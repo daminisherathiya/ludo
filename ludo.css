@@ -10,24 +10,24 @@ svg {
   display: block;
 }
 .deg451 {
-  background: linear-gradient(45deg, #00b300 50%, #ffff1a 50%);
+  background: linear-gradient(45deg, #06a049 50%, #ffde15 50%);
 }
 .deg452 {
-  background: linear-gradient(45deg, #ff0000 50%, #00ccff 50%);
+  background: linear-gradient(45deg, #eb1c22 50%, #27abfd 50%);
 }
 .deg1351 {
-  background: linear-gradient(135deg, #ffff1a 50%, #00ccff 50%);
+  background: linear-gradient(135deg, #ffde15 50%, #27abfd 50%);
 }
 .deg1352 {
-  background: linear-gradient(135deg, #00b300 50%, #ff0000 50%);
+  background: linear-gradient(135deg, #06a049 50%, #eb1c22 50%);
 }
 .degcenter {
   background: conic-gradient(
-    #ffff1a 45deg,
-    #00ccff 45deg 135deg,
-    #ff0000 135deg 225deg,
-    #00b300 225deg 315deg,
-    #ffff1a 315deg
+    #ffde15 45deg,
+    #27abfd 45deg 135deg,
+    #eb1c22 135deg 225deg,
+    #06a049 225deg 315deg,
+    #ffde15 315deg
   );
 }
 table {
@@ -47,14 +47,17 @@ table {
   border-top: hidden;
 }
 .red {
-  background-color: #ff0000;
+  background-color: #eb1c22;
 }
 .green {
-  background-color: #00b300;
+  background-color: #06a049;
 }
 .yellow {
-  background-color: #ffff1a;
+  background-color:#ffde15;
 }
 .blue {
-  background-color: #00ccff;
+  background-color: #27abfd;
+}
+.fa-star{
+  -webkit-text-stroke: 0.5px white;
 }
