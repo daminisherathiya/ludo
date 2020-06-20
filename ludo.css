@@ -1,0 +1,60 @@
+h1 {
+  text-align: center;
+}
+table,
+td {
+  border: 1px solid black;
+  padding: 10px;
+}
+svg {
+  display: block;
+}
+.deg451 {
+  background: linear-gradient(45deg, #00b300 50%, #ffff1a 50%);
+}
+.deg452 {
+  background: linear-gradient(45deg, #ff0000 50%, #00ccff 50%);
+}
+.deg1351 {
+  background: linear-gradient(135deg, #ffff1a 50%, #00ccff 50%);
+}
+.deg1352 {
+  background: linear-gradient(135deg, #00b300 50%, #ff0000 50%);
+}
+.degcenter {
+  background: conic-gradient(
+    #ffff1a 45deg,
+    #00ccff 45deg 135deg,
+    #ff0000 135deg 225deg,
+    #00b300 225deg 315deg,
+    #ffff1a 315deg
+  );
+}
+table {
+  margin: auto;
+  border-collapse: collapse;
+}
+.brh{
+  border-right: hidden;
+}
+.blh{
+  border-left: hidden;
+}
+.bbh {
+  border-bottom: hidden;
+}
+.bth {
+  border-top: hidden;
+}
+.red {
+  background-color: #ff0000;
+}
+.green {
+  background-color: #00b300;
+}
+.yellow {
+  background-color: #ffff1a;
+}
+.blue {
+  background-color: #00ccff;
+}
