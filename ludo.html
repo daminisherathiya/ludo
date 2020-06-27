@@ -1,163 +1,176 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
-    <link rel="stylesheet" href="ludo.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+  <link rel="stylesheet" href="ludo.css">
 </head>
+
 <body>
 
-<h1>LUDO GAME</h1>
+  <h1>LUDO GAME</h1>
 
-<table>
-  <tr>
-    <td class="green" colspan="6"></td>
-    <td></td>
-    <td style="padding: 0; color:#ffde15; text-align: center;">&#8595</td>
-    <td></td>
-    <td class="yellow" colspan="6"></td>
-  </tr>
-
-  <tr>
-  	<td class="green bbh bth" rowspan="4"></td>
-    <td colspan="4" rowspan="4" style="padding: 0;"><svg height="83" width="83">
-      <circle cx="25" cy="25" r="10" stroke="black" stroke-width="1" fill="#06a049" />
-      <circle cx="25" cy="58" r="10" stroke="black" stroke-width="1" fill="#06a049" />
-      <circle cx="58" cy="25" r="10" stroke="black" stroke-width="1" fill="#06a049" />
-      <circle cx="58" cy="58" r="10" stroke="black" stroke-width="1" fill="#06a049" />
-    </svg></td>
-    <td class="green bbh bth" rowspan="4"></td>
-    <td></td>
-    <td class="yellow"></td>
-    <td class="yellow" ></td>
-    <td class="yellow bbh bth" rowspan="4"></td>
-    <td colspan="4" rowspan="4" style="padding: 0;"><svg height="83" width="83">
-      <circle cx="25" cy="25" r="10" stroke="black" stroke-width="1" fill="#ffde15" />
-      <circle cx="25" cy="58" r="10" stroke="black" stroke-width="1" fill="#ffde15" />
-      <circle cx="58" cy="25" r="10" stroke="black" stroke-width="1" fill="#ffde15" />
-      <circle cx="58" cy="58" r="10" stroke="black" stroke-width="1" fill="#ffde15" />
-    </svg></td>
-    <td class="yellow bbh bth" rowspan="4"></td>
-  </tr>
-
-  <tr>
-    <td style="padding: 0;"><i class="far fa-star"></i></td>
-    <td class="yellow" ></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="yellow" ></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="yellow" ></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td  class="green" colspan="6"></td>
-    <td></td>
-    <td class="yellow" ></td>
-    <td></td>
-    <td  class="yellow" colspan="6"></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="green" ></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td rowspan=3 colspan="3" class="degcenter" style=" padding: 0;"><svg height="62" width="62">
-      <line x1="0" y1="0" x2="62" y2="62" style=" stroke:black; stroke-width:1px" />
-      <line x1="62" y1="0" x2="0" y2="62" style=" stroke:black; stroke-width:1px" />
-    </svg></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td style="padding: 0;"><i class="far fa-star"></i></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td style="padding: 0; color:#06a049; text-align: center;"> &#8594</td>
-    <td class="green" ></td>
-    <td class="green" ></td>
-    <td class="green" ></td>
-    <td class="green" ></td>
-    <td class="green" ></td>
-    <td class="blue" ></td>
-    <td class="blue" ></td>
-    <td class="blue" ></td>
-    <td class="blue" ></td>
-    <td class="blue" ></td>
-    <td style="padding: 0; color:  #27abfd; text-align: center;">&#8592</td>
-  </tr>
-  <tr>
-    <td></td>
-    <td></td>
-    <td style="padding: 0;"><i class="far fa-star"></i></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td class="blue" ></td>
-    <td></td>
-  </tr>
+  <table>
     <tr>
-    <td  class="red" colspan="6"></td>
-    <td></td>
-    <td class="red" ></td>
-    <td></td>
-    <td  class="blue" colspan="6"></td>
-  </tr>
-  <tr>
-  	<td class="red bbh bth" rowspan="4"></td>
-    <td colspan="4" rowspan="4" style="padding: 0;"><svg height="83" width="83">
-      <circle cx="25" cy="25" r="10" stroke="black" stroke-width="1" fill="#eb1c22" />
-      <circle cx="25" cy="58" r="10" stroke="black" stroke-width="1" fill="#eb1c22" />
-      <circle cx="58" cy="25" r="10" stroke="black" stroke-width="1" fill="#eb1c22" />
-      <circle cx="58" cy="58" r="10" stroke="black" stroke-width="1" fill="#eb1c22" />
-    </svg></td>
-    <td class="red bbh bth" rowspan="4"></td>
-    <td></td>
-    <td class="red" ></td>
-    <td></td>
-    <td class="blue bbh bth" rowspan="4"></td>
-    <td colspan="4" rowspan="4" style="padding: 0;"><svg height="83" width="83">
-      <circle cx="25" cy="25" r="10" stroke="black" stroke-width="1" fill="#27abfd" />
-      <circle cx="25" cy="58" r="10" stroke="black" stroke-width="1" fill="#27abfd" />
-      <circle cx="58" cy="25" r="10" stroke="black" stroke-width="1" fill="#27abfd" />
-      <circle cx="58" cy="58" r="10" stroke="black" stroke-width="1" fill="#27abfd" />
-    </svg></td>
-    <td class="blue bbh bth" rowspan="4"></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="red" ></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
-    <td class="red" ></td>
-    <td style="padding: 0;"><i class="far fa-star"></i></td>
-  </tr>
-  <tr>
-    <td class="red" ></td>
-    <td class="red" ></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td  class="red" colspan="6"></td>
-    <td></td>
-    <td style="padding: 0; color: #eb1c22; text-align: center;">&#8593</td>
-    <td></td>
-    <td  class="blue" colspan="6"></td>
-  </tr>
-</table>
+      <td class="green" colspan="6"></td>
+      <td></td>
+      <td class="arrow aud" style="color:#ffde15;">&#8595</td>
+      <td></td>
+      <td class="yellow" colspan="6"></td>
+    </tr>
+
+    <tr>
+      <td class="green bbh bth" rowspan="4"></td>
+      <td colspan="4" rowspan="4" style="padding: 0;">
+        <div style="height: 50%; ">
+          <div style="background-color: #06a049;" class="circle"></div><div style="background-color: #06a049;" class="circle"></div>
+        </div>
+        <div style="height: 50%;">
+          <div style="background-color: #06a049;" class="circle"></div><div style="background-color: #06a049;" class="circle"></div>
+        </div>
+      </td>
+
+      </svg>
+      <td class="green bbh bth" rowspan="4"></td>
+      <td></td>
+      <td class="yellow"></td>
+      <td class="yellow"></td>
+      <td class="yellow bbh bth" rowspan="4"></td>
+      <td colspan="4" rowspan="4" style="padding: 0;">
+      <div style="height: 50%; ">
+        <div style="background-color:#ffde15;" class="circle"></div><div style="background-color:#ffde15;" class="circle"></div>
+      </div>
+      <div style="height: 50%;">
+        <div style="background-color:#ffde15;" class="circle"></div><div style="background-color:#ffde15;" class="circle"></div>
+      </div>
+    </td>
+      <td class="yellow bbh bth" rowspan="4"></td>
+    </tr>
+
+    <tr>
+      <td style="padding: 0;"><i class="far fa-star fa-align-center"></i></td>
+      <td class="yellow"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="yellow"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="yellow"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="green" colspan="6"></td>
+      <td></td>
+      <td class="yellow"></td>
+      <td></td>
+      <td class="yellow" colspan="6"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="green"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td rowspan=3 colspan="3" class="degcenter"><svg height="300%" width="100%">
+          <line x1="0%" y1="0%" x2="100%" y2="100%" style=" stroke:black; stroke-width:1.1px" />
+          <line x1="100%" y1="0%" x2="0%" y2="100%" style=" stroke:black; stroke-width:1.1px" />
+        </svg></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td style="padding: 0;"><i class="far fa-star"></i></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="color:#06a049;" class="arrow alr"> &#8594</td>
+      <td class="green"></td>
+      <td class="green"></td>
+      <td class="green"></td>
+      <td class="green"></td>
+      <td class="green"></td>
+      <td class="blue"></td>
+      <td class="blue"></td>
+      <td class="blue"></td>
+      <td class="blue"></td>
+      <td class="blue"></td>
+      <td style="color:  #27abfd;" class="arrow alr">&#8592</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td style="padding: 0;"><i class="far fa-star"></i></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td class="blue"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="red" colspan="6"></td>
+      <td></td>
+      <td class="red"></td>
+      <td></td>
+      <td class="blue" colspan="6"></td>
+    </tr>
+    <tr>
+      <td class="red bbh bth" rowspan="4"></td>
+      <td colspan="4" rowspan="4" style="padding: 0;">
+        <div style="height: 50%; ">
+          <div style="background-color:#eb1c22;" class="circle"></div><div style="background-color:#eb1c22;" class="circle"></div>
+        </div>
+        <div style="height: 50%;">
+          <div style="background-color:#eb1c22;" class="circle"></div><div style="background-color:#eb1c22;" class="circle"></div>
+        </div>
+      </td>
+      <td class="red bbh bth" rowspan="4"></td>
+      <td></td>
+      <td class="red"></td>
+      <td></td>
+      <td class="blue bbh bth" rowspan="4"></td>
+      <td colspan="4" rowspan="4" style="padding: 0;"><div style="height: 50%; ">
+        <div style="background-color:#27abfd;" class="circle"></div><div style="background-color:#27abfd;" class="circle"></div>
+      </div>
+      <div style="height: 50%;">
+        <div style="background-color:#27abfd;" class="circle"></div><div style="background-color:#27abfd;" class="circle"></div>
+      </div>
+    </td>
+      <td class="blue bbh bth" rowspan="4"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="red"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td class="red"></td>
+      <td style="padding: 0;"><i class="far fa-star fa-fw"></i></td>
+    </tr>
+    <tr>
+      <td class="red"></td>
+      <td class="red"></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="red" colspan="6"></td>
+      <td></td>
+      <td style="color: #eb1c22;" class="arrow aud">&#8593</td>
+      <td></td>
+      <td class="blue" colspan="6"></td>
+    </tr>
+  </table>
 
 </body>
+
 </html>
