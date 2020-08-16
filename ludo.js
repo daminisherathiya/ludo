@@ -13,11 +13,22 @@ var toc1 = [];
 var toc2 = [];
 enableDice(0);
 
+function token_will_be_moved(randomDice, item) {
+  var cid = item.parentNode.getAttribute("id");
+  var n = parseInt(cid.substring(3)) + randomDice;
+  // console.log("n="+n);
+  if (n < 19) {
+    return true;
+  }
+  return false;
+}
+
 function rollDice(event) {
   randomDice = Math.floor(6 * Math.random()) + 1;
   // randomDice = 1;
   dic[i].src = "./dices/green/" + randomDice + ".png";
   dic[i].removeEventListener("click", rollDice);
+  var allowed_to_move_token = true;
 
   if (randomDice == 6) {
     toc1 = document.querySelectorAll(".circle .tokens_of_" + i);
@@ -28,18 +39,10 @@ function rollDice(event) {
       console.log(toc1);
       setTimeout(function () {
         if (toc1.length > 0) {
+          allowed_to_move_token = false;
           toc1[0].click();
         }
-        if (toc1.length > 1) {
-          toc1[1].click();
-        }
-        if (toc1.length > 2) {
-          toc1[2].click();
-        }
-        if (toc1.length > 3) {
-          toc1[3].click();
-        }
-      }, 1000);
+      }, 0);
     }
   }
   // console.log(toc1);
@@ -50,19 +53,23 @@ function rollDice(event) {
   if (toc2.length != 0) {
     console.log(toc2);
     setTimeout(function () {
-      if (toc2.length > 0) {
+      if (allowed_to_move_token && toc2.length > 0) {
+        allowed_to_move_token = !token_will_be_moved(randomDice, toc2[0]);
         toc2[0].click();
       }
-      if (toc2.length > 1) {
+      if (allowed_to_move_token && toc2.length > 1) {
+        allowed_to_move_token = !token_will_be_moved(randomDice, toc2[1]);
         toc2[1].click();
       }
-      if (toc2.length > 2) {
+      if (allowed_to_move_token && toc2.length > 2) {
+        allowed_to_move_token = !token_will_be_moved(randomDice, toc2[2]);
         toc2[2].click();
       }
-      if (toc2.length > 3) {
+      if (allowed_to_move_token && toc2.length > 3) {
+        allowed_to_move_token = !token_will_be_moved(randomDice, toc2[3]);
         toc2[3].click();
       }
-    }, 1000);
+    }, 0);
     // toc2[0].click();
   }
 
@@ -84,7 +91,7 @@ function rollDice(event) {
     i++;
     if (i >= 4) i = 0;
     dic[i].src = "./dices/green/" + randomDice + ".png";
-    setTimeout(enableDice, 500, i);
+    setTimeout(enableDice, 0, i);
     // enableDice(i);
   }
   // console.log(toc2.length);
@@ -110,19 +117,21 @@ function rollDice(event) {
   //   // enableDice(i);
   // }
 }
-
+var again=false;
 function run_token(num, count, alt) {
-  var total_token = document.querySelectorAll("#" + num + " img");
-  var total_token_length = total_token.length;
+  var p_total_token = document.querySelectorAll("#" + num + " img");
+  var p_total_token_length = p_total_token.length;
   var safe = document.querySelector("#" + num + ".safe img");
+  again=false;
   console.log("safe=" + safe);
-  if (safe == null && total_token_length > 0) {
-    total_token.forEach(function (item) {
+  if (safe == null && p_total_token_length > 0) {
+    p_total_token.forEach(function (item) {
       var alt_name = item.getAttribute("alt");
       if (alt.substring(2, 3) != alt_name.substring(2, 3)) {
+        again=true;
         console.log("alt_name=" + alt_name);
-        console.log(alt.substring(2, 3));
-        console.log(alt_name.substring(2, 3));
+        // console.log(alt.substring(2, 3));
+        // console.log(alt_name.substring(2, 3));
         var s = item.getAttribute("src");
         var n = s.substring(9, 10);
         var img = document.createElement("img");
@@ -145,8 +154,8 @@ function run_token(num, count, alt) {
   // console.log(num);
   src.appendChild(img);
 
-  total_token = document.querySelectorAll("#" + num + " img");
-  total_token_length = total_token.length;
+  var a_total_token = document.querySelectorAll("#" + num + " img");
+  a_total_token_length = a_total_token.length;
   // console.log("ddd "+i+" "+p_toc+" "+count);
 
   if (count != 18) {
@@ -155,22 +164,31 @@ function run_token(num, count, alt) {
     count == 18 &&
     document.getElementsByClassName("tokens_of_" + i).length == 0
   ) {
-    alert("your rank is " + rank + "st");
+    var winner_img = document.createElement("img");
+    winner_img.src = "./winner/" + rank + ".png";
+    var winner_src = document.getElementById("winner_"+i);
+    winner_src.appendChild(winner_img);
+    winner_img.classList.add("winner");
+
     rank++;
     if (rank == 4) {
-      alert("Game Is Over Now");
       game_over = true;
     }
   }
   img.classList.add("outside");
-  if (total_token_length == 1) {
+  if (a_total_token_length == 1) {
     img.classList.add("token");
   } else {
-    total_token.forEach(function (item) {
+    a_total_token.forEach(function (item) {
       item.classList.add("tokens");
     });
   }
-  document.getElementById(num).classList.add("token" + total_token_length);
+  for(var k=p_total_token_length;k>1;k--){
+    document.getElementById(num).classList.remove("token"+k);
+  }
+  if(a_total_token_length>1){
+  document.getElementById(num).classList.add("token" + a_total_token_length);
+  }
 }
 
 function move_token(event_inn) {
@@ -217,6 +235,7 @@ function move_token(event_inn) {
     //   return;
     // }
   }
+  var previously_total_token=document.querySelectorAll("#"+current_id+ " img");
   var alt = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
   // console.log(i + " " + p_toc + " " + count);
@@ -232,19 +251,24 @@ function move_token(event_inn) {
     "#" + current_id + " img"
   );
 
+    document.getElementById(current_id).classList.remove("token"+previously_total_token.length);
   if (after_run_total_tokens.length == 1) {
     after_run_total_tokens[0].classList.remove("tokens");
     after_run_total_tokens[0].classList.add("token");
   }
-  document
+  if(after_run_total_tokens>1){
+    document
     .getElementById(current_id)
     .classList.add("token" + after_run_total_tokens.length);
+  }
 
   // if (p_toc == i && count == 18) {
   //   document.getElementById("ddd").classList.remove("tokens_of_" + i);
   // }
   toc1 = [];
-  i++;
+  if(randomDice!=6 && num!="ddd" && again==false){
+    i++;
+  }
   if (i >= 4) i = 0;
   dic[i].src = "./dices/green/" + randomDice + ".png";
   //   setTimeout(enableDice, 1000, i);
@@ -272,7 +296,10 @@ function six_token(event_inn) {
   // console.log("hell"+toc1.length);
   remove_EventListener();
   toc1 = [];
-  i++;
+  if(randomDice!=6)
+  {
+    i++;
+  }
   if (i >= 4) i = 0;
   dic[i].src = "./dices/green/" + randomDice + ".png";
   //   setTimeout(enableDice, 1000, i);
@@ -284,10 +311,10 @@ function enableDice(i) {
   dic[(i + 1) % 4].style.display = "none";
   dic[(i + 2) % 4].style.display = "none";
   dic[(i + 3) % 4].style.display = "none";
-  var available = document.getElementsByClassName("tokens_of_" + i);
   if (game_over) {
     return;
   }
+  var available = document.getElementsByClassName("tokens_of_" + i);
   if (available.length == 0) {
     i = (i + 1) % 4;
     enableDice(i);
