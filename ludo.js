@@ -36,13 +36,13 @@ function rollDice(event) {
       item.addEventListener("click", six_token);
     });
     if (toc1.length != 0) {
-      console.log(toc1);
+      // console.log(toc1);
       setTimeout(function () {
         if (toc1.length > 0) {
           allowed_to_move_token = false;
           toc1[0].click();
         }
-      }, 0);
+      },0);
     }
   }
   // console.log(toc1);
@@ -51,7 +51,7 @@ function rollDice(event) {
     item.addEventListener("click", move_token);
   });
   if (toc2.length != 0) {
-    console.log(toc2);
+    // console.log(toc2);
     setTimeout(function () {
       if (allowed_to_move_token && toc2.length > 0) {
         allowed_to_move_token = !token_will_be_moved(randomDice, toc2[0]);
@@ -119,6 +119,7 @@ function rollDice(event) {
 }
 var again=false;
 function run_token(num, count, alt) {
+  console.log(num);
   var p_total_token = document.querySelectorAll("#" + num + " img");
   var p_total_token_length = p_total_token.length;
   var safe = document.querySelector("#" + num + ".safe img");
@@ -129,7 +130,7 @@ function run_token(num, count, alt) {
       var alt_name = item.getAttribute("alt");
       if (alt.substring(2, 3) != alt_name.substring(2, 3)) {
         again=true;
-        console.log("alt_name=" + alt_name);
+        // console.log("alt_name=" + alt_name);
         // console.log(alt.substring(2, 3));
         // console.log(alt_name.substring(2, 3));
         var s = item.getAttribute("src");
@@ -177,16 +178,26 @@ function run_token(num, count, alt) {
   }
   img.classList.add("outside");
   if (a_total_token_length == 1) {
-    img.classList.add("token");
-  } else {
+    if(count==18){
+      img.classList.add("token_svg_"+i)
+    }else{
+      img.classList.add("token");
+    }
+  }else {
     a_total_token.forEach(function (item) {
       item.classList.add("tokens");
     });
   }
+  if(count==18 && p_total_token_length==1){
+    p_total_token[0].classList.remove("token_svg_"+i);
+  }
   for(var k=p_total_token_length;k>1;k--){
     document.getElementById(num).classList.remove("token"+k);
   }
-  if(a_total_token_length>1){
+  for(var k=0;a_total_token_length>1 && k<a_total_token_length;k++){
+    a_total_token[k].classList.remove("token");
+  }
+  if(a_total_token_length>1 && count!=18){
   document.getElementById(num).classList.add("token" + a_total_token_length);
   }
 }
@@ -243,20 +254,21 @@ function move_token(event_inn) {
   // console.log(current_id.substring(2,3));
   // console.log("num="+num);
   if (count == 18) {
-    num = "ddd";
+    num = "svg_"+i;
   }
   run_token(num, count, alt);
   remove_EventListener();
   var after_run_total_tokens = document.querySelectorAll(
     "#" + current_id + " img"
   );
+  // console.log(after_run_total_tokens.length)
 
     document.getElementById(current_id).classList.remove("token"+previously_total_token.length);
   if (after_run_total_tokens.length == 1) {
     after_run_total_tokens[0].classList.remove("tokens");
     after_run_total_tokens[0].classList.add("token");
   }
-  if(after_run_total_tokens>1){
+  if(after_run_total_tokens.length>1){
     document
     .getElementById(current_id)
     .classList.add("token" + after_run_total_tokens.length);
@@ -266,7 +278,8 @@ function move_token(event_inn) {
   //   document.getElementById("ddd").classList.remove("tokens_of_" + i);
   // }
   toc1 = [];
-  if(randomDice!=6 && num!="ddd" && again==false){
+  // var ss=num.substring(0,3);
+  if(randomDice!=6 && count!=18 && again==false){
     i++;
   }
   if (i >= 4) i = 0;
