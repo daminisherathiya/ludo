@@ -1,6 +1,35 @@
 * {
   box-sizing: border-box;
 }
+
+.borderright {
+  border-right: 4px solid #4fff14;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height:100%;
+}
+.borderleft {
+  border-left: 4px solid #4fff14;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height:100%;
+}
+.borderbottom {
+  border-bottom: 4px solid #4fff14;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width:100%;
+}
+.bordertop {
+  border-top: 4px solid #4fff14;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width:100%;
+}
 .div {
   width: 405px;
   margin: auto;
@@ -18,21 +47,106 @@
   margin-left: 4px;
   margin-top: -10px;
   position: relative;
+  z-index: 1;
+  
 }
-/* .animation{
+/* .a{
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  z-index: 0;
+  top: 3px;
+  left: 1px;
+  background-color:transparent;
+  border-left: 4px solid #cc9900;
+  border-right:4px solid #cc9900;
+  border-top:4px solid #888844;
+  border-bottom:4px solid #888844;
+  border-radius: 50%;
+  animation: mytoken 600ms infinite ;
+  
+} */
+/* @keyframes mytoken{
+  from{ border-image: 
+    -webkit-linear-gradient(#743ad5, #d53a9d);
+}
+  to{border-color:#ccb100;}
+  
+} */
+/* @keyframes mytoken{
+  from{border-color: #806f00 ;}
+  to{border-color:#ccb100;}
+  
+} */
+.run_token {
+  width: 15px;
+  height: 25px;
+  top: -5px;
+  left: 4px;
+  z-index: 2;
+  position: absolute;
+}
+.animation_0{
   width: 27px;
   height: 27px;
   position: absolute;
-  top: 5px;
+  z-index: 1;
+  top: 6px;
   left: -2px;
-  animation: mymove 400ms infinite;
+  animation: mymove_0 600ms ;
 }
-@keyframes mymove {
-  0% { clip-path: circle(5%); }
-  50%{ clip-path: circle(15%);background: #eb1c22;}
-   75% { clip-path: circle(20%);background:#ed4c51;  }
-   100% { clip-path: circle(20%);background:#ffdede;  }
-}  */
+.animation_1{
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  left: -2px;
+  animation: mymove_1 600ms ;
+}
+.animation_2{
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  left: -2px;
+  animation: mymove_2 600ms ;
+}
+
+.animation_3{
+  width: 27px;
+  height: 27px;
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  left: -2px;
+  animation: mymove_3 600ms ;
+}
+@keyframes mymove_0 {
+  0% { clip-path: circle(25%);background:#06a049;  } 
+  50% { clip-path: circle(15%);background:#06a049;  } 
+  75% { clip-path: circle(15%);background:#06a049;  } 
+  100% { clip-path: circle(5%);background:#06a049;  }
+} 
+@keyframes mymove_1 {
+  0% { clip-path: circle(25%);background:#ffde15;  } 
+  50% { clip-path: circle(15%);background:#ffde15;  } 
+  75% { clip-path: circle(15%);background:#ffde15;  } 
+   100% { clip-path: circle(5%);background:#ffde15;  }
+} 
+@keyframes mymove_2{
+  0% { clip-path: circle(25%);background:#27abfd;  } 
+  50% { clip-path: circle(15%);background:#27abfd;  } 
+  75% { clip-path: circle(15%);background:#27abfd;  } 
+   100% { clip-path: circle(5%);background:#27abfd;  }
+} 
+@keyframes mymove_3 {
+  0% { clip-path: circle(25%);background:#eb1c22;  } 
+  50% { clip-path: circle(15%);background:#eb1c22;  } 
+  75% { clip-path: circle(15%);background:#eb1c22;  } 
+   100% { clip-path: circle(5%);background:#eb1c22;  }
+} 
 /* .safe>i~img{
   margin-top: -19px;
   margin-left: -4px;
@@ -78,6 +192,7 @@ img {
   margin: 4px auto;
 }
 .user {
+  position: relative;
   height: 62px;
   width: 62px;
   border: 1px solid black;
@@ -150,19 +265,19 @@ table {
   position: absolute;
 }
 #svg_0 {
-  left: 7px;
-  top: 27px;
+  left: 6px;
+  top: 30px;
 }
 #svg_2 {
-  left: 57px;
-  top: 27px;
+  left: 54px;
+  top: 30px;
 }
 #svg_1 {
-  left: 32px;
+  left: 31px;
   top: 3px;
 }
 #svg_3 {
-  left: 32px;
+  left: 31px;
   top: 52px;
 }
 .token_svg_0 {
@@ -193,6 +308,32 @@ table {
   height: 25px;
   position: relative;
 }
+.svg_token2{
+    height: 23px;
+    width: 14px;
+    float: left;
+    margin-left: -4px;
+    margin-top: auto;
+    position: relative;
+}
+.svg_token3{
+  height: 20px;
+    width: 11px;
+    float: left;
+    margin-left: -4px;
+    margin-top: auto;
+    position: relative;
+}
+.svg_token4{
+  height: 20px;
+    width: 10px;
+    float: left;
+    margin-left: -4px;
+    margin-top: auto;
+    position: relative;
+}
+
+
 /* @media(min-width:496px){
   .aud{
     transform: scale(1.9,1.2);
@@ -216,9 +357,14 @@ table {
 } */
 
 @media (max-width: 496px) {
-  td {
+  td{
     width: 25px;
     height: 25px;
+  }
+  .animation_0,.animation_1,.animation_2,.animation_3 {
+    width: 25px;
+    height: 25px;
+    top: 3px;
   }
   h1 {
     margin-bottom: 15px;
@@ -300,6 +446,10 @@ table {
     margin-left: 4px;
     margin-top: -8px;
   }
+  .run_token{
+    width: 12px;
+    height: 21px;
+  }
   .tokens {
     height: 18px;
     width: 9px;
@@ -367,6 +517,11 @@ table {
     width: 19px;
     height: 19px;
     line-height: 0px;
+  }
+  .animation_0,.animation_1,.animation_2,.animation_3 {
+    width: 19px;
+    height: 19px;
+    left: -1px;
   }
   h1 {
     font-size: 40px;
@@ -436,6 +591,10 @@ table {
     margin-left: 3px;
     margin-top: -8px;
   }
+  .run_token{
+    width: 10px;
+    height: 19px;
+  }
   .tokens{
     height: 16px;
     width: 8px;
@@ -486,6 +645,9 @@ table {
     height: 17px;
     margin-left: 2px;
     margin-top: -6px;
+  }
+  .run_token{
+    height: 17px;
   }
   .tokens{
     height: 14px;
@@ -601,4 +763,16 @@ svg {
 
 .blue {
   background-color: #27abfd;
+}
+.highlight0{
+  background-color: #047b38;
+}
+.highlight1{
+  background-color: #e6c700;
+}
+.highlight2{
+  background-color: #039dfc;
+}
+.highlight3{
+  background-color:#d31219;
 }
