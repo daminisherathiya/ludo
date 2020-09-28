@@ -5,29 +5,28 @@
   document.getElementById("dice-3"),
 ];
 
-// var no_of_dice_rolls = 0;
+var no_of_dice_rolls = 0;
 var i = 0;
 var total_players = 4;
 var rank = 1;
-var left=false;
-var winner_src="./winner/";
-var token_src="./tokens/";
-var left_src="./left/";
+var player_left = false;
+var winner_src = "./winner/";
+var token_src = "./tokens/";
+var left_src = "./left/";
 var green_dot = 1;
 var yellow_dot = 1;
 var blue_dot = 1;
 var red_dot = 1;
 var game_over = false;
 var automatic = false;
-var again = false;
+var turn_again = false;
 var randomDice = Math.floor(6 * Math.random()) + 1;
 dic[i].src = "./dices/green/" + randomDice + ".png";
 var vis = false;
-var toc1 = [];
-var toc2 = [];
+var token_inside_home = [];
+var token_outside_home = [];
 var timeouts = [];
 var allowed_to_move_token = true;
-console.log("enable for starting");
 enableDice();
 
 function token_will_be_moved(randomDice, item) {
@@ -38,48 +37,9 @@ function token_will_be_moved(randomDice, item) {
   }
   return false;
 }
-function rollDice() {
-  // console.log("no_of_dice_rolls="+no_of_dice_rolls)
-  allowed_to_move_token = true;
-  console.log("i=" + i);
-  dic[i].removeEventListener("click", rollDice);
-  randomDice = Math.floor(6 * Math.random()) + 1;
-  // randomDice = 6;
-  console.log("randmdices=" + randomDice);
-  dic[i].src = "./dices/green/" + randomDice + ".png";
-  // var allowed_to_move_token = true;
-
-
-
-
-  toc1 = [];
-  if (randomDice == 6) {
-    console.log("six");
-    toc1 = document.querySelectorAll(".circle .tokens_of_" + i);
-    toc1.forEach(function (item) {
-      item.addEventListener("click", six_token);
-    });
-    console.log(toc1);
-    // if (toc1.length != 0) {
-    //   setTimeout(function () {
-    //     console.log("toccc1")
-    //       allowed_to_move_token = false;
-    //       console.log(toc1);
-    //       toc1[0].click();
-    //   }, 500);
-    // }
-  }
-  console.log(toc1);
-  toc2 = document.querySelectorAll("td .tokens_of_" + i + ".outside");
-  console.log("random")
-  toc2.forEach(function (item) {
-    // console.log(item);
-    item.addEventListener("click", move_token);
-  });
-  console.log(toc2);
-
+function any_chance_to_move_token() {
   vis = false;
-  toc2.forEach(function (item) {
+  token_outside_home.forEach(function (item) {
     var cid = item.parentNode.getAttribute("id");
     var n = parseInt(cid.substring(3)) + randomDice;
     if (n < 19) {
@@ -88,148 +48,188 @@ function rollDice() {
       item.removeEventListener("click", move_token);
     }
   });
-  console.log("vis=" + vis)
-  // if (!(randomDice==6 && toc1.length!=0) && vis==true && toc2.length != 0) {
+}
+function automatic_clicked_token() {
+  allowed_to_move_token = true;
+  var already_come = false;
+  if (token_inside_home.length != 0) {
+    already_come = true;
+    setTimeout(function () {
+      allowed_to_move_token = false;
+      token_inside_home[0].click();
+    }, 500);
+  }
 
-  //   console.log(toc2);
-  //   setTimeout(function () {
-  //     console.log(allowed_to_move_token);
-  //     console.log("toccccccccccccccc2");
-  //     if (allowed_to_move_token && toc2.length > 0 ) {
-  //       allowed_to_move_token = !token_will_be_moved(randomDice, toc2[0]);
-  //       toc2[0].click();
-  //     }
-  //     if (allowed_to_move_token && toc2.length > 1) {
-  //       allowed_to_move_token = !token_will_be_moved(randomDice, toc2[1]);
-  //       toc2[1].click();
-  //     }
-  //     if (allowed_to_move_token && toc2.length > 2 ) {
-  //       allowed_to_move_token = !token_will_be_moved(randomDice, toc2[2]);
-  //       toc2[2].click();
-  //     }
-  //     if (allowed_to_move_token && toc2.length > 3 ) {
-  //       allowed_to_move_token = !token_will_be_moved(randomDice, toc2[3]);
-  //       toc2[3].click();
-  //     }
-  //   }, 500);
-  // }
+  if (!already_come && vis == true && token_outside_home.length != 0) {
+    setTimeout(function () {
+      if (allowed_to_move_token && token_outside_home.length > 0) {
+        allowed_to_move_token = !token_will_be_moved(
+          randomDice,
+          token_outside_home[0]
+        );
+        token_outside_home[0].click();
+      }
+      if (allowed_to_move_token && token_outside_home.length > 1) {
+        allowed_to_move_token = !token_will_be_moved(
+          randomDice,
+          token_outside_home[1]
+        );
+        token_outside_home[1].click();
+      }
+      if (allowed_to_move_token && token_outside_home.length > 2) {
+        allowed_to_move_token = !token_will_be_moved(
+          randomDice,
+          token_outside_home[2]
+        );
+        token_outside_home[2].click();
+      }
+      if (allowed_to_move_token && token_outside_home.length > 3) {
+        allowed_to_move_token = !token_will_be_moved(
+          randomDice,
+          token_outside_home[3]
+        );
+        token_outside_home[3].click();
+      }
+    }, 500);
+  }
+}
+
+function rollDice() {
+  dic[i].removeEventListener("click", rollDice);
+  randomDice = Math.floor(6 * Math.random()) + 1;
+  console.log({randomDice})
+  // randomDice = 4;
+  dic[i].src = "./dices/green/" + randomDice + ".png";
+  token_inside_home = [];
+  if (randomDice == 6) {
+    token_inside_home = document.querySelectorAll(".circle .tokens_of_" + i);
+    token_inside_home.forEach(function (item) {
+      item.addEventListener("click", six_token);
+    });
+  }
+  token_outside_home = document.querySelectorAll(
+    "td .tokens_of_" + i + ".outside"
+  );
+  token_outside_home.forEach(function (item) {
+    item.addEventListener("click", move_token);
+  });
+  any_chance_to_move_token();
+  automatic_clicked_token();
   if (
-    (randomDice == 6 && toc1.length == 0 && vis == false) ||
+    (randomDice == 6 && token_inside_home.length == 0 && vis == false) ||
     (randomDice != 6 && vis == false)
   ) {
-    console.log("i incresed");
     disable_progressbar();
     i++;
     i = i % 4;
     dic[i].src = "./dices/green/" + randomDice + ".png";
-    console.log("enable for random");
     setTimeout(enableDice, 500);
   }
 }
 
-function pre_address(current_id, tag, alt) {
-  if (current_id == alt) {
+function pre_address(current_token_id, tag, alt) {
+  if (current_token_id == alt) {
     return 0;
   }
-  var count = parseInt(current_id.substring(3)) - 1;
-  var p_toc = parseInt(current_id.substring(2, 3));
+  var count = parseInt(current_token_id.substring(3)) - 1;
+  var place_tag = parseInt(current_token_id.substring(2, 3));
 
-  if (p_toc != tag && count < 0) {
+  if (place_tag != tag && count < 0) {
     count = 12;
-    if (p_toc == 0) {
-      p_toc = 3;
+    if (place_tag == 0) {
+      place_tag = 3;
     } else {
-      p_toc = (p_toc - 1) % 4;
+      place_tag = (place_tag - 1) % 4;
     }
   }
   if (count == -1) {
     return alt;
   }
-  var num = "d_" + p_toc + count;
-  return num;
+  var token_place_id = "d_" + place_tag + count;
+  return token_place_id;
 }
-function next_address(current_id) {
-  var count = parseInt(current_id.substring(3)) + 1;
-  var p_toc = parseInt(current_id.substring(2, 3));
+function next_address(current_token_id, steps) {
+  var count = parseInt(current_token_id.substring(3)) + steps;
+  var place_tag = parseInt(current_token_id.substring(2, 3));
   if (count == 12) {
-    var temp_p_toc = (p_toc + 1) % 4;
-    if (temp_p_toc == i) {
+    var temp_place_tag = (place_tag + 1) % 4;
+    if (temp_place_tag == i) {
       count = count + 1;
-      p_toc = temp_p_toc;
+      place_tag = temp_place_tag;
     }
   } else if (count > 12) {
     var temp_count = count;
     count = count - 13;
-    if (current_id.substring(3) < 13) {
-      p_toc = (p_toc + 1) % 4;
+    if (current_token_id.substring(3) < 13) {
+      place_tag = (place_tag + 1) % 4;
     } else {
       temp_count--;
     }
-    if (p_toc == i) {
+    if (place_tag == i) {
       count = temp_count + 1;
     }
   }
-  var num = "d_" + p_toc + count;
+  var token_place_id = "d_" + place_tag + count;
   if (count == 18) {
-    num = "svg_" + i;
+    token_place_id = "svg_" + i;
   }
-  return num;
+  return [token_place_id,count];
 }
 function call_to_next_player(count) {
   disable_progressbar();
-  if (total_players == 1 || left || (randomDice != 6 && count != 18 && again == false)) {
+  if (
+    total_players == 1 ||
+    player_left ||
+    (randomDice != 6 && count != 18 && turn_again == false)
+  ) {
     i++;
   }
   i = i % 4;
   dic[i].src = "./dices/green/" + randomDice + ".png";
   enableDice();
 }
-function set_class(current_id, previously_total_token) {
-  var after_run_total_tokens = document.querySelectorAll(
-    "#" + current_id + " img"
-  );
+// function set_class(current_token_id, previously_total_token) {
+//   var after_run_total_tokens = document.querySelectorAll(
+//     "#" + current_token_id + " img"
+//   );
 
-  document
-    .getElementById(current_id)
-    .classList.remove("token" + previously_total_token.length);
-  if (after_run_total_tokens.length == 1) {
-    after_run_total_tokens[0].classList.remove("tokens");
-    after_run_total_tokens[0].classList.add("token");
-  }
-  if (after_run_total_tokens.length > 1) {
-    document
-      .getElementById(current_id)
-      .classList.add("token" + after_run_total_tokens.length);
-  }
+//   document
+//     .getElementById(current_token_id)
+//     .classList.remove("token" + previously_total_token.length);
+//   if (after_run_total_tokens.length == 1) {
+//     after_run_total_tokens[0].classList.remove("tokens");
+//     after_run_total_tokens[0].classList.add("token");
+//   }
+//   else if (after_run_total_tokens.length > 1) {
+//     document
+//       .getElementById(current_token_id)
+//       .classList.add("token" + after_run_total_tokens.length);
+//   }
+// }
+function set_img_at_given_place_id(img_src, player_id, alt, place_id) {
+  var img = document.createElement("img");
+  img.src = img_src + player_id + ".png";
+  img.alt = alt;
+  var src = document.getElementById(place_id);
+  src.appendChild(img);
+  return img;
 }
-function set_img_at_given_place_id(img_src,player_id,alt,place_id){
-        var img = document.createElement("img");
-        img.src = img_src + player_id + ".png";
-        img.alt = alt;
-        var src = document.getElementById(place_id);
-        src.appendChild(img);
-        return img;
-}
-function backword(current_id, alt, last_token) {
+function backword(current_token_id, alt, last_token) {
   var time = 0;
-  var p_toc = parseInt(alt.substring(2, 3));
-  var k = pre_address(current_id, p_toc, alt);
-  // console.log(k);
-  var vis = false;
+  var player_id = parseInt(alt.substring(2, 3));
+  var k = pre_address(current_token_id, player_id, alt);
   while (k != 0) {
-    // console.log("k=" + k);
     setTimeout(
-      function (k, current_id, p_toc, alt) {
+      function (k, current_token_id, player_id, alt) {
         var tt = document.querySelector(
-          "#" + current_id + " img[alt=" + alt + "]"
+          "#" + current_token_id + " img[alt=" + alt + "]"
         );
         tt.remove(tt);
-        var img=set_img_at_given_place_id(token_src,p_toc,alt,k);
+        var img = set_img_at_given_place_id(token_src, player_id, alt, k);
         if (k == alt) {
           img.classList.add("token");
-          img.classList.add("tokens_of_" + p_toc);
+          img.classList.add("tokens_of_" + player_id);
           if (last_token == alt) {
-            // toc1 = [];
             call_to_next_player();
           }
         } else {
@@ -238,54 +238,51 @@ function backword(current_id, alt, last_token) {
       },
       time,
       k,
-      current_id,
-      p_toc,
+      current_token_id,
+      player_id,
       alt
     );
     time = time + 35;
-    current_id = k;
-    k = pre_address(k, p_toc, alt);
+    current_token_id = k;
+    k = pre_address(k, player_id, alt);
   }
 }
-function set_positions(num, count, img, p_total_token, alt) {
-  var safe = document.querySelector("#" + num + ".safe img");
-  again = false;
-  var total_killed = 0;
-  console.log("safe=" + safe);
+function set_positions(token_place_id, count, img, p_total_token, alt) {
+  var safe = document.querySelector("#" + token_place_id + ".safe img");
+  turn_again = false;
   if (safe == null && p_total_token.length > 0) {
     var last_token = p_total_token[p_total_token.length - 1].getAttribute(
       "alt"
     );
     p_total_token.forEach(function (item) {
       var alt_name = item.getAttribute("alt");
-      console.error("not safe")
       if (
         alt.substring(2, 3) != alt_name.substring(2, 3) &&
         item.getAttribute("class") != "run_token"
       ) {
-        console.error("not same")
-        again = true;
-        total_killed++;
-        backword(num, alt_name, last_token);
+        turn_again = true;
+        backword(token_place_id, alt_name, last_token);
       }
     });
   }
-  var a_total_token = document.querySelectorAll("#" + num + " img");
   setTimeout(function () {
-    console.error("set")
-    // var a_total_token = document.querySelectorAll("#" + num + " img");
-    a_total_token_length = a_total_token.length - total_killed;
+    // var a_total_token = document.querySelectorAll("#" + token_place_id + " img");
+    // a_total_token_length = a_total_token.length;
     if (count != 18) {
       img.classList.add("tokens_of_" + i);
     } else if (
       count == 18 &&
       document.getElementsByClassName("tokens_of_" + i).length == 0
     ) {
+      player_left = true;
       total_players--;
-      var winner_img=set_img_at_given_place_id(winner_src,rank,"","winner_" + i)
-     
+      var winner_img = set_img_at_given_place_id(
+        winner_src,
+        rank,
+        "",
+        "winner_" + i
+      );
       winner_img.classList.add("winner");
-
       rank++;
       if (rank == 4) {
         game_over = true;
@@ -293,177 +290,164 @@ function set_positions(num, count, img, p_total_token, alt) {
     }
     img.classList.add("outside");
     img.classList.remove("run_token");
-    if (a_total_token_length == 1) {
-      if (count == 18) {
-        img.classList.add("token_svg_" + i);
-      } else {
-        // console.error("token")
-        img.classList.add("token");
-      }
-    } else {
-      a_total_token.forEach(function (item) {
-        if (count != 18) {
-          item.classList.add("tokens");
-        } else {
-          item.classList.add("svg_token" + a_total_token_length);
-        }
-      });
-    }
-    if (count == 18 && p_total_token.length == 1) {
-      p_total_token[0].classList.remove("token_svg_" + i);
-    }
-    for (var k = p_total_token.length; k > 1; k--) {
-      document.getElementById(num).classList.remove("token" + k);
-    }
-    for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
-      a_total_token[k].classList.remove("token");
-    }
-    if (a_total_token_length > 1 && count != 18) {
-      document
-        .getElementById(num)
-        .classList.add("token" + a_total_token_length);
-    }
-    if (!again) {
-      // toc1 = [];
+    set_remainin_token(token_place_id,p_total_token,count);
+    // if (a_total_token_length == 1) {
+    //   if (count == 18) {
+    //     a_total_token[0].classList.add("token_svg_" + i);
+    //   } else {
+    //     a_total_token[0].classList.remove("tokens");
+    //     a_total_token[0].classList.add("token");
+    //   }
+    // } else {
+    //   a_total_token.forEach(function (item) {
+    //     if (count != 18) {
+    //       item.classList.add("tokens");
+    //     } else {
+    //       item.classList.add("svg_token" + a_total_token_length);
+    //     }
+    //   });
+    // }
+    // if (count == 18 && p_total_token.length == 1) {
+    //   p_total_token[0].classList.remove("token_svg_" + i);
+    // }
+    // for (var k = p_total_token.length; k > 1; k--) {
+    //   document.getElementById(token_place_id).classList.remove("token" + k);
+    // }
+    // for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
+    //   a_total_token[k].classList.remove("token");
+    // }
+    // if (a_total_token_length > 1 && count != 18) {
+    //   document
+    //     .getElementById(token_place_id)
+    //     .classList.add("token" + a_total_token_length);
+    // }
+    if (!turn_again) {
       call_to_next_player(count);
     }
   }, 1);
 }
-function run_token(current_id, num, count, alt, previously_total_token) {
-  var p_total_token = document.querySelectorAll("#" + num + " img");
-  var k = next_address(current_id);
-  var time = 0;
-  if (current_id == num) {
-    var img=set_img_at_given_place_id(token_src,i,alt,num);
-    var a_total_token = document.querySelectorAll("#" + num + " img");
+function run_token(
+  current_token_id,
+  token_place_id,
+  count,
+  alt,
+  previously_total_token
+) {
+  var p_total_token = document.querySelectorAll("#" + token_place_id + " img");
+  var step = 1;
+  var id_n_count = next_address(current_token_id, step);
+  var next_id=id_n_count[0];
+  var time = 200;
+  if (current_token_id == token_place_id) {
+    var img = set_img_at_given_place_id(token_src, i, alt, token_place_id);
+    // var a_total_token = document.querySelectorAll(
+    //   "#" + token_place_id + " img"
+    // );
     img.classList.add("tokens_of_" + i);
-    a_total_token_length = a_total_token.length;
     img.classList.add("outside");
-    if (a_total_token_length == 1) {
-      img.classList.add("token");
-    } else {
-      a_total_token.forEach(function (item) {
-        item.classList.add("tokens");
-      });
-    }
-    for (var k = p_total_token.length; k > 1; k--) {
-      document.getElementById(num).classList.remove("token" + k);
-    }
-    for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
-      a_total_token[k].classList.remove("token");
-    }
-    if (a_total_token_length > 1 && count != 18) {
-      document
-        .getElementById(num)
-        .classList.add("token" + a_total_token_length);
-    }
-    // toc1 = [];
+    // a_total_token_length = a_total_token.length;
+    set_remainin_token(token_place_id,p_total_token,0);
+  
+    // if (a_total_token_length == 1) {
+    //   img.classList.add("token");
+    // } else {
+    //   a_total_token.forEach(function (item) {
+    //     item.classList.add("tokens");
+    //   });
+    // }
+    // for (var k = p_total_token.length; k > 1; k--) {
+    //   document.getElementById(token_place_id).classList.remove("token" + k);
+    // }
+    // for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
+    //   a_total_token[k].classList.remove("token");
+    // }
+    // if (a_total_token_length > 1 && count != 18) {
+    //   document
+    //     .getElementById(token_place_id)
+    //     .classList.add("token" + a_total_token_length);
+    // }
     call_to_next_player();
     return;
   }
   var span = document.createElement("span");
   span.classList.add("animation_" + i);
-  document.getElementById(current_id).appendChild(span);
-  var temp_c_id = current_id;
-  while (current_id !== num) {
-    // console.log("k=" + k);
+  document.getElementById(current_token_id).appendChild(span);
+  var temp_current_id = current_token_id;
+  while (current_token_id !== token_place_id) {
     setTimeout(
-      function (k, current_id, i, alt) {
-        var tt = document.querySelector(
-          "#" + current_id + " img[alt=" + alt + "]"
+      function (next_id, current_token_id, i, alt) {
+        var remove_token = document.querySelector(
+          "#" + current_token_id + " img[alt=" + alt + "]"
         );
-        tt.remove(tt);
+        remove_token.remove(remove_token);
+        var remove_animation;
         setTimeout(
-          function (current_id, i) {
-            tt = document.querySelector(
-              "#" + current_id + " span.animation_" + i
+          function (current_token_id, i) {
+            remove_animation = document.querySelector(
+              "#" + current_token_id + " span.animation_" + i
             );
-            tt.remove(tt);
+            remove_animation.remove(remove_animation);
           },
           500,
-          current_id,
+          current_token_id,
           i
         );
-        if (temp_c_id === current_id) {
-          set_class(temp_c_id, previously_total_token);
+        if (temp_current_id === current_token_id) {
+          set_remainin_token(temp_current_id, previously_total_token,0);
         }
-        var img = set_img_at_given_place_id(token_src,i,alt,k);
+        var img = set_img_at_given_place_id(token_src, i, alt, next_id);
         var span = document.createElement("span");
-        var src = document.getElementById(k);
+        var src = document.getElementById(next_id);
         src.appendChild(span);
         span.classList.add("animation_" + i);
         img.classList.add("run_token");
-        if (k == num) {
-          // setTimeout(
-          //   function (k, i, img, num) {
-          // img.classList.remove("run_token");
-          tt = document.querySelector("#" + num + " span.animation_" + i);
-          tt.remove(tt);
-          //   },
-          //   0,
-          //   k,
-          //   i,
-          //   img,
-          //   num
-          // );
-          set_positions(num, count, img, p_total_token, alt);
+        if (next_id == token_place_id) {
+          remove_animation = document.querySelector(
+            "#" + token_place_id + " span.animation_" + i
+          );
+          remove_animation.remove(remove_animation);
+          set_positions(token_place_id, count, img, p_total_token, alt);
         }
       },
-      time + 200,
-      k,
-      current_id,
+      time,
+      next_id,
+      current_token_id,
       i,
       alt
     );
     time = time + 200;
-    current_id = k;
-    k = next_address(k);
+    current_token_id = next_id;
+    id_n_count = next_address(next_id, step);
+    next_id =id_n_count[0];
   }
 }
 
 function move_token(event_inn) {
-  remove_EventListener(i);
+  remove_EventListener();
   automatic = true;
-  console.log("move_token");
-  var current_id = event_inn.target.parentNode.getAttribute("id");
-  var count = parseInt(current_id.substring(3)) + randomDice;
-  var p_toc = parseInt(current_id.substring(2, 3));
-  if (count == 12) {
-    var temp_p_toc = (p_toc + 1) % 4;
-    if (temp_p_toc == i) {
-      count = count + 1;
-      p_toc = temp_p_toc;
-    }
-  } else if (count > 12) {
-    var temp_count = count;
-    count = count - 13;
-    if (current_id.substring(3) < 13) {
-      p_toc = (p_toc + 1) % 4;
-    } else {
-      temp_count--;
-    }
-    if (p_toc == i) {
-      count = temp_count + 1;
-    }
-  }
+  var current_token_id = event_inn.target.parentNode.getAttribute("id");
+  var id_n_count= next_address(current_token_id, randomDice);
+  var token_place_id=id_n_count[0];
+  var count=id_n_count[1];
+  // var count = parseInt(current_token_id.substring(3)) + randomDice;
   var previously_total_token = document.querySelectorAll(
-    "#" + current_id + " img"
+    "#" + current_token_id + " img"
   );
   var alt = event_inn.target.getAttribute("alt");
-  var num = "d_" + p_toc + count;
-  if (count == 18) {
-    num = "svg_" + i;
-  }
-  // console.log("cc");
-  run_token(current_id, num, count, alt, previously_total_token);
+  run_token(
+    current_token_id,
+    token_place_id,
+    count,
+    alt,
+    previously_total_token
+  );
 }
 
 function remove_EventListener() {
-  console.log("remove_eventlisner_for=" + randomDice);
-  toc1.forEach(function (items) {
+  token_inside_home.forEach(function (items) {
     items.removeEventListener("click", six_token);
   });
-  toc2.forEach(function (items) {
+  token_outside_home.forEach(function (items) {
     items.removeEventListener("click", move_token);
   });
 }
@@ -472,318 +456,174 @@ function six_token(event_inn) {
   automatic = true;
   var alt = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
-  var num = "d_" + i.toString() + "0";
-  // console.error(timeouts);
-  run_token(num, num, 0, alt);
+  var token_place_id = "d_" + i.toString() + "0";
+  run_token(token_place_id, token_place_id, 0, alt);
 }
-function set_remainin_token(current_id, p_total_token) {
-  var a_total_token = document.querySelectorAll("#" + current_id + " img");
-  if (a_total_token.length == 1) {
-    a_total_token[0].classList.remove("tokens");
-    a_total_token[0].classList.add("token");
+
+function set_remainin_token(current_token_id, p_total_token,count) {
+  var a_total_token = document.querySelectorAll(
+    "#" + current_token_id + " img"
+  );
+  a_total_token_length=a_total_token.length;
+  if (a_total_token_length == 1) {
+    if (count == 18) {
+      a_total_token[0].classList.add("token_svg_" + i);
+    } else {
+      a_total_token[0].classList.remove("tokens");
+      a_total_token[0].classList.add("token");
+    }
   } else {
     a_total_token.forEach(function (item) {
-      item.classList.add("tokens");
+      if (count != 18) {
+        item.classList.add("tokens");
+      } else {
+        item.classList.add("svg_token" + a_total_token_length);
+      }
     });
   }
-  for (var k = p_total_token.length; k > 1; k--) {
-    document.getElementById(current_id).classList.remove("token" + k);
+  if (count == 18 && p_total_token.length == 1) {
+    p_total_token[0].classList.remove("token_svg_" + i);
   }
-  for (var k = 0; a_total_token.length > 1 && k < a_total_token.length; k++) {
+  for (var k = p_total_token.length; k > 1; k--) {
+    document.getElementById(current_token_id).classList.remove("token" + k);
+  }
+  for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
     a_total_token[k].classList.remove("token");
   }
-  if (a_total_token.length > 1) {
+  if (a_total_token_length > 1 && count != 18) {
     document
-      .getElementById(current_id)
-      .classList.add("token" + a_total_token.length);
+      .getElementById(current_token_id)
+      .classList.add("token" + a_total_token_length);
   }
+}
+function remove_all_tokens_of_this_player() {
+  var toc1 = document.querySelectorAll(".circle .tokens_of_" + i);
+  var toc2 = document.querySelectorAll("td .tokens_of_" + i + ".outside");
+  var svg = document.querySelectorAll("#svg_"+i+" img");
+  for (var z = 0; z < toc1.length; z++) {
+    toc1[z].remove(toc1[z]);
+  }
+  for (var z = 0; z < toc2.length; z++) {
+    var current_token_id = toc2[z].parentNode.getAttribute("id");
+    var p_total_token = document.querySelectorAll(
+      "#" + current_token_id + " img"
+    );
+    toc2[z].remove(toc2[z]);
+    var a_total_token = document.querySelectorAll(
+      "#" + current_token_id + " img"
+    );
+    set_remainin_token(current_token_id,p_total_token,0);
+  }
+  for(var z=0;z<svg.length;z++){
+    svg[z].remove(svg[z]);
+  }
+}
+function player_went() {
+  remove_all_tokens_of_this_player();
+  var left_img = set_img_at_given_place_id(left_src, i, "", "winner_" + i);
+  left_img.classList.add("winner");
+  total_players--;
+  player_left = true;
+  call_to_next_player();
+}
+function leave_stage() {
+  if (automatic == false) {
+    var count_dot;
+    if (i == 0) {
+      if (green_dot == 6) {
+        player_went();
+        return;
+      }
+      count_dot = green_dot;
+      green_dot++;
+    } else if (i == 1) {
+      if (yellow_dot == 6) {
+        player_went();
+        return;
+      }
+      count_dot = yellow_dot;
+      yellow_dot++;
+    } else if (i == 2) {
+      if (blue_dot == 6) {
+        player_went();
+        return;
+      }
+      count_dot = blue_dot;
+      blue_dot++;
+    } else if (i == 3) {
+      if (red_dot == 6) {
+        player_went();
+        return;
+      }
+      count_dot = red_dot;
+      red_dot++;
+    }
+    var dot = document.querySelector("#dot" + i + "_" + count_dot);
+    dic[i].click();
+    dot.style.background = "#f51c40";
+    any_chance_to_move_token();
+    automatic_clicked_token();
+  }
+}
+function highlight_stage(string, highlight, time) {
+  var border = document.querySelector("#u-" + i + " div.border" + string);
+  var length = 99;
+  while (length >= 0) {
+    var time_out = setTimeout(
+      function (length) {
+        if (string == "left" || string == "right") {
+          border.style.height = length + "%";
+        } else {
+          border.style.width = length + "%";
+        }
+        for (var z = 0; z < highlight.length && length % 15 == 0; z++) {
+          highlight[z].classList.toggle("highlight" + i);
+        }
+        if (length == 0 && string == "top") {
+          leave_stage();
+        }
+      },
+      time,
+      length
+    );
+    length--;
+    time = time + 15;
+    timeouts.push(time_out);
+  }
+  return time;
+}
+function add_progressbar(string, border) {
+  var new_div = document.createElement("div");
+  var id = document.getElementById("u-" + i);
+  id.appendChild(new_div);
+  id = document.querySelector("#u-" + i + " div:nth-of-type(" + string + ")");
+  id.classList.add(border);
 }
 function timing() {
-  var new_div = document.createElement("div");
-  var id = document.getElementById("u-" + i);
-  id.appendChild(new_div);
-  id = document.querySelector("#u-" + i + " div");
-  id.classList.add("bordertop");
-
-  var new_div = document.createElement("div");
-  var id = document.getElementById("u-" + i);
-  id.appendChild(new_div);
-  id = document.querySelector("#u-" + i + " div:nth-of-type(2)");
-  id.classList.add("borderleft");
-
-  var new_div = document.createElement("div");
-  var id = document.getElementById("u-" + i);
-  id.appendChild(new_div);
-  id = document.querySelector("#u-" + i + " div:nth-of-type(3)");
-  id.classList.add("borderbottom");
-
-  var new_div = document.createElement("div");
-  var id = document.getElementById("u-" + i);
-  id.appendChild(new_div);
-  id = document.querySelector("#u-" + i + " div:nth-of-type(4)");
-  id.classList.add("borderright");
+  add_progressbar("1", "bordertop");
+  add_progressbar("2", "borderleft");
+  add_progressbar("3", "borderbottom");
+  add_progressbar("4", "borderright");
   timeouts = [];
-  var left = document.querySelector("#u-" + i + " div.borderleft");
-  var h = 99;
-  var time = 50;
   var highlight = document.querySelectorAll(".highlight_" + i);
-  while (h >= 0) {
-    le = setTimeout(
-      function (h) {
-        // console.error("le="+h);
-        left.style.height = h + "%";
-        for (var z = 0; z < highlight.length && (h % 15 == 0); z++) {
-          highlight[z].classList.toggle("highlight" + i);
-
-        }
-        // a[4].style.transform="rotate("+h*25+"deg)";
-      },
-      time,
-      h
-    );
-    h--;
-    time = time + 15;
-    timeouts.push(le);
-  }
-
-  var bottom = document.querySelector("#u-" + i + " div.borderbottom");
-  var w = 99;
-  while (w >= 0) {
-    bo = setTimeout(
-      function (w) {
-        // console.error("bo="+w);
-        bottom.style.width = w + "%";
-        for (var z = 0; z < highlight.length && (w % 15 == 0); z++) {
-          highlight[z].classList.toggle("highlight" + i);
-
-        }
-        // a[0].style.transform="rotate("+w+"deg)";
-      },
-      time,
-      w
-    );
-
-    w--;
-    time = time + 15;
-    timeouts.push(bo);
-  }
-
-  var right = document.querySelector("#u-" + i + " div.borderright");
-  var top = document.querySelector("#u-" + i + " div.bordertop");
-  var h = 99;
-  while (h >= 0) {
-    ri = setTimeout(
-      function (h) {
-        // console.error("ri="+h);
-        right.style.height = h + "%";
-        for (var z = 0; z < highlight.length && (h % 15 == 0); z++) {
-          highlight[z].classList.toggle("highlight" + i);
-
-        }
-        // a[0].style.transform="rotate("+h+"deg)";
-        // if (h == 55) {
-        //   right.style.borderColor = "#f51c40";
-        //   top.style.borderColor = "#ff8c00";
-        // }
-      },
-      time,
-      h
-    );
-
-    h--;
-    time = time + 15;
-    timeouts.push(ri);
-  }
-
-  var w = 99;
-  while (w >= 0) {
-    to = setTimeout(
-      function (w) {
-        // console.error("to="+w);
-        top.style.width = w + "%";
-        for (var z = 0; z < highlight.length && (w % 15 == 0); z++) {
-          highlight[z].classList.toggle("highlight" + i);
-        }
-        // a[0].style.transform="rotate("+w+"deg)";
-        if (w == 0) {
-          console.log("automatic");
-          disable_progressbar();
-          console.log("hii");
-          console.log("toc1");
-
-          var toc = document.querySelectorAll(".circle .tokens_of_" + i);
-          toc2 = document.querySelectorAll("td .tokens_of_" + i + ".outside");
-          vis = false;
-          if (automatic == false) {
-            var count_dot;
-            if (i == 0) {
-              if (green_dot == 6) {
-                for (var z = 0; z < toc.length; z++) {
-                  toc[z].remove(toc[z]);
-                }
-                for (var z = 0; z < toc2.length; z++) {
-                  var current_id = toc2[z].parentNode.getAttribute("id");
-                  var p_total_token = document.querySelectorAll("#" + current_id + " img");
-                  toc2[z].remove(toc2[z]);
-                  set_remainin_token(current_id, p_total_token);
-                }
-                var left_img=set_img_at_given_place_id(left_src,i,"","winner_" + i);
-                left_img.classList.add("winner");
-                total_players--;
-                left = true;
-                call_to_next_player();
-                return;
-
-              }
-              count_dot = green_dot;
-              green_dot++;
-            } else if (i == 1) {
-              if (yellow_dot == 6) {
-                for (var z = 0; z < toc.length; z++) {
-                  toc[z].remove(toc[z]);
-                }
-                for (var z = 0; z < toc2.length; z++) {
-                  var current_id = toc2[z].parentNode.getAttribute("id");
-                  var p_total_token = document.querySelectorAll("#" + current_id + " img");
-                  toc2[z].remove(toc2[z]);
-                  set_remainin_token(current_id, p_total_token);
-                }
-                var left_img=set_img_at_given_place_id(left_src,i,"","winner_" + i);
-                left_img.classList.add("winner");
-                total_players--;
-                left = true;
-                call_to_next_player();
-                return;
-              }
-              count_dot = yellow_dot;
-              yellow_dot++;
-            } else if (i == 2) {
-              if (blue_dot == 6) {
-                for (var z = 0; z < toc.length; z++) {
-                  toc[z].remove(toc[z]);
-                }
-                for (var z = 0; z < toc2.length; z++) {
-                  var current_id = toc2[z].parentNode.getAttribute("id");
-                  var p_total_token = document.querySelectorAll("#" + current_id + " img");
-                  toc2[z].remove(toc2[z]);
-                  set_remainin_token(current_id, p_total_token);
-                }
-                var left_img=set_img_at_given_place_id(left_src,i,"","winner_" + i);
-                left_img.classList.add("winner");
-                total_players--;
-                left = true;
-                call_to_next_player();
-                return;
-              }
-              count_dot = blue_dot;
-              blue_dot++;
-            } else if (i == 3) {
-              if (red_dot == 6) {
-
-                for (var z = 0; z < toc.length; z++) {
-                  toc[z].remove(toc[z]);
-                }
-                for (var z = 0; z < toc2.length; z++) {
-                  var current_id = toc2[z].parentNode.getAttribute("id");
-                  var p_total_token = document.querySelectorAll("#" + current_id + " img");
-                  toc2[z].remove(toc2[z]);
-                  set_remainin_token(current_id, p_total_token);
-                }
-                var left_img=set_img_at_given_place_id(left_src,i,"","winner_" + i);
-                left_img.classList.add("winner");
-                total_players--;
-                left = true;
-                call_to_next_player();
-                return;
-              }
-              count_dot = red_dot;
-              red_dot++;
-            }
-            var dot = document.querySelector("#dot" + i + "_" + count_dot);
-            dic[i].click();
-            console.log(dot);
-            dot.style.background = "#f51c40";
-            toc2.forEach(function (item) {
-              var cid = item.parentNode.getAttribute("id");
-              var n = parseInt(cid.substring(3)) + randomDice;
-              console.log(n);
-              if (n < 19) {
-                vis = true;
-              } else {
-                item.removeEventListener("click", move_token);
-              }
-            });
-          }
-          var allready_come = false;
-          // allowed_to_move_token = true;
-          if (toc1.length != 0) {
-            console.log("allowed_to_move_token=" + allowed_to_move_token)
-            allowed_to_move_token = false;
-            allready_come = true;
-            toc1[0].click();
-          }
-          console.log(vis);
-
-          if (!allready_come && vis == true && toc2.length != 0) {
-            // console.log(toc2);
-            console.log("inside");
-            console.log(allowed_to_move_token);
-            if (allowed_to_move_token && toc2.length > 0) {
-              allowed_to_move_token = !token_will_be_moved(
-                randomDice,
-                toc2[0]
-              );
-              toc2[0].click();
-            }
-            if (allowed_to_move_token && toc2.length > 1) {
-              allowed_to_move_token = !token_will_be_moved(
-                randomDice,
-                toc2[1]
-              );
-              toc2[1].click();
-            }
-            if (allowed_to_move_token && toc2.length > 2) {
-              allowed_to_move_token = !token_will_be_moved(
-                randomDice,
-                toc2[2]
-              );
-              toc2[2].click();
-            }
-            if (allowed_to_move_token && toc2.length > 3) {
-              allowed_to_move_token = !token_will_be_moved(
-                randomDice,
-                toc2[3]
-              );
-              toc2[3].click();
-            }
-          }
-        }
-      },
-      time,
-      w
-    );
-    w--;
-    time = time + 15;
-    timeouts.push(to);
-  }
-  // console.error(timeouts);
+  var time = 50;
+  time = highlight_stage("left", highlight, time);
+  time = highlight_stage("bottom", highlight, time);
+  time = highlight_stage("right", highlight, time);
+  highlight_stage("top", highlight, time);
 }
 function disable_progressbar() {
-  // console.error(timeouts);
-  var l = document.querySelector("#u-" + i + " .borderleft");
-  // console.error(l);
-  if (l != null) {
-    // console.error("yes")
-    l.remove(l);
-    var b = document.querySelector("#u-" + i + " .borderbottom");
-    b.remove(b);
-    var r = document.querySelector("#u-" + i + " .borderright");
-    r.remove(r);
-    var t = document.querySelector("#u-" + i + " .bordertop");
-    t.remove(t);
+  var left_border = document.querySelector("#u-" + i + " .borderleft");
+  if (left_border != null) {
+    left_border.remove(left_border);
+    var bottom_border = document.querySelector("#u-" + i + " .borderbottom");
+    bottom_border.remove(bottom_border);
+    var right_border = document.querySelector("#u-" + i + " .borderright");
+    right_border.remove(right_border);
+    var top_border = document.querySelector("#u-" + i + " .bordertop");
+    top_border.remove(top_border);
   }
   for (var z = 0; z < timeouts.length; z++) {
-    // console.error(timeouts[z]);
     clearTimeout(timeouts[z]);
   }
   var highlight = document.querySelectorAll(".highlight_" + i);
@@ -797,17 +637,19 @@ function enableDice() {
   // if (no_of_dice_rolls > 2) {
   //   return;
   // }
-  left=false;
-  if (total_players == 1 && document.querySelectorAll("#winner_" + i + " img").length == 0 && rank != 4) {
-    var t1 = document.querySelectorAll(".circle .tokens_of_" + i);
-    var t2 = document.querySelectorAll("td .tokens_of_" + i + ".outside");
-    for (var z = 0; z < t1.length; z++) {
-      t1[z].remove(t1[z]);
-    }
-    for (var z = 0; z < t2.length; z++) {
-      t2[z].remove(t2[z]);
-    }
-    var winner_img=set_img_at_given_place_id(winner_src,rank,"","winner_" + i);
+  player_left = false;
+  if (
+    total_players == 1 &&
+    document.querySelectorAll("#winner_" + i + " img").length == 0 &&
+    rank != 4
+  ) {
+    remove_all_tokens_of_this_player();
+    var winner_img = set_img_at_given_place_id(
+      winner_src,
+      rank,
+      "",
+      "winner_" + i
+    );
     winner_img.classList.add("winner");
     return;
   }
@@ -822,7 +664,7 @@ function enableDice() {
   }
   var available = document.getElementsByClassName("tokens_of_" + i);
   if (available.length == 0) {
-    left = true;
+    player_left = true;
     call_to_next_player();
   } else {
     dic[i].addEventListener("click", rollDice);
