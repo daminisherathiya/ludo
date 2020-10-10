@@ -40,9 +40,7 @@ function token_will_be_moved(randomDice, item) {
 function any_chance_to_move_token() {
   vis = false;
   token_outside_home.forEach(function (item) {
-    var cid = item.parentNode.getAttribute("id");
-    var n = parseInt(cid.substring(3)) + randomDice;
-    if (n < 19) {
+    if (token_will_be_moved(randomDice, item)) {
       vis = true;
     } else {
       item.removeEventListener("click", move_token);
@@ -56,49 +54,36 @@ function automatic_clicked_token() {
     already_come = true;
     setTimeout(function () {
       allowed_to_move_token = false;
+      // console.error({token_inside_home})
       token_inside_home[0].click();
-    }, 500);
+    }, 1);
   }
-
   if (!already_come && vis == true && token_outside_home.length != 0) {
     setTimeout(function () {
-      if (allowed_to_move_token && token_outside_home.length > 0) {
-        allowed_to_move_token = !token_will_be_moved(
-          randomDice,
-          token_outside_home[0]
-        );
-        token_outside_home[0].click();
+      for (var z = 0; z < 4; z++) {
+        if (allowed_to_move_token && token_outside_home.length > z) {
+          allowed_to_move_token = !token_will_be_moved(
+            randomDice,
+            token_outside_home[z]
+          );
+          token_outside_home[z].click();
+        }
       }
-      if (allowed_to_move_token && token_outside_home.length > 1) {
-        allowed_to_move_token = !token_will_be_moved(
-          randomDice,
-          token_outside_home[1]
-        );
-        token_outside_home[1].click();
-      }
-      if (allowed_to_move_token && token_outside_home.length > 2) {
-        allowed_to_move_token = !token_will_be_moved(
-          randomDice,
-          token_outside_home[2]
-        );
-        token_outside_home[2].click();
-      }
-      if (allowed_to_move_token && token_outside_home.length > 3) {
-        allowed_to_move_token = !token_will_be_moved(
-          randomDice,
-          token_outside_home[3]
-        );
-        token_outside_home[3].click();
-      }
-    }, 500);
+    }, 1);
   }
 }
 
 function rollDice() {
   dic[i].removeEventListener("click", rollDice);
   randomDice = Math.floor(6 * Math.random()) + 1;
-  console.log({randomDice})
-  // randomDice = 4;
+  // randomDice = 6;
+  // var time=0;
+  // for (var z = 0; z < 10; z++) {
+  //   setTimeout(function(){
+  //     dic[i].src = "./dices/green/" + (z%6)+1 + ".png";
+  //   },200);
+  //   time=time+200;
+  // }
   dic[i].src = "./dices/green/" + randomDice + ".png";
   token_inside_home = [];
   if (randomDice == 6) {
@@ -114,7 +99,22 @@ function rollDice() {
     item.addEventListener("click", move_token);
   });
   any_chance_to_move_token();
-  automatic_clicked_token();
+  if (document.getElementById("myCheck").checked == true) {
+    for (var z = 0; z < token_inside_home.length; z++) {
+      token_inside_home[z].classList.add("pointer_event");
+    }
+    for (var z = 0; z < token_outside_home.length; z++) {
+      token_outside_home[z].classList.add("pointer_event");
+    }
+    automatic_clicked_token();
+  } else {
+    for (var z = 0; z < token_inside_home.length; z++) {
+      token_inside_home[z].classList.remove("pointer_event");
+    }
+    for (var z = 0; z < token_outside_home.length; z++) {
+      token_outside_home[z].classList.remove("pointer_event");
+    }
+  }
   if (
     (randomDice == 6 && token_inside_home.length == 0 && vis == false) ||
     (randomDice != 6 && vis == false)
@@ -173,7 +173,7 @@ function next_address(current_token_id, steps) {
   if (count == 18) {
     token_place_id = "svg_" + i;
   }
-  return [token_place_id,count];
+  return [token_place_id, count];
 }
 function call_to_next_player(count) {
   disable_progressbar();
@@ -188,24 +188,6 @@ function call_to_next_player(count) {
   dic[i].src = "./dices/green/" + randomDice + ".png";
   enableDice();
 }
-// function set_class(current_token_id, previously_total_token) {
-//   var after_run_total_tokens = document.querySelectorAll(
-//     "#" + current_token_id + " img"
-//   );
-
-//   document
-//     .getElementById(current_token_id)
-//     .classList.remove("token" + previously_total_token.length);
-//   if (after_run_total_tokens.length == 1) {
-//     after_run_total_tokens[0].classList.remove("tokens");
-//     after_run_total_tokens[0].classList.add("token");
-//   }
-//   else if (after_run_total_tokens.length > 1) {
-//     document
-//       .getElementById(current_token_id)
-//       .classList.add("token" + after_run_total_tokens.length);
-//   }
-// }
 function set_img_at_given_place_id(img_src, player_id, alt, place_id) {
   var img = document.createElement("img");
   img.src = img_src + player_id + ".png";
@@ -266,8 +248,6 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
     });
   }
   setTimeout(function () {
-    // var a_total_token = document.querySelectorAll("#" + token_place_id + " img");
-    // a_total_token_length = a_total_token.length;
     if (count != 18) {
       img.classList.add("tokens_of_" + i);
     } else if (
@@ -290,37 +270,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
     }
     img.classList.add("outside");
     img.classList.remove("run_token");
-    set_remainin_token(token_place_id,p_total_token,count);
-    // if (a_total_token_length == 1) {
-    //   if (count == 18) {
-    //     a_total_token[0].classList.add("token_svg_" + i);
-    //   } else {
-    //     a_total_token[0].classList.remove("tokens");
-    //     a_total_token[0].classList.add("token");
-    //   }
-    // } else {
-    //   a_total_token.forEach(function (item) {
-    //     if (count != 18) {
-    //       item.classList.add("tokens");
-    //     } else {
-    //       item.classList.add("svg_token" + a_total_token_length);
-    //     }
-    //   });
-    // }
-    // if (count == 18 && p_total_token.length == 1) {
-    //   p_total_token[0].classList.remove("token_svg_" + i);
-    // }
-    // for (var k = p_total_token.length; k > 1; k--) {
-    //   document.getElementById(token_place_id).classList.remove("token" + k);
-    // }
-    // for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
-    //   a_total_token[k].classList.remove("token");
-    // }
-    // if (a_total_token_length > 1 && count != 18) {
-    //   document
-    //     .getElementById(token_place_id)
-    //     .classList.add("token" + a_total_token_length);
-    // }
+    set_remainin_token(token_place_id, p_total_token, count);
     if (!turn_again) {
       call_to_next_player(count);
     }
@@ -336,36 +286,13 @@ function run_token(
   var p_total_token = document.querySelectorAll("#" + token_place_id + " img");
   var step = 1;
   var id_n_count = next_address(current_token_id, step);
-  var next_id=id_n_count[0];
+  var next_id = id_n_count[0];
   var time = 200;
   if (current_token_id == token_place_id) {
     var img = set_img_at_given_place_id(token_src, i, alt, token_place_id);
-    // var a_total_token = document.querySelectorAll(
-    //   "#" + token_place_id + " img"
-    // );
     img.classList.add("tokens_of_" + i);
     img.classList.add("outside");
-    // a_total_token_length = a_total_token.length;
-    set_remainin_token(token_place_id,p_total_token,0);
-  
-    // if (a_total_token_length == 1) {
-    //   img.classList.add("token");
-    // } else {
-    //   a_total_token.forEach(function (item) {
-    //     item.classList.add("tokens");
-    //   });
-    // }
-    // for (var k = p_total_token.length; k > 1; k--) {
-    //   document.getElementById(token_place_id).classList.remove("token" + k);
-    // }
-    // for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
-    //   a_total_token[k].classList.remove("token");
-    // }
-    // if (a_total_token_length > 1 && count != 18) {
-    //   document
-    //     .getElementById(token_place_id)
-    //     .classList.add("token" + a_total_token_length);
-    // }
+    set_remainin_token(token_place_id, p_total_token, 0);
     call_to_next_player();
     return;
   }
@@ -393,7 +320,7 @@ function run_token(
           i
         );
         if (temp_current_id === current_token_id) {
-          set_remainin_token(temp_current_id, previously_total_token,0);
+          set_remainin_token(temp_current_id, previously_total_token, 0);
         }
         var img = set_img_at_given_place_id(token_src, i, alt, next_id);
         var span = document.createElement("span");
@@ -418,7 +345,7 @@ function run_token(
     time = time + 200;
     current_token_id = next_id;
     id_n_count = next_address(next_id, step);
-    next_id =id_n_count[0];
+    next_id = id_n_count[0];
   }
 }
 
@@ -426,9 +353,9 @@ function move_token(event_inn) {
   remove_EventListener();
   automatic = true;
   var current_token_id = event_inn.target.parentNode.getAttribute("id");
-  var id_n_count= next_address(current_token_id, randomDice);
-  var token_place_id=id_n_count[0];
-  var count=id_n_count[1];
+  var id_n_count = next_address(current_token_id, randomDice);
+  var token_place_id = id_n_count[0];
+  var count = id_n_count[1];
   // var count = parseInt(current_token_id.substring(3)) + randomDice;
   var previously_total_token = document.querySelectorAll(
     "#" + current_token_id + " img"
@@ -460,11 +387,11 @@ function six_token(event_inn) {
   run_token(token_place_id, token_place_id, 0, alt);
 }
 
-function set_remainin_token(current_token_id, p_total_token,count) {
+function set_remainin_token(current_token_id, p_total_token, count) {
   var a_total_token = document.querySelectorAll(
     "#" + current_token_id + " img"
   );
-  a_total_token_length=a_total_token.length;
+  a_total_token_length = a_total_token.length;
   if (a_total_token_length == 1) {
     if (count == 18) {
       a_total_token[0].classList.add("token_svg_" + i);
@@ -499,7 +426,7 @@ function set_remainin_token(current_token_id, p_total_token,count) {
 function remove_all_tokens_of_this_player() {
   var toc1 = document.querySelectorAll(".circle .tokens_of_" + i);
   var toc2 = document.querySelectorAll("td .tokens_of_" + i + ".outside");
-  var svg = document.querySelectorAll("#svg_"+i+" img");
+  var svg = document.querySelectorAll("#svg_" + i + " img");
   for (var z = 0; z < toc1.length; z++) {
     toc1[z].remove(toc1[z]);
   }
@@ -512,9 +439,9 @@ function remove_all_tokens_of_this_player() {
     var a_total_token = document.querySelectorAll(
       "#" + current_token_id + " img"
     );
-    set_remainin_token(current_token_id,p_total_token,0);
+    set_remainin_token(current_token_id, p_total_token, 0);
   }
-  for(var z=0;z<svg.length;z++){
+  for (var z = 0; z < svg.length; z++) {
     svg[z].remove(svg[z]);
   }
 }
@@ -634,7 +561,7 @@ function disable_progressbar() {
 
 function enableDice() {
   // no_of_dice_rolls ++;
-  // if (no_of_dice_rolls > 2) {
+  // if (no_of_dice_rolls > 5) {
   //   return;
   // }
   player_left = false;
@@ -669,6 +596,10 @@ function enableDice() {
   } else {
     dic[i].addEventListener("click", rollDice);
     timing();
-    dic[i].click();
+    if (document.getElementById("myCheck").checked == true) {
+      setTimeout(function () {
+        dic[i].click();
+      }, 1000);
+    }
   }
 }
