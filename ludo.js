@@ -10,6 +10,7 @@ var i = 0;
 var total_players = 4;
 var rank = 1;
 var player_left = false;
+var turn=0;
 var winner_src = "./winner/";
 var token_src = "./tokens/";
 var left_src = "./left/";
@@ -47,14 +48,18 @@ function any_chance_to_move_token() {
     }
   });
 }
-function automatic_clicked_token() {
+function automatic_clicked_token(for_turn) {
+  if (for_turn < turn) {
+    return;
+  }
+  turn++;
   allowed_to_move_token = true;
   var already_come = false;
   if (token_inside_home.length != 0) {
     already_come = true;
     setTimeout(function () {
       allowed_to_move_token = false;
-      // console.error({token_inside_home})
+      // console.log({token_inside_home})
       token_inside_home[0].click();
     }, 1);
   }
@@ -77,14 +82,6 @@ function rollDice() {
   dic[i].removeEventListener("click", rollDice);
   randomDice = Math.floor(6 * Math.random()) + 1;
   // randomDice = 6;
-  // var time=0;
-  // for (var z = 0; z < 10; z++) {
-  //   setTimeout(function(){
-  //     dic[i].src = "./dices/green/" + (z%6)+1 + ".png";
-  //   },200);
-  //   time=time+200;
-  // }
-  dic[i].src = "./dices/green/" + randomDice + ".png";
   token_inside_home = [];
   if (randomDice == 6) {
     token_inside_home = document.querySelectorAll(".circle .tokens_of_" + i);
@@ -99,31 +96,40 @@ function rollDice() {
     item.addEventListener("click", move_token);
   });
   any_chance_to_move_token();
-  if (document.getElementById("myCheck").checked == true) {
-    for (var z = 0; z < token_inside_home.length; z++) {
-      token_inside_home[z].classList.add("pointer_event");
-    }
-    for (var z = 0; z < token_outside_home.length; z++) {
-      token_outside_home[z].classList.add("pointer_event");
-    }
-    automatic_clicked_token();
-  } else {
-    for (var z = 0; z < token_inside_home.length; z++) {
-      token_inside_home[z].classList.remove("pointer_event");
-    }
-    for (var z = 0; z < token_outside_home.length; z++) {
-      token_outside_home[z].classList.remove("pointer_event");
-    }
-  }
-  if (
-    (randomDice == 6 && token_inside_home.length == 0 && vis == false) ||
-    (randomDice != 6 && vis == false)
-  ) {
-    disable_progressbar();
-    i++;
-    i = i % 4;
-    dic[i].src = "./dices/green/" + randomDice + ".png";
-    setTimeout(enableDice, 500);
+  var time=0;
+  for (var z = 0; z < 6+randomDice; z++) {
+    setTimeout(function(z, for_turn){
+      dic[i].src = "./dices/green/" + ((z%6)+1) + ".png";
+      if(z>=6 && ((z%6)+1)==randomDice){
+        if (document.getElementById("myCheck").checked == true) {
+          for (var z = 0; z < token_inside_home.length; z++) {
+            token_inside_home[z].classList.add("pointer_event");
+          }
+          for (var z = 0; z < token_outside_home.length; z++) {
+            token_outside_home[z].classList.add("pointer_event");
+          }
+          automatic_clicked_token(for_turn);
+        } else {
+          for (var z = 0; z < token_inside_home.length; z++) {
+            token_inside_home[z].classList.remove("pointer_event");
+          }
+          for (var z = 0; z < token_outside_home.length; z++) {
+            token_outside_home[z].classList.remove("pointer_event");
+          }
+        }
+        if (
+          (randomDice == 6 && token_inside_home.length == 0 && vis == false) ||
+          (randomDice != 6 && vis == false)
+        ) {
+          disable_progressbar();
+          i++;
+          i = i % 4;
+          dic[i].src = "./dices/green/" + randomDice + ".png";
+          setTimeout(enableDice, 500);
+        }
+      }
+    },time,z, turn);
+    time=time+50;
   }
 }
 
@@ -488,8 +494,9 @@ function leave_stage() {
     var dot = document.querySelector("#dot" + i + "_" + count_dot);
     dic[i].click();
     dot.style.background = "#f51c40";
-    any_chance_to_move_token();
-    automatic_clicked_token();
+    setTimeout(function(for_turn){
+      automatic_clicked_token(for_turn);
+    },(7+randomDice)*50, turn);
   }
 }
 function highlight_stage(string, highlight, time) {
@@ -564,6 +571,7 @@ function enableDice() {
   // if (no_of_dice_rolls > 5) {
   //   return;
   // }
+  turn++;
   player_left = false;
   if (
     total_players == 1 &&
@@ -603,3 +611,9 @@ function enableDice() {
     }
   }
 }
+
+document.getElementById("myCheck").addEventListener("change", function(){
+  if (this.checked) {
+    leave_stage();
+  }
+});
