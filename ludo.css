@@ -236,11 +236,63 @@ img {
   height: 52px;
   border: 1px solid black;
   border-radius: 6%;
+  
+}
+.border_animation{
+  animation: animation_for_dice 1000ms infinite ;
 }
 .dice {
   width: 42px;
   height: 42px;
   margin: 4px auto;
+}
+.dice_margin{
+  margin: auto;
+}
+.inside_token_animation{
+  animation: animation_for_inside_token 1000ms infinite ;
+}
+@keyframes animation_for_inside_token{
+  0% { border: 2px solid rgb(236, 32, 32);}
+  10% { border: 2px solid rgb(118, 64, 206);}
+  20% { border: 2px solid rgb(39, 158, 255);}
+  30% { border: 2px solid rgb(250, 35, 124);} 
+  40% { border: 2px solid rgb(98, 196, 163);} 
+  50% { border: 2px solid rgb(68, 250, 78);}
+  60% { border: 2px solid rgb(68, 37, 243);} 
+  70% { border: 2px solid rgb(85, 0, 134);} 
+  80% { border: 2px solid rgb(125, 255, 18);} 
+  90% { border: 2px solid rgb(0, 255, 157);} 
+  100% { border: 2px solid rgb(255, 146, 74);} 
+}
+.outside_token_animation{
+  animation: animation_for_outside_token 1000ms infinite ;
+}
+@keyframes animation_for_outside_token{
+  0% { outline-offset: -2px; outline: 2px solid rgb(236, 32, 32);}
+  10% { outline-offset: -2px; outline: 2px solid rgb(118, 64, 206);}
+  20% { outline-offset: -2px; outline: 2px solid rgb(39, 158, 255);}
+  30% { outline-offset: -2px; outline: 2px solid rgb(250, 35, 124);} 
+  40% { outline-offset: -2px; outline: 2px solid rgb(98, 196, 163);} 
+  50% { outline-offset: -2px; outline: 2px solid rgb(68, 250, 78);}
+  60% { outline-offset: -2px; outline: 2px solid rgb(68, 37, 243);} 
+  70% { outline-offset: -2px; outline: 2px solid rgb(85, 0, 134);} 
+  80% { outline-offset: -2px; outline: 2px solid rgb(125, 255, 18);} 
+  90% { outline-offset: -2px; outline: 2px solid rgb(0, 255, 157);} 
+  100% { outline-offset: -2px; outline: 2px solid rgb(255, 146, 74);} 
+}
+@keyframes animation_for_dice{
+  0% {border: 5px solid rgb(236, 32, 32);}
+  10% {border: 5px solid rgb(118, 64, 206);}
+  20% {border: 5px solid rgb(39, 158, 255);}
+  30% {border: 5px solid rgb(250, 35, 124);} 
+  40% {border: 5px solid rgb(98, 196, 163);} 
+  50% {border: 5px solid rgb(68, 250, 78);}
+  60% {border: 5px solid rgb(68, 37, 243);} 
+  70% {border: 5px solid rgb(85, 0, 134);} 
+  80% {border: 5px solid rgb(125, 255, 18);} 
+  90% {border: 5px solid rgb(0, 255, 157);} 
+  100% {border: 5px solid rgb(255, 146, 74);} 
 }
 .user {
   position: relative;
@@ -329,7 +381,7 @@ table {
 }
 #svg_3 {
   left: 31px;
-  top: 52px;
+  top: 56px;
 }
 .token_svg_0 {
   left: -2px;
