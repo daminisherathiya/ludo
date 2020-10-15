@@ -22,7 +22,7 @@ var game_over = false;
 var automatic = false;
 var turn_again = false;
 var randomDice = Math.floor(6 * Math.random()) + 1;
-dic[i].src = "./dices/green/" + randomDice + ".png";
+dic[i].src = "./images/dices/" + randomDice + ".png";
 var vis = false;
 var token_inside_home = [];
 var token_outside_home = [];
@@ -112,7 +112,7 @@ function rollDice() {
   for (var z = 0; z < 6 + randomDice; z++) {
     setTimeout(
       function (z, for_turn) {
-        dic[i].src = "./dices/green/" + ((z % 6) + 1) + ".png";
+        dic[i].src = "./images/dices/" + ((z % 6) + 1) + ".png";
         if (z >= 6 && (z % 6) + 1 == randomDice) {
           document
             .querySelector("#d-" + i + " img")
@@ -143,7 +143,7 @@ function rollDice() {
             disable_progressbar();
             i++;
             i = i % 4;
-            dic[i].src = "./dices/green/" + randomDice + ".png";
+            dic[i].src = "./images/dices/" + randomDice + ".png";
             setTimeout(enableDice, 500);
           }
         }
@@ -214,7 +214,7 @@ function call_to_next_player(count) {
     i++;
   }
   i = i % 4;
-  dic[i].src = "./dices/green/" + randomDice + ".png";
+  dic[i].src = "./images/dices/" + randomDice + ".png";
   enableDice();
 }
 function set_img_at_given_place_id(img_src, player_id, alt, place_id) {
@@ -545,7 +545,6 @@ function leave_stage(increase_dot = true) {
       var dot = document.querySelector("#dot" + i + "_" + count_dot);
       dot.style.background = "#f51c40";
     }
-    console.log("inside lwav stage " + turn);
     dic[i].click();
 
     setTimeout(
