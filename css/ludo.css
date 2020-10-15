@@ -311,7 +311,7 @@ body {
   height: 100vh;
   min-width: 260px;
   margin: 0;
-  background-image: url("./images/background_image.jpg");
+  background-image: url("../images/background_image.jpg");
   background-repeat: no-repeat;
   background-size: cover;
 }
