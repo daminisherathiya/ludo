@@ -13,7 +13,7 @@ var player_left = false;
 var turn = 0;
 var winner_src = "./winner/";
 var token_src = "./tokens/";
-var left_src = "./left/";
+var left_src = "./images/left_user/";
 var green_dot = 1;
 var yellow_dot = 1;
 var blue_dot = 1;
@@ -216,6 +216,20 @@ function call_to_next_player(count) {
   i = i % 4;
   dic[i].src = "./images/dices/" + randomDice + ".png";
   enableDice();
+}
+function get_color_from_idx(idx){
+  if (idx === 0) {
+      return "green";
+  }
+  else if (idx === 1) {
+    return "yellow";
+  }
+  else if (idx === 2) {
+    return "blue";
+  }
+  else if (idx === 3) {
+    return "red";
+  }
 }
 function set_img_at_given_place_id(img_src, player_id, alt, place_id) {
   var img = document.createElement("img");
@@ -503,7 +517,8 @@ function remove_all_tokens_of_this_player() {
 }
 function player_went() {
   remove_all_tokens_of_this_player();
-  var left_img = set_img_at_given_place_id(left_src, i, "", "winner_" + i);
+  var color = get_color_from_idx(i);
+  var left_img = set_img_at_given_place_id(left_src, color, "", "winner_" + i);
   left_img.classList.add("winner");
   total_players--;
   player_left = true;
