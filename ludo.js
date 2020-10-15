@@ -12,7 +12,7 @@ var rank = 1;
 var player_left = false;
 var turn = 0;
 var winner_src = "./winner/";
-var token_src = "./tokens/";
+var token_src = "./images/tokens/";
 var left_src = "./images/left_user/";
 var green_dot = 1;
 var yellow_dot = 1;
@@ -250,7 +250,8 @@ function backword(current_token_id, alt, last_token) {
           "#" + current_token_id + " img[alt=" + alt + "]"
         );
         tt.remove(tt);
-        var img = set_img_at_given_place_id(token_src, player_id, alt, k);
+        var color = get_color_from_idx(i);
+        var img = set_img_at_given_place_id(token_src, color, alt, k);
         if (k == alt) {
           img.classList.add("token");
           img.classList.add("tokens_of_" + player_id);
@@ -333,7 +334,8 @@ function run_token(
   var next_id = id_n_count[0];
   var time = 200;
   if (current_token_id == token_place_id) {
-    var img = set_img_at_given_place_id(token_src, i, alt, token_place_id);
+    var color = get_color_from_idx(i);
+    var img = set_img_at_given_place_id(token_src, color, alt, token_place_id);
     img.classList.add("tokens_of_" + i);
     img.classList.add("outside");
     set_pointer_event();
@@ -367,7 +369,8 @@ function run_token(
         if (temp_current_id === current_token_id) {
           set_remainin_token(temp_current_id, previously_total_token, 0);
         }
-        var img = set_img_at_given_place_id(token_src, i, alt, next_id);
+        var color = get_color_from_idx(i);
+        var img = set_img_at_given_place_id(token_src, color, alt, next_id);
         var span = document.createElement("span");
         var src = document.getElementById(next_id);
         src.appendChild(span);
