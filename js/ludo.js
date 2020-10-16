@@ -407,7 +407,7 @@ function move_token(event_inn) {
       "outside_token_animation"
     );
   }
-  remove_EventListener();
+  remove_event_listener();
   automatic = true;
   var current_token_id = event_inn.target.parentNode.getAttribute("id");
   var id_n_count = next_address(current_token_id, random_dice);
@@ -427,7 +427,7 @@ function move_token(event_inn) {
   );
 }
 
-function remove_EventListener() {
+function remove_event_listener() {
   token_inside_home.forEach(function (items) {
     items.removeEventListener("click", six_token);
   });
@@ -445,7 +445,7 @@ function six_token(event_inn) {
       "outside_token_animation"
     );
   }
-  remove_EventListener();
+  remove_event_listener();
   automatic = true;
   var alt = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
