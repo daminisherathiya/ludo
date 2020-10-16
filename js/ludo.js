@@ -21,8 +21,8 @@ var red_dot = 1;
 var game_over = false;
 var automatic = false;
 var turn_again = false;
-var randomDice = Math.floor(6 * Math.random()) + 1;
-dic[i].src = "./images/dices/" + randomDice + ".png";
+var random_dice = Math.floor(6 * Math.random()) + 1;
+dic[i].src = "./images/dices/" + random_dice + ".png";
 var vis = false;
 var token_inside_home = [];
 var token_outside_home = [];
@@ -38,9 +38,9 @@ function set_pointer_event() {
 set_pointer_event();
 enableDice();
 
-function token_will_be_moved(randomDice, item) {
+function token_will_be_moved(random_dice, item) {
   var cid = item.parentNode.getAttribute("id");
-  var n = parseInt(cid.substring(3)) + randomDice;
+  var n = parseInt(cid.substring(3)) + random_dice;
   if (n < 19) {
     return true;
   }
@@ -49,7 +49,7 @@ function token_will_be_moved(randomDice, item) {
 function any_chance_to_move_token() {
   vis = false;
   token_outside_home.forEach(function (item) {
-    if (token_will_be_moved(randomDice, item)) {
+    if (token_will_be_moved(random_dice, item)) {
       vis = true;
     } else {
       item.parentNode.classList.remove("outside_token_animation");
@@ -78,7 +78,7 @@ function automatic_clicked_token(for_turn) {
       for (var z = 0; z < 4; z++) {
         if (allowed_to_move_token && token_outside_home.length > z) {
           allowed_to_move_token = !token_will_be_moved(
-            randomDice,
+            random_dice,
             token_outside_home[z]
           );
           if (for_turn + 1 == turn) {
@@ -92,10 +92,10 @@ function automatic_clicked_token(for_turn) {
 
 function rollDice() {
   dic[i].removeEventListener("click", rollDice);
-  randomDice = Math.floor(6 * Math.random()) + 1;
-  // randomDice = 6;
+  random_dice = Math.floor(6 * Math.random()) + 1;
+  // random_dice = 6;
   // token_inside_home = [];
-  if (randomDice == 6) {
+  if (random_dice == 6) {
     token_inside_home = document.querySelectorAll(".circle .tokens_of_" + i);
     token_inside_home.forEach(function (item) {
       item.addEventListener("click", six_token);
@@ -109,11 +109,11 @@ function rollDice() {
   });
   any_chance_to_move_token();
   var time = 0;
-  for (var z = 0; z < 6 + randomDice; z++) {
+  for (var z = 0; z < 6 + random_dice; z++) {
     setTimeout(
       function (z, for_turn) {
         dic[i].src = "./images/dices/" + ((z % 6) + 1) + ".png";
-        if (z >= 6 && (z % 6) + 1 == randomDice) {
+        if (z >= 6 && (z % 6) + 1 == random_dice) {
           document
             .querySelector("#d-" + i + " img")
             .classList.remove("dice_margin");
@@ -135,15 +135,15 @@ function rollDice() {
             automatic_clicked_token(for_turn);
           }
           if (
-            (randomDice == 6 &&
+            (random_dice == 6 &&
               token_inside_home.length == 0 &&
               vis == false) ||
-            (randomDice != 6 && vis == false)
+            (random_dice != 6 && vis == false)
           ) {
             disable_progressbar();
             i++;
             i = i % 4;
-            dic[i].src = "./images/dices/" + randomDice + ".png";
+            dic[i].src = "./images/dices/" + random_dice + ".png";
             setTimeout(enableDice, 500);
           }
         }
@@ -209,12 +209,12 @@ function call_to_next_player(count) {
   if (
     total_players == 1 ||
     player_left ||
-    (randomDice != 6 && count != 18 && turn_again == false)
+    (random_dice != 6 && count != 18 && turn_again == false)
   ) {
     i++;
   }
   i = i % 4;
-  dic[i].src = "./images/dices/" + randomDice + ".png";
+  dic[i].src = "./images/dices/" + random_dice + ".png";
   enableDice();
 }
 function get_color_from_idx(idx){
@@ -410,10 +410,10 @@ function move_token(event_inn) {
   remove_EventListener();
   automatic = true;
   var current_token_id = event_inn.target.parentNode.getAttribute("id");
-  var id_n_count = next_address(current_token_id, randomDice);
+  var id_n_count = next_address(current_token_id, random_dice);
   var token_place_id = id_n_count[0];
   var count = id_n_count[1];
-  // var count = parseInt(current_token_id.substring(3)) + randomDice;
+  // var count = parseInt(current_token_id.substring(3)) + random_dice;
   var previously_total_token = document.querySelectorAll(
     "#" + current_token_id + " img"
   );
@@ -569,7 +569,7 @@ function leave_stage(increase_dot = true) {
       function (for_turn) {
         automatic_clicked_token(for_turn);
       },
-      (7 + randomDice) * 50,
+      (7 + random_dice) * 50,
       turn
     );
   }
