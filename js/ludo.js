@@ -36,7 +36,7 @@ function set_pointer_event() {
   }
 }
 set_pointer_event();
-enableDice();
+enable_dice();
 
 function token_will_be_moved(random_dice, item) {
   var cid = item.parentNode.getAttribute("id");
@@ -90,8 +90,8 @@ function automatic_clicked_token(for_turn) {
   }
 }
 
-function rollDice() {
-  dic[i].removeEventListener("click", rollDice);
+function roll_dice() {
+  dic[i].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
   // random_dice = 6;
   // token_inside_home = [];
@@ -144,7 +144,7 @@ function rollDice() {
             i++;
             i = i % 4;
             dic[i].src = "./images/dices/" + random_dice + ".png";
-            setTimeout(enableDice, 500);
+            setTimeout(enable_dice, 500);
           }
         }
       },
@@ -215,7 +215,7 @@ function call_to_next_player(count) {
   }
   i = i % 4;
   dic[i].src = "./images/dices/" + random_dice + ".png";
-  enableDice();
+  enable_dice();
 }
 function get_color_from_idx(idx){
   if (idx === 0) {
@@ -641,7 +641,7 @@ function disable_progressbar() {
   }
 }
 
-function enableDice() {
+function enable_dice() {
   // no_of_dice_rolls ++;
   // if (no_of_dice_rolls > 5) {
   //   return;
@@ -681,7 +681,7 @@ function enableDice() {
   } else {
     document.querySelector("#d-" + i + " img").classList.add("dice_margin");
     document.querySelector("#d-" + i).classList.add("border_animation");
-    dic[i].addEventListener("click", rollDice);
+    dic[i].addEventListener("click", roll_dice);
     timing();
     if (document.getElementById("myCheck").checked == true) {
       setTimeout(function () {
