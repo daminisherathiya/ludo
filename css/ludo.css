@@ -82,28 +82,28 @@ input:checked + .slider:after
   left: 16px;
 }
 
-.borderright {
+.border_right {
   border-right: 4px solid #4fff14;
   position: absolute;
   top: 0;
   right: 0;
   height:100%;
 }
-.borderleft {
+.border_left {
   border-left: 4px solid #4fff14;
   position: absolute;
   bottom: 0;
   left: 0;
   height:100%;
 }
-.borderbottom {
+.border_bottom {
   border-bottom: 4px solid #4fff14;
   position: absolute;
   bottom: 0;
   right: 0;
   width:100%;
 }
-.bordertop {
+.border_top {
   border-top: 4px solid #4fff14;
   position: absolute;
   top: 0;
