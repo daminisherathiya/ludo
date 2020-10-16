@@ -29,7 +29,7 @@ var token_outside_home = [];
 var timeouts = [];
 // var allowed_to_move_token = true;
 function set_pointer_event() {
-  if (document.getElementById("myCheck").checked) {
+  if (document.getElementById("my_check").checked) {
     disable_pointer_event();
   } else {
     enable_pointer_event();
@@ -131,7 +131,7 @@ function roll_dice() {
             );
           }
           any_chance_to_move_token();
-          if (document.getElementById("myCheck").checked == true) {
+          if (document.getElementById("my_check").checked == true) {
             automatic_clicked_token(for_turn);
           }
           if (
@@ -683,7 +683,7 @@ function enable_dice() {
     document.querySelector("#d-" + i).classList.add("border_animation");
     dic[i].addEventListener("click", roll_dice);
     timing();
-    if (document.getElementById("myCheck").checked == true) {
+    if (document.getElementById("my_check").checked == true) {
       setTimeout(function () {
         dic[i].click();
       }, 1000);
@@ -715,7 +715,7 @@ function disable_pointer_event() {
   }
 }
 
-document.getElementById("myCheck").addEventListener("change", function () {
+document.getElementById("my_check").addEventListener("change", function () {
   if (this.checked) {
     disable_pointer_event();
     leave_stage(false);
