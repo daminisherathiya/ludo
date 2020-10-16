@@ -231,9 +231,9 @@ function get_color_from_idx(idx){
     return "red";
   }
 }
-function set_img_at_given_place_id(img_src, player_id, alt, place_id) {
+function set_img_at_given_place_id(img_src, color, alt, place_id) {
   var img = document.createElement("img");
-  img.src = img_src + player_id + ".png";
+  img.src = img_src + color + ".png";
   img.alt = alt;
   var src = document.getElementById(place_id);
   src.appendChild(img);
@@ -250,7 +250,7 @@ function backword(current_token_id, alt, last_token) {
           "#" + current_token_id + " img[alt=" + alt + "]"
         );
         tt.remove(tt);
-        var color = get_color_from_idx(i);
+        var color = get_color_from_idx(player_id);
         var img = set_img_at_given_place_id(token_src, color, alt, k);
         if (k == alt) {
           img.classList.add("token");
