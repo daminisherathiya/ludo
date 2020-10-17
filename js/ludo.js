@@ -470,7 +470,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
       if (count != 18) {
         item.classList.add("tokens");
       } else {
-        item.classList.add("svg_token" + a_total_token_length);
+        item.classList.add("svg_token_" + a_total_token_length);
       }
     });
   }
@@ -478,7 +478,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
     p_total_token[0].classList.remove("token_svg_" + i);
   }
   for (var k = p_total_token.length; k > 1; k--) {
-    document.getElementById(current_token_id).classList.remove("token" + k);
+    document.getElementById(current_token_id).classList.remove("token_" + k);
   }
   for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
     a_total_token[k].classList.remove("token");
@@ -486,7 +486,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
   if (a_total_token_length > 1 && count != 18) {
     document
       .getElementById(current_token_id)
-      .classList.add("token" + a_total_token_length);
+      .classList.add("token_" + a_total_token_length);
   }
 }
 function remove_all_tokens_of_this_player() {
@@ -696,10 +696,10 @@ function enable_pointer_event() {
   );
   var all_dices = document.querySelectorAll(".dice");
   for (var z = 0; z < all_tokens.length; z++) {
-    all_tokens[z].classList.remove("pointer_event");
+    all_tokens[z].classList.remove("disable_pointer_event");
   }
   for (var z = 0; z < all_dices.length; z++) {
-    all_dices[z].classList.remove("pointer_event");
+    all_dices[z].classList.remove("disable_pointer_event");
   }
 }
 function disable_pointer_event() {
@@ -708,10 +708,10 @@ function disable_pointer_event() {
   );
   var all_dices = document.querySelectorAll(".dice");
   for (var z = 0; z < all_tokens.length; z++) {
-    all_tokens[z].classList.add("pointer_event");
+    all_tokens[z].classList.add("disable_pointer_event");
   }
   for (var z = 0; z < all_dices.length; z++) {
-    all_dices[z].classList.add("pointer_event");
+    all_dices[z].classList.add("disable_pointer_event");
   }
 }
 
