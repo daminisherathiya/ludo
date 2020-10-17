@@ -217,9 +217,9 @@ function call_to_next_player(count) {
   dic[i].src = "./images/dices/" + random_dice + ".png";
   enable_dice();
 }
-function get_color_from_idx(idx){
+function get_color_from_idx(idx) {
   if (idx === 0) {
-      return "green";
+    return "green";
   }
   else if (idx === 1) {
     return "yellow";
