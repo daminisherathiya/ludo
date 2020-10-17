@@ -54,8 +54,6 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-
-/* Rounded sliders */
 .slider.round {
   border-radius: 34px;
 }
@@ -150,7 +148,7 @@ input:checked + .slider:after
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: mymove_0 600ms ;
+  animation: my_move_0 600ms ;
 }
 .animation_1{
   width: 27px;
@@ -159,7 +157,7 @@ input:checked + .slider:after
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: mymove_1 600ms ;
+  animation: my_move_1 600ms ;
 }
 .animation_2{
   width: 27px;
@@ -168,7 +166,7 @@ input:checked + .slider:after
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: mymove_2 600ms ;
+  animation: my_move_2 600ms ;
 }
 
 .animation_3{
@@ -178,27 +176,27 @@ input:checked + .slider:after
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: mymove_3 600ms ;
+  animation: my_move_3 600ms ;
 }
-@keyframes mymove_0 {
+@keyframes my_move_0 {
   0% { clip-path: circle(25%);background:#06a049;  } 
   50% { clip-path: circle(15%);background:#06a049;  } 
   75% { clip-path: circle(15%);background:#06a049;  } 
   100% { clip-path: circle(5%);background:#06a049;  }
 } 
-@keyframes mymove_1 {
+@keyframes my_move_1 {
   0% { clip-path: circle(25%);background:#ffde15;  } 
   50% { clip-path: circle(15%);background:#ffde15;  } 
   75% { clip-path: circle(15%);background:#ffde15;  } 
    100% { clip-path: circle(5%);background:#ffde15;  }
 } 
-@keyframes mymove_2{
+@keyframes my_move_2{
   0% { clip-path: circle(25%);background:#27abfd;  } 
   50% { clip-path: circle(15%);background:#27abfd;  } 
   75% { clip-path: circle(15%);background:#27abfd;  } 
    100% { clip-path: circle(5%);background:#27abfd;  }
 } 
-@keyframes mymove_3 {
+@keyframes my_move_3 {
   0% { clip-path: circle(25%);background:#eb1c22;  } 
   50% { clip-path: circle(15%);background:#eb1c22;  } 
   75% { clip-path: circle(15%);background:#eb1c22;  } 
