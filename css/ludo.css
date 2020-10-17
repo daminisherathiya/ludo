@@ -121,7 +121,7 @@ input:checked + .slider:after
   justify-content: space-around;
 }
 
-.pointer_event{
+.disable_pointer_event{
   pointer-events: none;
 }
 
@@ -213,13 +213,13 @@ img {
   margin-top: auto;
   position: relative;
 }
-.token2 {
+.token_2 {
   padding-left: 10.5px;
 }
-.token3 {
+.token_3 {
   padding-left: 7px;
 }
-.token4 {
+.token_4 {
   padding-left: 5px;
 }
 .dot {
@@ -410,7 +410,7 @@ table {
   height: 25px;
   position: relative;
 }
-.svg_token2{
+.svg_token_2{
     height: 23px;
     width: 14px;
     float: left;
@@ -418,7 +418,7 @@ table {
     margin-top: auto;
     position: relative;
 }
-.svg_token3{
+.svg_token_3{
   height: 20px;
     width: 11px;
     float: left;
@@ -426,7 +426,7 @@ table {
     margin-top: auto;
     position: relative;
 }
-.svg_token4{
+.svg_token_4{
   height: 20px;
     width: 10px;
     float: left;
@@ -447,14 +447,14 @@ table {
   h1 {
     margin-bottom: 0px;
   }
-  .svg_token3{
+  .svg_token_3{
     width: 10px;
   }
-  .svg_token4{
+  .svg_token_4{
     width: 8.5px;
   }
   
-  .token4 {
+  .token_4 {
     padding-left: 7px;
   }
   .tokens {
@@ -516,14 +516,14 @@ table {
     margin-bottom: 0px;
     margin-top: 37px;
   }
-  .svg_token2{
+  .svg_token_2{
     width: 11px;
     height: 20px;
   }
-  .svg_token3{
+  .svg_token_3{
     width: 9.5px;
   }
-  .svg_token4{
+  .svg_token_4{
     width: 8px;
   }
   
@@ -555,13 +555,13 @@ table {
     height: 18px;
     width: 9px;
   }
-  .token2 {
+  .token_2 {
     padding-left: 8.5px;
   }
-  .token3 {
+  .token_3 {
     padding-left: 6px;
   }
-  .token4 {
+  .token_4 {
     padding-left: 5px;
   }
   .dice {
@@ -630,11 +630,11 @@ table {
     height: 19px;
     left: -1px;
   }
-  .svg_token3{
+  .svg_token_3{
     width: 8px;
     height: 17px;
   }
-  .svg_token4{
+  .svg_token_4{
     width: 7px;
     height: 17px;
   }
@@ -667,7 +667,7 @@ table {
   width: 10px;
   top: 0px;
 }
-.svg_token2 {
+.svg_token_2 {
   width: 8px;
   height: 17px;
 }
@@ -716,11 +716,11 @@ table {
   h1 {
     font-size: 30px;
   }
-  .svg_token3{
+  .svg_token_3{
     width: 7.5px;
     height: 14px;
   }
-  .svg_token4 {
+  .svg_token_4 {
     width: 6.5px;
     height: 15px;
 }
