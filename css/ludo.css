@@ -295,6 +295,10 @@ input:checked + .slider:after {
   pointer-events: none;
 }
 
+img {
+  display: block;
+}
+
 .animation_0 {
   width: 27px;
   height: 27px;
@@ -404,10 +408,6 @@ input:checked + .slider:after {
     clip-path: circle(5%);
     background: #eb1c22;
   }
-}
-
-img {
-  display: block;
 }
 
 .inside_token_animation {
@@ -536,35 +536,6 @@ img {
   }
 }
 
-.user {
-  position: relative;
-  height: 62px;
-  width: 62px;
-  border: 1px solid black;
-  display: inline-block;
-}
-.user img {
-  height: 60px;
-  width: 60px;
-}
-
-.arrow_top_bottom {
-  position: absolute;
-  left: 37%;
-  top: 13%;
-}
-.arrow_left_right {
-  position: absolute;
-  top: 16%;
-  left: 18%;
-}
-
-.winner {
-  width: 107px;
-  height: 107px;
-  position: absolute;
-}
-
 svg {
   display: block;
   margin: 0;
@@ -647,11 +618,51 @@ svg {
   position: relative;
 }
 
+.user {
+  position: relative;
+  height: 62px;
+  width: 62px;
+  border: 1px solid black;
+  display: inline-block;
+}
+.user img {
+  height: 60px;
+  width: 60px;
+}
+
+.arrow_top_bottom {
+  position: absolute;
+  left: 37%;
+  top: 13%;
+}
+.arrow_left_right {
+  position: absolute;
+  top: 16%;
+  left: 18%;
+}
+
+.winner {
+  width: 107px;
+  height: 107px;
+  position: absolute;
+}
+
 @media (max-width: 496px) {
+  h1 {
+    margin-bottom: 0px;
+  }
+
   td {
     width: 25px;
     height: 25px;
   }
+  .token_4 {
+    padding-left: 7px;
+  }
+  .tokens {
+    margin-left: -5px;
+  }
+
   .animation_0,
   .animation_1,
   .animation_2,
@@ -660,50 +671,11 @@ svg {
     height: 25px;
     top: 3px;
   }
-  h1 {
-    margin-bottom: 0px;
-  }
-  .svg_token_3 {
-    width: 10px;
-  }
-  .svg_token_4 {
-    width: 8.5px;
-  }
-  .token_4 {
-    padding-left: 7px;
-  }
-  .tokens {
-    margin-left: -5px;
-  }
-  .fa-star {
-    font-size: 19px;
-    -webkit-text-stroke: 0.2px white;
-  }
-  .arrow_left_right {
-    top: 12%;
-  }
-  .div {
-    width: 375px;
-  }
-  .dice {
-    width: 51px;
-    height: 51px;
-  }
-  .user {
-    height: 73px;
-    width: 73px;
-  }
-  .user img {
-    height: 71px;
-    width: 71px;
-  }
-  .dice_cover {
-    width: 61px;
-    height: 61px;
-  }
+
   #svg_3 {
     top: 50px;
   }
+
   .token_svg_0,
   .token_svg_2 {
     left: -3px;
@@ -713,6 +685,45 @@ svg {
   .token_svg_3 {
     left: -2px;
   }
+
+  .svg_token_3 {
+    width: 10px;
+  }
+  .svg_token_4 {
+    width: 8.5px;
+  }
+
+  .fa-star {
+    font-size: 19px;
+    -webkit-text-stroke: 0.2px white;
+  }
+
+  .arrow_left_right {
+    top: 12%;
+  }
+
+  .div {
+    width: 375px;
+  }
+
+  .dice {
+    width: 51px;
+    height: 51px;
+  }
+  .dice_cover {
+    width: 61px;
+    height: 61px;
+  }
+
+  .user {
+    height: 73px;
+    width: 73px;
+  }
+  .user img {
+    height: 71px;
+    width: 71px;
+  }
+
   .winner {
     width: 99px;
     height: 99px;
@@ -722,51 +733,22 @@ svg {
   body {
     height: 94vh;
   }
-  td {
-    width: 22px;
-    height: 22px;
-  }
+
   h1 {
     margin-bottom: 0px;
     margin-top: 37px;
   }
-  .svg_token_2 {
-    width: 11px;
-    height: 20px;
-  }
-  .svg_token_3 {
-    width: 9.5px;
-  }
-  .svg_token_4 {
-    width: 8px;
+
+  td {
+    width: 22px;
+    height: 22px;
   }
 
-  .fa-star {
-    font-size: 17px;
-  }
-  .arrow_top_bottom,
-  .arrow_left_right {
-    font-size: 10px;
-  }
-  .arrow_left_right {
-    top: 23.5%;
-  }
-  .div {
-    width: 330px;
-  }
   .token {
     width: 12px;
     height: 21px;
     margin-left: 4px;
     margin-top: -8px;
-  }
-  .run_token {
-    width: 12px;
-    height: 21px;
-  }
-  .tokens {
-    height: 18px;
-    width: 9px;
   }
   .token_2 {
     padding-left: 8.5px;
@@ -777,22 +759,15 @@ svg {
   .token_4 {
     padding-left: 5px;
   }
-  .dice {
-    width: 44px;
-    height: 44px;
+  .tokens {
+    height: 18px;
+    width: 9px;
   }
-  .user {
-    height: 65px;
-    width: 65px;
+  .run_token {
+    width: 12px;
+    height: 21px;
   }
-  .user img {
-    height: 63px;
-    width: 63px;
-  }
-  .dice_cover {
-    width: 54px;
-    height: 54px;
-  }
+
   #svg_0 {
     top: 24px;
   }
@@ -807,6 +782,7 @@ svg {
     left: 27px;
     top: 44px;
   }
+
   .token_svg_0,
   .token_svg_2 {
     height: 21px;
@@ -820,6 +796,52 @@ svg {
     width: 11px;
     top: 1px;
   }
+
+  .svg_token_2 {
+    width: 11px;
+    height: 20px;
+  }
+  .svg_token_3 {
+    width: 9.5px;
+  }
+  .svg_token_4 {
+    width: 8px;
+  }
+
+  .fa-star {
+    font-size: 17px;
+  }
+
+  .arrow_top_bottom,
+  .arrow_left_right {
+    font-size: 10px;
+  }
+  .arrow_left_right {
+    top: 23.5%;
+  }
+
+  .div {
+    width: 330px;
+  }
+
+  .dice {
+    width: 44px;
+    height: 44px;
+  }
+  .dice_cover {
+    width: 54px;
+    height: 54px;
+  }
+
+  .user {
+    height: 65px;
+    width: 65px;
+  }
+  .user img {
+    height: 63px;
+    width: 63px;
+  }
+
   .winner {
     width: 86px;
     height: 86px;
@@ -830,14 +852,32 @@ svg {
   body {
     height: 91vh;
   }
+
   h1 {
     margin-top: 55px;
   }
+
   td {
     width: 19px;
     height: 19px;
     line-height: 0px;
   }
+
+  .token {
+    width: 10px;
+    height: 19px;
+    margin-left: 3px;
+    margin-top: -8px;
+  }
+  .tokens {
+    height: 16px;
+    width: 8px;
+  }
+  .run_token {
+    width: 10px;
+    height: 19px;
+  }
+
   .animation_0,
   .animation_1,
   .animation_2,
@@ -846,22 +886,7 @@ svg {
     height: 19px;
     left: -1px;
   }
-  .svg_token_3 {
-    width: 8px;
-    height: 17px;
-  }
-  .svg_token_4 {
-    width: 7px;
-    height: 17px;
-  }
 
-  .fa-star {
-    font-size: 14px;
-    -webkit-text-stroke: 0.1px white;
-  }
-  .div {
-    width: 285px;
-  }
   #svg_0 {
     top: 20px;
   }
@@ -883,41 +908,47 @@ svg {
     width: 10px;
     top: 0px;
   }
-  .svg_token_2 {
-    width: 8px;
-    height: 17px;
-  }
-  .token_svg_3 {
-    height: 19px;
-    width: 10px;
-    top: -4px;
-  }
   .token_svg_0,
   .token_svg_2 {
     height: 19px;
     width: 10px;
     top: -6px;
   }
+  .token_svg_3 {
+    height: 19px;
+    width: 10px;
+    top: -4px;
+  }
+
+  .svg_token_2 {
+    width: 8px;
+    height: 17px;
+  }
+  .svg_token_3 {
+    width: 8px;
+    height: 17px;
+  }
+  .svg_token_4 {
+    width: 7px;
+    height: 17px;
+  }
+
+  .fa-star {
+    font-size: 14px;
+    -webkit-text-stroke: 0.1px white;
+  }
+  
+  .div {
+    width: 285px;
+  }
+
   .arrow_left_right {
     top: 53.5%;
   }
   .arrow_top_bottom {
     top: 47%;
   }
-  .token {
-    width: 10px;
-    height: 19px;
-    margin-left: 3px;
-    margin-top: -8px;
-  }
-  .run_token {
-    width: 10px;
-    height: 19px;
-  }
-  .tokens {
-    height: 16px;
-    width: 8px;
-  }
+
   .winner {
     width: 66px;
     height: 66px;
@@ -925,62 +956,29 @@ svg {
 }
 
 @media (max-width: 300px) {
+  h1 {
+    font-size: 30px;
+  }
+
   td {
     width: 17px;
     height: 17px;
     line-height: 0px;
   }
-  h1 {
-    font-size: 30px;
-  }
-  .svg_token_3 {
-    width: 7.5px;
-    height: 14px;
-  }
-  .svg_token_4 {
-    width: 6.5px;
-    height: 15px;
-  }
 
-  .fa-star {
-    font-size: 9px;
-    -webkit-text-stroke: 0px white;
-  }
-  .div {
-    width: 255px;
-  }
-  .dot {
-    width: 6px;
-    height: 6px;
-  }
-  .dice {
-    width: 36px;
-    height: 36px;
-  }
-  .dice_cover {
-    width: 45px;
-    height: 45px;
-  }
-  .user {
-    width: 54px;
-    height: 54px;
-  }
-  .user img {
-    width: 52px;
-    height: 52px;
-  }
   .token {
     height: 17px;
     margin-left: 2px;
     margin-top: -6px;
   }
-  .run_token {
-    height: 17px;
-  }
   .tokens {
     height: 14px;
     width: 7.5px;
   }
+  .run_token {
+    height: 17px;
+  }
+
   #svg_0 {
     top: 17px;
   }
@@ -996,6 +994,7 @@ svg {
     left: 23px;
     top: 33px;
   }
+
   .token_svg_1,
   .token_svg_3 {
     height: 17px;
@@ -1009,4 +1008,45 @@ svg {
     width: 10px;
     top: -3px;
   }
+
+  .svg_token_3 {
+    width: 7.5px;
+    height: 14px;
+  }
+  .svg_token_4 {
+    width: 6.5px;
+    height: 15px;
+  }
+
+  .fa-star {
+    font-size: 9px;
+    -webkit-text-stroke: 0px white;
+  }
+
+  .div {
+    width: 255px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .dice {
+    width: 36px;
+    height: 36px;
+  }
+  .dice_cover {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .user {
+    width: 54px;
+    height: 54px;
+  }
+  .user img {
+    width: 52px;
+    height: 52px;
+  }  
 }
