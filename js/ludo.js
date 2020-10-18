@@ -471,7 +471,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
       if (count != 18) {
         item.classList.add("multiple_tokens");
       } else {
-        item.classList.add("svg_token_" + a_total_token_length);
+        item.classList.add("destination_containing_" + a_total_token_length + "_tokens");
       }
     });
   }

@@ -580,7 +580,7 @@ img {
   position: relative;
 }
 
-.svg_token_2 {
+.destination_containing_2_tokens {
   height: 23px;
   width: 14px;
   float: left;
@@ -588,7 +588,7 @@ img {
   margin-top: auto;
   position: relative;
 }
-.svg_token_3 {
+.destination_containing_3_tokens {
   height: 20px;
   width: 11px;
   float: left;
@@ -596,7 +596,7 @@ img {
   margin-top: auto;
   position: relative;
 }
-.svg_token_4 {
+.destination_containing_4_tokens {
   height: 20px;
   width: 10px;
   float: left;
@@ -673,10 +673,10 @@ img {
     left: -2px;
   }
 
-  .svg_token_3 {
+  .destination_containing_3_tokens {
     width: 10px;
   }
-  .svg_token_4 {
+  .destination_containing_4_tokens {
     width: 8.5px;
   }
 
@@ -784,14 +784,14 @@ img {
     top: 1px;
   }
 
-  .svg_token_2 {
+  .destination_containing_2_tokens {
     width: 11px;
     height: 20px;
   }
-  .svg_token_3 {
+  .destination_containing_3_tokens {
     width: 9.5px;
   }
-  .svg_token_4 {
+  .destination_containing_4_tokens {
     width: 8px;
   }
 
@@ -907,15 +907,15 @@ img {
     top: -4px;
   }
 
-  .svg_token_2 {
+  .destination_containing_2_tokens {
     width: 8px;
     height: 17px;
   }
-  .svg_token_3 {
+  .destination_containing_3_tokens {
     width: 8px;
     height: 17px;
   }
-  .svg_token_4 {
+  .destination_containing_4_tokens {
     width: 7px;
     height: 17px;
   }
@@ -996,11 +996,11 @@ img {
     top: -3px;
   }
 
-  .svg_token_3 {
+  .destination_containing_3_tokens {
     width: 7.5px;
     height: 14px;
   }
-  .svg_token_4 {
+  .destination_containing_4_tokens {
     width: 6.5px;
     height: 15px;
   }
