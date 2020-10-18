@@ -66,7 +66,7 @@ td {
   margin-top: auto;
   position: relative;
 }
-.run_token {
+.running_token {
   width: 15px;
   height: 25px;
   top: -5px;
@@ -763,7 +763,7 @@ svg {
     height: 18px;
     width: 9px;
   }
-  .run_token {
+  .running_token {
     width: 12px;
     height: 21px;
   }
@@ -873,7 +873,7 @@ svg {
     height: 16px;
     width: 8px;
   }
-  .run_token {
+  .running_token {
     width: 10px;
     height: 19px;
   }
@@ -975,7 +975,7 @@ svg {
     height: 14px;
     width: 7.5px;
   }
-  .run_token {
+  .running_token {
     height: 17px;
   }
 
