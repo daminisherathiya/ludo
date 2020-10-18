@@ -333,8 +333,8 @@ function run_token(
   var id_n_count = next_address(current_token_id, step);
   var next_id = id_n_count[0];
   var time = 200;
+  var color = get_color_from_idx(i);
   if (current_token_id == token_place_id) {
-    var color = get_color_from_idx(i);
     var img = set_img_at_given_place_id(token_src, color, alt, token_place_id);
     img.classList.add("tokens_of_" + i);
     img.classList.add("outside");
@@ -344,7 +344,7 @@ function run_token(
     return;
   }
   var span = document.createElement("span");
-  span.classList.add("animation_" + i);
+  span.classList.add("running_" + color + "_token_animation");
   document.getElementById(current_token_id).appendChild(span);
   var temp_current_id = current_token_id;
   while (current_token_id !== token_place_id) {
@@ -358,7 +358,7 @@ function run_token(
         setTimeout(
           function (current_token_id, i) {
             remove_animation = document.querySelector(
-              "#" + current_token_id + " span.animation_" + i
+              "#" + current_token_id + " span.running_" + color + "_token_animation"
             );
             remove_animation.remove(remove_animation);
           },
@@ -369,16 +369,15 @@ function run_token(
         if (temp_current_id === current_token_id) {
           set_remainin_token(temp_current_id, previously_total_token, 0);
         }
-        var color = get_color_from_idx(i);
         var img = set_img_at_given_place_id(token_src, color, alt, next_id);
         var span = document.createElement("span");
         var src = document.getElementById(next_id);
         src.appendChild(span);
-        span.classList.add("animation_" + i);
+        span.classList.add("running_" + color + "_token_animation");
         img.classList.add("running_token");
         if (next_id == token_place_id) {
           remove_animation = document.querySelector(
-            "#" + token_place_id + " span.animation_" + i
+            "#" + token_place_id + " span.running_" + color + "_token_animation"
           );
           remove_animation.remove(remove_animation);
           set_positions(token_place_id, count, img, p_total_token, alt);

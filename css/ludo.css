@@ -286,7 +286,7 @@ img {
   display: block;
 }
 
-.animation_0 {
+.running_green_token_animation {
   width: 27px;
   height: 27px;
   position: absolute;
@@ -295,7 +295,7 @@ img {
   left: -2px;
   animation: my_move_0 600ms;
 }
-.animation_1 {
+.running_yellow_token_animation {
   width: 27px;
   height: 27px;
   position: absolute;
@@ -304,7 +304,7 @@ img {
   left: -2px;
   animation: my_move_1 600ms;
 }
-.animation_2 {
+.running_blue_token_animation {
   width: 27px;
   height: 27px;
   position: absolute;
@@ -313,7 +313,7 @@ img {
   left: -2px;
   animation: my_move_2 600ms;
 }
-.animation_3 {
+.running_red_token_animation {
   width: 27px;
   height: 27px;
   position: absolute;
@@ -650,10 +650,10 @@ svg {
     margin-left: -5px;
   }
 
-  .animation_0,
-  .animation_1,
-  .animation_2,
-  .animation_3 {
+  .running_green_token_animation,
+  .running_yellow_token_animation,
+  .running_blue_token_animation,
+  .running_red_token_animation {
     width: 25px;
     height: 25px;
     top: 3px;
@@ -865,10 +865,10 @@ svg {
     height: 19px;
   }
 
-  .animation_0,
-  .animation_1,
-  .animation_2,
-  .animation_3 {
+  .running_green_token_animation,
+  .running_yellow_token_animation,
+  .running_blue_token_animation,
+  .running_red_token_animation {
     width: 19px;
     height: 19px;
     left: -1px;
