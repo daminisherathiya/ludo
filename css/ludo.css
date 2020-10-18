@@ -169,7 +169,7 @@ input:checked + .slider:after {
 }
 /* Until code ending here. */
 
-.degcenter {
+.destination {
   background: conic-gradient(
     #ffde15 0% 12.5%,
     #27abfd 12.5% 37.5%,
