@@ -586,7 +586,7 @@ function highlight_stage(string, highlight, time) {
           border.style.width = length + "%";
         }
         for (var z = 0; z < highlight.length && length % 15 == 0; z++) {
-          highlight[z].classList.toggle("highlight_" + i);
+          highlight[z].classList.toggle("highlight" + i);
         }
         if (length == 0 && string == "top") {
           leave_stage();
@@ -637,7 +637,7 @@ function disable_progressbar() {
   }
   var highlight = document.querySelectorAll(".highlight_" + i);
   for (var z = 0; z < highlight.length; z++) {
-    highlight[z].classList.remove("highlight_" + i);
+    highlight[z].classList.remove("highlight" + i);
   }
 }
 
