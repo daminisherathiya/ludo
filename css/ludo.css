@@ -256,7 +256,7 @@ input:checked + .slider:after {
   background: radial-gradient(circle, #0f7a0d, white, white);
   border-radius: 50%;
 }
-.dot_cover {
+.dots_container {
   line-height: 0;
   display: flex;
   justify-content: space-around;
