@@ -200,7 +200,8 @@ function next_address(current_token_id, steps) {
   }
   var token_place_id = "d_" + place_tag + count;
   if (count == 18) {
-    token_place_id = "svg_" + i;
+    var color = get_color_from_idx(i);
+    token_place_id = "destination_for_" + color + "_tokens";
   }
   return [token_place_id, count];
 }
@@ -501,7 +502,7 @@ function remove_all_tokens_of_this_player() {
   }
   var toc1 = document.querySelectorAll(".circle .tokens_of_" + i);
   var toc2 = document.querySelectorAll("td .tokens_of_" + i + ".outside");
-  var svg = document.querySelectorAll("#svg_" + i + " img");
+  var svg = document.querySelectorAll("#destination_for_" + color + "_tokens" + " img");
   for (var z = 0; z < toc1.length; z++) {
     toc1[z].remove(toc1[z]);
   }
