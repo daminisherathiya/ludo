@@ -41,7 +41,7 @@ td {
   position: relative;
 }
 
-.token {
+.single_token {
   width: 15px;
   height: 25px;
   margin-left: 4px;
@@ -744,7 +744,7 @@ svg {
     height: 22px;
   }
 
-  .token {
+  .single_token {
     width: 12px;
     height: 21px;
     margin-left: 4px;
@@ -863,7 +863,7 @@ svg {
     line-height: 0px;
   }
 
-  .token {
+  .single_token {
     width: 10px;
     height: 19px;
     margin-left: 3px;
@@ -966,7 +966,7 @@ svg {
     line-height: 0px;
   }
 
-  .token {
+  .single_token {
     height: 17px;
     margin-left: 2px;
     margin-top: -6px;

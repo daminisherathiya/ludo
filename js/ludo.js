@@ -253,7 +253,7 @@ function backword(current_token_id, alt, last_token) {
         var color = get_color_from_idx(player_id);
         var img = set_img_at_given_place_id(token_src, color, alt, k);
         if (k == alt) {
-          img.classList.add("token");
+          img.classList.add("single_token");
           img.classList.add("tokens_of_" + player_id);
           if (last_token == alt) {
             call_to_next_player();
@@ -463,7 +463,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
       a_total_token[0].classList.add("token_svg_" + i);
     } else {
       a_total_token[0].classList.remove("tokens");
-      a_total_token[0].classList.add("token");
+      a_total_token[0].classList.add("single_token");
     }
   } else {
     a_total_token.forEach(function (item) {
@@ -481,7 +481,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
     document.getElementById(current_token_id).classList.remove("token_" + k);
   }
   for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
-    a_total_token[k].classList.remove("token");
+    a_total_token[k].classList.remove("single_token");
   }
   if (a_total_token_length > 1 && count != 18) {
     document
