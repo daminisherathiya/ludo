@@ -102,6 +102,10 @@ td {
   margin-bottom: 0;
 }
 
+/* I have copy-pasted this code
+for the on/off button from somewhere
+else.
+Code starting from here: */
 .switch {
   position: relative;
   display: inline-block;
@@ -163,19 +167,8 @@ input:checked + .slider:after {
   content: "YES";
   left: 16px;
 }
+/* Until code ending here. */
 
-/* .deg451 {
-  background: linear-gradient(45deg, #06a049 50%, #ffde15 50%);
-}
-.deg452 {
-  background: linear-gradient(45deg, #eb1c22 50%, #27abfd 50%);
-}
-.deg1351 {
-  background: linear-gradient(135deg, #ffde15 50%, #27abfd 50%);
-}
-.deg1352 {
-  background: linear-gradient(135deg, #06a049 50%, #eb1c22 50%);
-} */
 .degcenter {
   background: conic-gradient(
     #ffde15 0% 12.5%,
