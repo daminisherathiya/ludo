@@ -241,7 +241,7 @@ input:checked + .slider:after {
   width: 100%;
 }
 
-.div {
+.users_panel {
   position: relative;
   width: 405px;
   margin: auto;
@@ -689,7 +689,7 @@ svg {
     top: 12%;
   }
 
-  .div {
+  .users_panel {
     width: 375px;
   }
 
@@ -807,7 +807,7 @@ svg {
     top: 23.5%;
   }
 
-  .div {
+  .users_panel {
     width: 330px;
   }
 
@@ -925,7 +925,7 @@ svg {
     -webkit-text-stroke: 0.1px white;
   }
 
-  .div {
+  .users_panel {
     width: 285px;
   }
 
@@ -1010,7 +1010,7 @@ svg {
     -webkit-text-stroke: 0px white;
   }
 
-  .div {
+  .users_panel {
     width: 255px;
   }
 
