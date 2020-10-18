@@ -398,9 +398,9 @@ img {
 }
 
 .home_token_animation {
-  animation: animation_for_inside_token 1000ms infinite;
+  animation: home_token_animation_percentage_wise 1000ms infinite;
 }
-@keyframes animation_for_inside_token {
+@keyframes home_token_animation_percentage_wise {
   0% {
     border: 2px solid rgb(236, 32, 32);
   }
@@ -436,9 +436,9 @@ img {
   }
 }
 .outside_token_animation {
-  animation: animation_for_outside_token 1000ms infinite;
+  animation: home_token_animation_percentage_wise 1000ms infinite;
 }
-@keyframes animation_for_outside_token {
+@keyframes home_token_animation_percentage_wise {
   0% {
     outline-offset: -2px;
     outline: 2px solid rgb(236, 32, 32);
@@ -484,10 +484,10 @@ img {
     outline: 2px solid rgb(255, 146, 74);
   }
 }
-.border_animation {
-  animation: animation_for_dice 1000ms infinite;
+.dice_border_animation {
+  animation: dice_border_animation_percentage_wise 1000ms infinite;
 }
-@keyframes animation_for_dice {
+@keyframes dice_border_animation_percentage_wise {
   0% {
     border: 5px solid rgb(236, 32, 32);
   }
@@ -523,7 +523,7 @@ img {
   }
 }
 
-svg {
+.destination_line_container {
   display: block;
   margin: 0;
   padding: 0;
