@@ -575,7 +575,7 @@ function leave_stage(increase_dot = true) {
   }
 }
 function highlight_stage(string, highlight, time) {
-  var border = document.querySelector("#u-" + i + " div.border_" + string);
+  var border = document.querySelector("#u-" + i + " div.timer_border_" + string);
   var length = 99;
   while (length >= 0) {
     var time_out = setTimeout(
@@ -610,10 +610,10 @@ function add_progressbar(string, border) {
   id.classList.add(border);
 }
 function timing() {
-  add_progressbar("1", "border_top");
-  add_progressbar("2", "border_left");
-  add_progressbar("3", "border_bottom");
-  add_progressbar("4", "border_right");
+  add_progressbar("1", "timer_border_top");
+  add_progressbar("2", "timer_border_left");
+  add_progressbar("3", "timer_border_bottom");
+  add_progressbar("4", "timer_border_right");
   timeouts = [];
   var highlight = document.querySelectorAll(".highlight_" + i);
   var time = 50;
@@ -623,14 +623,14 @@ function timing() {
   highlight_stage("top", highlight, time);
 }
 function disable_progressbar() {
-  var left_border = document.querySelector("#u-" + i + " .border_left");
+  var left_border = document.querySelector("#u-" + i + " .timer_border_left");
   if (left_border != null) {
     left_border.remove(left_border);
-    var bottom_border = document.querySelector("#u-" + i + " .border_bottom");
+    var bottom_border = document.querySelector("#u-" + i + " .timer_border_bottom");
     bottom_border.remove(bottom_border);
-    var right_border = document.querySelector("#u-" + i + " .border_right");
+    var right_border = document.querySelector("#u-" + i + " .timer_border_right");
     right_border.remove(right_border);
-    var top_border = document.querySelector("#u-" + i + " .border_top");
+    var top_border = document.querySelector("#u-" + i + " .timer_border_top");
     top_border.remove(top_border);
   }
   for (var z = 0; z < timeouts.length; z++) {
