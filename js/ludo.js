@@ -458,9 +458,10 @@ function set_remainin_token(current_token_id, p_total_token, count) {
     "#" + current_token_id + " img"
   );
   a_total_token_length = a_total_token.length;
+  var color = get_color_from_idx(i);
   if (a_total_token_length == 1) {
     if (count == 18) {
-      a_total_token[0].classList.add("token_svg_" + i);
+      a_total_token[0].classList.add("single_"+ color + "_token_inside_destination");
     } else {
       a_total_token[0].classList.remove("multiple_tokens");
       a_total_token[0].classList.add("single_token");
@@ -475,7 +476,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
     });
   }
   if (count == 18 && p_total_token.length == 1) {
-    p_total_token[0].classList.remove("token_svg_" + i);
+    p_total_token[0].classList.remove("single_" + color + "_token_inside_destination");
   }
   for (var k = p_total_token.length; k > 1; k--) {
     document.getElementById(current_token_id).classList.remove("cell_containing_" + k + "_tokens");
