@@ -293,7 +293,7 @@ img {
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: my_move_0 600ms;
+  animation: running_green_token_animation_percentage_wise 600ms;
 }
 .running_yellow_token_animation {
   width: 27px;
@@ -302,7 +302,7 @@ img {
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: my_move_1 600ms;
+  animation: running_yellow_token_animation_percentage_wise 600ms;
 }
 .running_blue_token_animation {
   width: 27px;
@@ -311,7 +311,7 @@ img {
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: my_move_2 600ms;
+  animation: running_blue_token_animation_percentage_wise 600ms;
 }
 .running_red_token_animation {
   width: 27px;
@@ -320,10 +320,10 @@ img {
   z-index: 1;
   top: 6px;
   left: -2px;
-  animation: my_move_3 600ms;
+  animation: running_red_token_animation_percentage_wise 600ms;
 }
 
-@keyframes my_move_0 {
+@keyframes running_green_token_animation_percentage_wise {
   0% {
     clip-path: circle(25%);
     background: #06a049;
@@ -342,7 +342,7 @@ img {
   }
 }
 
-@keyframes my_move_1 {
+@keyframes running_yellow_token_animation_percentage_wise {
   0% {
     clip-path: circle(25%);
     background: #ffde15;
@@ -360,7 +360,7 @@ img {
     background: #ffde15;
   }
 }
-@keyframes my_move_2 {
+@keyframes running_blue_token_animation_percentage_wise {
   0% {
     clip-path: circle(25%);
     background: #27abfd;
@@ -378,7 +378,7 @@ img {
     background: #27abfd;
   }
 }
-@keyframes my_move_3 {
+@keyframes running_red_token_animation_percentage_wise {
   0% {
     clip-path: circle(25%);
     background: #eb1c22;
