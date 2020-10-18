@@ -462,13 +462,13 @@ function set_remainin_token(current_token_id, p_total_token, count) {
     if (count == 18) {
       a_total_token[0].classList.add("token_svg_" + i);
     } else {
-      a_total_token[0].classList.remove("tokens");
+      a_total_token[0].classList.remove("multiple_tokens");
       a_total_token[0].classList.add("single_token");
     }
   } else {
     a_total_token.forEach(function (item) {
       if (count != 18) {
-        item.classList.add("tokens");
+        item.classList.add("multiple_tokens");
       } else {
         item.classList.add("svg_token_" + a_total_token_length);
       }
