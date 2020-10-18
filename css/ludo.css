@@ -199,16 +199,16 @@ input:checked + .slider:after {
   background-color: #27abfd;
 }
 
-.highlight0 {
+.light_green {
   background-color: #047b38;
 }
-.highlight1 {
+.light_yellow {
   background-color: #e6c700;
 }
-.highlight2 {
+.light_blue {
   background-color: #039dfc;
 }
-.highlight3 {
+.light_red {
   background-color: #d31219;
 }
 
