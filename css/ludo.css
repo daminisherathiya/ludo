@@ -270,7 +270,7 @@ input:checked + .slider:after {
 .dice_margin {
   margin: auto;
 }
-.dice_cover {
+.dice_container {
   background-image: linear-gradient(#efd8d9, #e6b2b3);
   width: 52px;
   height: 52px;
@@ -697,7 +697,7 @@ svg {
     width: 51px;
     height: 51px;
   }
-  .dice_cover {
+  .dice_container {
     width: 61px;
     height: 61px;
   }
@@ -815,7 +815,7 @@ svg {
     width: 44px;
     height: 44px;
   }
-  .dice_cover {
+  .dice_container {
     width: 54px;
     height: 54px;
   }
@@ -1023,7 +1023,7 @@ svg {
     width: 36px;
     height: 36px;
   }
-  .dice_cover {
+  .dice_container {
     width: 45px;
     height: 45px;
   }
