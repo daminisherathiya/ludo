@@ -397,7 +397,7 @@ img {
   }
 }
 
-.inside_token_animation {
+.home_token_animation {
   animation: animation_for_inside_token 1000ms infinite;
 }
 @keyframes animation_for_inside_token {
