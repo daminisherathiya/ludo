@@ -122,7 +122,7 @@ function roll_dice() {
             .classList.remove("border_animation");
           for (var z = 0; z < token_inside_home.length; z++) {
             token_inside_home[z].parentNode.classList.add(
-              "inside_token_animation"
+              "home_token_animation"
             );
           }
           for (var z = 0; z < token_outside_home.length; z++) {
@@ -399,7 +399,7 @@ function run_token(
 function move_token(event_inn) {
   turn++;
   for (var z = 0; z < token_inside_home.length; z++) {
-    token_inside_home[z].parentNode.classList.remove("inside_token_animation");
+    token_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
   for (var z = 0; z < token_outside_home.length; z++) {
     token_outside_home[z].parentNode.classList.remove(
@@ -437,7 +437,7 @@ function remove_event_listener() {
 function six_token(event_inn) {
   turn++;
   for (var z = 0; z < token_inside_home.length; z++) {
-    token_inside_home[z].parentNode.classList.remove("inside_token_animation");
+    token_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
   for (var z = 0; z < token_outside_home.length; z++) {
     token_outside_home[z].parentNode.classList.remove(
@@ -492,7 +492,7 @@ function remove_all_tokens_of_this_player() {
   document.querySelector("#d-" + i + " img").classList.remove("dice_margin");
   document.querySelector("#d-" + i).classList.remove("border_animation");
   for (var z = 0; z < token_inside_home.length; z++) {
-    token_inside_home[z].parentNode.classList.remove("inside_token_animation");
+    token_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
   for (var z = 0; z < token_outside_home.length; z++) {
     token_outside_home[z].parentNode.classList.remove(
