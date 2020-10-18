@@ -259,7 +259,7 @@ function backword(current_token_id, alt, last_token) {
             call_to_next_player();
           }
         } else {
-          img.classList.add("run_token");
+          img.classList.add("running_token");
         }
       },
       time,
@@ -284,7 +284,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
       var alt_name = item.getAttribute("alt");
       if (
         alt.substring(2, 3) != alt_name.substring(2, 3) &&
-        item.getAttribute("class") != "run_token"
+        item.getAttribute("class") != "running_token"
       ) {
         turn_again = true;
         backword(token_place_id, alt_name, last_token);
@@ -313,7 +313,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
       }
     }
     img.classList.add("outside");
-    img.classList.remove("run_token");
+    img.classList.remove("running_token");
     set_pointer_event();
     set_remainin_token(token_place_id, p_total_token, count);
     if (!turn_again) {
@@ -375,7 +375,7 @@ function run_token(
         var src = document.getElementById(next_id);
         src.appendChild(span);
         span.classList.add("animation_" + i);
-        img.classList.add("run_token");
+        img.classList.add("running_token");
         if (next_id == token_place_id) {
           remove_animation = document.querySelector(
             "#" + token_place_id + " span.animation_" + i
