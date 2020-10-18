@@ -49,13 +49,13 @@ td {
   position: relative;
   z-index: 1;
 }
-.token_2 {
+.cell_containing_2_tokens {
   padding-left: 10.5px;
 }
-.token_3 {
+.cell_containing_3_tokens {
   padding-left: 7px;
 }
-.token_4 {
+.cell_containing_4_tokens {
   padding-left: 5px;
 }
 .multiple_tokens {
@@ -656,7 +656,7 @@ svg {
     width: 25px;
     height: 25px;
   }
-  .token_4 {
+  .cell_containing_4_tokens {
     padding-left: 7px;
   }
   .multiple_tokens {
@@ -750,13 +750,13 @@ svg {
     margin-left: 4px;
     margin-top: -8px;
   }
-  .token_2 {
+  .cell_containing_2_tokens {
     padding-left: 8.5px;
   }
-  .token_3 {
+  .cell_containing_3_tokens {
     padding-left: 6px;
   }
-  .token_4 {
+  .cell_containing_4_tokens {
     padding-left: 5px;
   }
   .multiple_tokens {
