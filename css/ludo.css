@@ -179,16 +179,10 @@ input:checked + .slider:after {
   );
 }
 
-.brh {
-  border-right: hidden;
-}
-.blh {
-  border-left: hidden;
-}
-.bbh {
+.border_bottom_hidden {
   border-bottom: hidden;
 }
-.bth {
+.border_top_hidden {
   border-top: hidden;
 }
 
