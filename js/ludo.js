@@ -119,7 +119,7 @@ function roll_dice() {
             .classList.remove("dice_margin");
           document
             .querySelector("#d-" + i)
-            .classList.remove("border_animation");
+            .classList.remove("dice_border_animation");
           for (var z = 0; z < token_inside_home.length; z++) {
             token_inside_home[z].parentNode.classList.add(
               "home_token_animation"
@@ -490,7 +490,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
 }
 function remove_all_tokens_of_this_player() {
   document.querySelector("#d-" + i + " img").classList.remove("dice_margin");
-  document.querySelector("#d-" + i).classList.remove("border_animation");
+  document.querySelector("#d-" + i).classList.remove("dice_border_animation");
   for (var z = 0; z < token_inside_home.length; z++) {
     token_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
@@ -681,7 +681,7 @@ function enable_dice() {
     call_to_next_player();
   } else {
     document.querySelector("#d-" + i + " img").classList.add("dice_margin");
-    document.querySelector("#d-" + i).classList.add("border_animation");
+    document.querySelector("#d-" + i).classList.add("dice_border_animation");
     dic[i].addEventListener("click", roll_dice);
     timing();
     if (document.getElementById("my_check").checked == true) {
