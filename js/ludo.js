@@ -6,7 +6,7 @@
 ];
 
 var no_of_dice_rolls_till_now = 0;
-var i = 0;
+var turn_of_the_player = 0;
 var total_players = 4;
 var rank = 1;
 var player_left = false;
@@ -22,7 +22,7 @@ var game_over = false;
 var automatic = false;
 var turn_again = false;
 var random_dice = Math.floor(6 * Math.random()) + 1;
-dices[i].src = "./images/dices/" + random_dice + ".png";
+dices[turn_of_the_player].src = "./images/dices/" + random_dice + ".png";
 var vis = false;
 var token_inside_home = [];
 var token_outside_home = [];
@@ -91,29 +91,29 @@ function automatic_clicked_token(for_turn) {
 }
 
 function roll_dice() {
-  dices[i].removeEventListener("click", roll_dice);
+  dices[turn_of_the_player].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
   // random_dice = 6;
   // token_inside_home = [];
   if (random_dice == 6) {
-    token_inside_home = document.querySelectorAll(".circle .tokens_of_" + i);
+    token_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
     token_inside_home.forEach(function (item) {
       item.addEventListener("click", six_token);
     });
   }
   token_outside_home = document.querySelectorAll(
-    "td .tokens_of_" + i + ".outside"
+    "td .tokens_of_" + turn_of_the_player + ".outside"
   );
   token_outside_home.forEach(function (item) {
     item.addEventListener("click", move_token);
   });
   any_chance_to_move_token();
   var time = 0;
-  var color = get_color_from_idx(i);
+  var color = get_color_from_idx(turn_of_the_player);
   for (var z = 0; z < 6 + random_dice; z++) {
     setTimeout(
       function (z, for_turn) {
-        dices[i].src = "./images/dices/" + ((z % 6) + 1) + ".png";
+        dices[turn_of_the_player].src = "./images/dices/" + ((z % 6) + 1) + ".png";
         if (z >= 6 && (z % 6) + 1 == random_dice) {
           document
             .querySelector("#"+ color + "_dice_container" + " img")
@@ -142,9 +142,9 @@ function roll_dice() {
             (random_dice != 6 && vis == false)
           ) {
             disable_progressbar();
-            i++;
-            i = i % 4;
-            dices[i].src = "./images/dices/" + random_dice + ".png";
+            turn_of_the_player++;
+            turn_of_the_player = turn_of_the_player % 4;
+            dices[turn_of_the_player].src = "./images/dices/" + random_dice + ".png";
             setTimeout(enable_dice, 500);
           }
         }
@@ -183,7 +183,7 @@ function next_address(current_token_id, steps) {
   var place_tag = parseInt(current_token_id.substring(2, 3));
   if (count == 12) {
     var temp_place_tag = (place_tag + 1) % 4;
-    if (temp_place_tag == i) {
+    if (temp_place_tag == turn_of_the_player) {
       count = count + 1;
       place_tag = temp_place_tag;
     }
@@ -195,13 +195,13 @@ function next_address(current_token_id, steps) {
     } else {
       temp_count--;
     }
-    if (place_tag == i) {
+    if (place_tag == turn_of_the_player) {
       count = temp_count + 1;
     }
   }
   var token_place_id = "d_" + place_tag + count;
   if (count == 18) {
-    var color = get_color_from_idx(i);
+    var color = get_color_from_idx(turn_of_the_player);
     token_place_id = "destination_for_" + color + "_tokens";
   }
   return [token_place_id, count];
@@ -213,10 +213,10 @@ function call_to_next_player(count) {
     player_left ||
     (random_dice != 6 && count != 18 && turn_again == false)
   ) {
-    i++;
+    turn_of_the_player++;
   }
-  i = i % 4;
-  dices[i].src = "./images/dices/" + random_dice + ".png";
+  turn_of_the_player = turn_of_the_player % 4;
+  dices[turn_of_the_player].src = "./images/dices/" + random_dice + ".png";
   enable_dice();
 }
 function get_color_from_idx(idx) {
@@ -295,10 +295,10 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
   }
   setTimeout(function () {
     if (count != 18) {
-      img.classList.add("tokens_of_" + i);
+      img.classList.add("tokens_of_" + turn_of_the_player);
     } else if (
       count == 18 &&
-      document.getElementsByClassName("tokens_of_" + i).length == 0
+      document.getElementsByClassName("tokens_of_" + turn_of_the_player).length == 0
     ) {
       player_left = true;
       total_players--;
@@ -306,7 +306,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
         winner_src,
         rank,
         "",
-        "winner_" + i
+        "winner_" + turn_of_the_player
       );
       winner_img.classList.add("winner");
       rank++;
@@ -335,10 +335,10 @@ function run_token(
   var id_n_count = next_address(current_token_id, step);
   var next_id = id_n_count[0];
   var time = 200;
-  var color = get_color_from_idx(i);
+  var color = get_color_from_idx(turn_of_the_player);
   if (current_token_id == token_place_id) {
     var img = set_img_at_given_place_id(token_src, color, alt, token_place_id);
-    img.classList.add("tokens_of_" + i);
+    img.classList.add("tokens_of_" + turn_of_the_player);
     img.classList.add("outside");
     set_pointer_event();
     set_remainin_token(token_place_id, p_total_token, 0);
@@ -351,14 +351,14 @@ function run_token(
   var temp_current_id = current_token_id;
   while (current_token_id !== token_place_id) {
     setTimeout(
-      function (next_id, current_token_id, i, alt) {
+      function (next_id, current_token_id, turn_of_the_player, alt) {
         var remove_token = document.querySelector(
           "#" + current_token_id + " img[alt=" + alt + "]"
         );
         remove_token.remove(remove_token);
         var remove_animation;
         setTimeout(
-          function (current_token_id, i) {
+          function (current_token_id, turn_of_the_player) {
             remove_animation = document.querySelector(
               "#" + current_token_id + " span.running_" + color + "_token_animation"
             );
@@ -366,7 +366,7 @@ function run_token(
           },
           500,
           current_token_id,
-          i
+          turn_of_the_player
         );
         if (temp_current_id === current_token_id) {
           set_remainin_token(temp_current_id, previously_total_token, 0);
@@ -388,7 +388,7 @@ function run_token(
       time,
       next_id,
       current_token_id,
-      i,
+      turn_of_the_player,
       alt
     );
     time = time + 200;
@@ -450,7 +450,7 @@ function six_token(event_inn) {
   automatic = true;
   var alt = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
-  var token_place_id = "d_" + i.toString() + "0";
+  var token_place_id = "d_" + turn_of_the_player.toString() + "0";
   run_token(token_place_id, token_place_id, 0, alt);
 }
 
@@ -459,7 +459,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
     "#" + current_token_id + " img"
   );
   a_total_token_length = a_total_token.length;
-  var color = get_color_from_idx(i);
+  var color = get_color_from_idx(turn_of_the_player);
   if (a_total_token_length == 1) {
     if (count == 18) {
       a_total_token[0].classList.add("single_"+ color + "_token_inside_destination");
@@ -492,7 +492,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
   }
 }
 function remove_all_tokens_of_this_player() {
-  var color = get_color_from_idx(i);
+  var color = get_color_from_idx(turn_of_the_player);
   document.querySelector("#"+ color + "_dice_container" + " img").classList.remove("dice_margin");
   document.querySelector("#"+ color + "_dice_container").classList.remove("dice_border_animation");
   for (var z = 0; z < token_inside_home.length; z++) {
@@ -503,8 +503,8 @@ function remove_all_tokens_of_this_player() {
       "outside_token_animation"
     );
   }
-  var toc1 = document.querySelectorAll(".circle .tokens_of_" + i);
-  var toc2 = document.querySelectorAll("td .tokens_of_" + i + ".outside");
+  var toc1 = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
+  var toc2 = document.querySelectorAll("td .tokens_of_" + turn_of_the_player + ".outside");
   var svg = document.querySelectorAll("#destination_for_" + color + "_tokens" + " img");
   for (var z = 0; z < toc1.length; z++) {
     toc1[z].remove(toc1[z]);
@@ -523,8 +523,8 @@ function remove_all_tokens_of_this_player() {
 }
 function player_went() {
   remove_all_tokens_of_this_player();
-  var color = get_color_from_idx(i);
-  var left_img = set_img_at_given_place_id(left_src, color, "", "winner_" + i);
+  var color = get_color_from_idx(turn_of_the_player);
+  var left_img = set_img_at_given_place_id(left_src, color, "", "winner_" + turn_of_the_player);
   left_img.classList.add("winner");
   total_players--;
   player_left = true;
@@ -534,28 +534,28 @@ function leave_stage(increase_dot = true) {
   if (automatic == false) {
     if (increase_dot) {
       var count_dot;
-      if (i == 0) {
+      if (turn_of_the_player == 0) {
         if (green_dot == 6) {
           player_went();
           return;
         }
         count_dot = green_dot;
         green_dot++;
-      } else if (i == 1) {
+      } else if (turn_of_the_player == 1) {
         if (yellow_dot == 6) {
           player_went();
           return;
         }
         count_dot = yellow_dot;
         yellow_dot++;
-      } else if (i == 2) {
+      } else if (turn_of_the_player == 2) {
         if (blue_dot == 6) {
           player_went();
           return;
         }
         count_dot = blue_dot;
         blue_dot++;
-      } else if (i == 3) {
+      } else if (turn_of_the_player == 3) {
         if (red_dot == 6) {
           player_went();
           return;
@@ -563,11 +563,11 @@ function leave_stage(increase_dot = true) {
         count_dot = red_dot;
         red_dot++;
       }
-      var color = get_color_from_idx(i);
+      var color = get_color_from_idx(turn_of_the_player);
       var dot = document.querySelector("#dot_of_" + color + "_" + count_dot);
       dot.style.background = "#f51c40";
     }
-    dices[i].click();
+    dices[turn_of_the_player].click();
 
     setTimeout(
       function (for_turn) {
@@ -579,7 +579,7 @@ function leave_stage(increase_dot = true) {
   }
 }
 function highlight_stage(string, highlight, time) {
-  var color=get_color_from_idx(i);
+  var color=get_color_from_idx(turn_of_the_player);
   var border = document.querySelector("#" + color + "_user" + " div.timer_border_" + string);
   var length = 99;
   while (length >= 0) {
@@ -591,7 +591,7 @@ function highlight_stage(string, highlight, time) {
           border.style.width = length + "%";
         }
         for (var z = 0; z < highlight.length && length % 15 == 0; z++) {
-          var color = get_color_from_idx(i);
+          var color = get_color_from_idx(turn_of_the_player);
           highlight[z].classList.toggle("light_" + color);
         }
         if (length == 0 && string == "top") {
@@ -609,7 +609,7 @@ function highlight_stage(string, highlight, time) {
 }
 function add_progressbar(string, border) {
   var new_div = document.createElement("div");
-  var color = get_color_from_idx(i);
+  var color = get_color_from_idx(turn_of_the_player);
   var id = document.getElementById(color + "_user");
   id.appendChild(new_div);
   id = document.querySelector("#" + color + "_user" + " div:nth-of-type(" + string + ")");
@@ -621,7 +621,7 @@ function timing() {
   add_progressbar("3", "timer_border_bottom");
   add_progressbar("4", "timer_border_right");
   timeouts = [];
-  var highlight = document.querySelectorAll(".highlight_" + i);
+  var highlight = document.querySelectorAll(".highlight_" + turn_of_the_player);
   var time = 50;
   time = highlight_stage("left", highlight, time);
   time = highlight_stage("bottom", highlight, time);
@@ -629,7 +629,7 @@ function timing() {
   highlight_stage("top", highlight, time);
 }
 function disable_progressbar() {
-  var color = get_color_from_idx(i);
+  var color = get_color_from_idx(turn_of_the_player);
   var left_border = document.querySelector("#" + color + "_user" + " .timer_border_left");
   if (left_border != null) {
     left_border.remove(left_border);
@@ -643,9 +643,9 @@ function disable_progressbar() {
   for (var z = 0; z < timeouts.length; z++) {
     clearTimeout(timeouts[z]);
   }
-  var highlight = document.querySelectorAll(".highlight_" + i);
+  var highlight = document.querySelectorAll(".highlight_" + turn_of_the_player);
   for (var z = 0; z < highlight.length; z++) {
-    var color = get_color_from_idx(i);
+    var color = get_color_from_idx(turn_of_the_player);
     highlight[z].classList.remove("light_" + color);
   }
 }
@@ -661,7 +661,7 @@ function enable_dice() {
   player_left = false;
   if (
     total_players == 1 &&
-    document.querySelectorAll("#winner_" + i + " img").length == 0 &&
+    document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
     rank != 4
   ) {
     remove_all_tokens_of_this_player();
@@ -669,33 +669,33 @@ function enable_dice() {
       winner_src,
       rank,
       "",
-      "winner_" + i
+      "winner_" + turn_of_the_player
     );
     winner_img.classList.add("winner");
     return;
   }
   automatic = false;
-  dices[i].style.display = "block";
-  dices[(i + 1) % 4].style.display = "none";
-  dices[(i + 2) % 4].style.display = "none";
-  dices[(i + 3) % 4].style.display = "none";
+  dices[turn_of_the_player].style.display = "block";
+  dices[(turn_of_the_player + 1) % 4].style.display = "none";
+  dices[(turn_of_the_player + 2) % 4].style.display = "none";
+  dices[(turn_of_the_player + 3) % 4].style.display = "none";
 
   if (game_over) {
     return;
   }
-  var color = get_color_from_idx(i);
-  var available = document.getElementsByClassName("tokens_of_" + i);
+  var color = get_color_from_idx(turn_of_the_player);
+  var available = document.getElementsByClassName("tokens_of_" + turn_of_the_player);
   if (available.length == 0) {
     player_left = true;
     call_to_next_player();
   } else {
     document.querySelector("#"+ color + "_dice_container" + " img").classList.add("dice_margin");
     document.querySelector("#"+ color + "_dice_container").classList.add("dice_border_animation");
-    dices[i].addEventListener("click", roll_dice);
+    dices[turn_of_the_player].addEventListener("click", roll_dice);
     timing();
     if (document.getElementById("run_automatically_switch_input").checked == true) {
       setTimeout(function () {
-        dices[i].click();
+        dices[turn_of_the_player].click();
       }, 1000);
     }
   }
