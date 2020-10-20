@@ -576,7 +576,8 @@ function leave_stage(increase_dot = true) {
   }
 }
 function highlight_stage(string, highlight, time) {
-  var border = document.querySelector("#u-" + i + " div.timer_border_" + string);
+  var color=get_color_from_idx(i);
+  var border = document.querySelector("#" + color + "_user" + " div.timer_border_" + string);
   var length = 99;
   while (length >= 0) {
     var time_out = setTimeout(
@@ -605,9 +606,10 @@ function highlight_stage(string, highlight, time) {
 }
 function add_progressbar(string, border) {
   var new_div = document.createElement("div");
-  var id = document.getElementById("u-" + i);
+  var color = get_color_from_idx(i);
+  var id = document.getElementById(color + "_user");
   id.appendChild(new_div);
-  id = document.querySelector("#u-" + i + " div:nth-of-type(" + string + ")");
+  id = document.querySelector("#" + color + "_user" + " div:nth-of-type(" + string + ")");
   id.classList.add(border);
 }
 function timing() {
@@ -624,14 +626,15 @@ function timing() {
   highlight_stage("top", highlight, time);
 }
 function disable_progressbar() {
-  var left_border = document.querySelector("#u-" + i + " .timer_border_left");
+  var color = get_color_from_idx(i);
+  var left_border = document.querySelector("#" + color + "_user" + " .timer_border_left");
   if (left_border != null) {
     left_border.remove(left_border);
-    var bottom_border = document.querySelector("#u-" + i + " .timer_border_bottom");
+    var bottom_border = document.querySelector("#" + color + "_user" + " .timer_border_bottom");
     bottom_border.remove(bottom_border);
-    var right_border = document.querySelector("#u-" + i + " .timer_border_right");
+    var right_border = document.querySelector("#" + color + "_user" + " .timer_border_right");
     right_border.remove(right_border);
-    var top_border = document.querySelector("#u-" + i + " .timer_border_top");
+    var top_border = document.querySelector("#" + color + "_user" + " .timer_border_top");
     top_border.remove(top_border);
   }
   for (var z = 0; z < timeouts.length; z++) {
