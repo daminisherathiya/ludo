@@ -1,4 +1,4 @@
-﻿var dic = [
+﻿var dices = [
   document.getElementById("green_dice"),
   document.getElementById("yellow_dice"),
   document.getElementById("blue_dice"),
@@ -22,7 +22,7 @@ var game_over = false;
 var automatic = false;
 var turn_again = false;
 var random_dice = Math.floor(6 * Math.random()) + 1;
-dic[i].src = "./images/dices/" + random_dice + ".png";
+dices[i].src = "./images/dices/" + random_dice + ".png";
 var vis = false;
 var token_inside_home = [];
 var token_outside_home = [];
@@ -91,7 +91,7 @@ function automatic_clicked_token(for_turn) {
 }
 
 function roll_dice() {
-  dic[i].removeEventListener("click", roll_dice);
+  dices[i].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
   // random_dice = 6;
   // token_inside_home = [];
@@ -113,7 +113,7 @@ function roll_dice() {
   for (var z = 0; z < 6 + random_dice; z++) {
     setTimeout(
       function (z, for_turn) {
-        dic[i].src = "./images/dices/" + ((z % 6) + 1) + ".png";
+        dices[i].src = "./images/dices/" + ((z % 6) + 1) + ".png";
         if (z >= 6 && (z % 6) + 1 == random_dice) {
           document
             .querySelector("#"+ color + "_dice_container" + " img")
@@ -144,7 +144,7 @@ function roll_dice() {
             disable_progressbar();
             i++;
             i = i % 4;
-            dic[i].src = "./images/dices/" + random_dice + ".png";
+            dices[i].src = "./images/dices/" + random_dice + ".png";
             setTimeout(enable_dice, 500);
           }
         }
@@ -216,7 +216,7 @@ function call_to_next_player(count) {
     i++;
   }
   i = i % 4;
-  dic[i].src = "./images/dices/" + random_dice + ".png";
+  dices[i].src = "./images/dices/" + random_dice + ".png";
   enable_dice();
 }
 function get_color_from_idx(idx) {
@@ -567,7 +567,7 @@ function leave_stage(increase_dot = true) {
       var dot = document.querySelector("#dot_of_" + color + "_" + count_dot);
       dot.style.background = "#f51c40";
     }
-    dic[i].click();
+    dices[i].click();
 
     setTimeout(
       function (for_turn) {
@@ -675,10 +675,10 @@ function enable_dice() {
     return;
   }
   automatic = false;
-  dic[i].style.display = "block";
-  dic[(i + 1) % 4].style.display = "none";
-  dic[(i + 2) % 4].style.display = "none";
-  dic[(i + 3) % 4].style.display = "none";
+  dices[i].style.display = "block";
+  dices[(i + 1) % 4].style.display = "none";
+  dices[(i + 2) % 4].style.display = "none";
+  dices[(i + 3) % 4].style.display = "none";
 
   if (game_over) {
     return;
@@ -691,11 +691,11 @@ function enable_dice() {
   } else {
     document.querySelector("#"+ color + "_dice_container" + " img").classList.add("dice_margin");
     document.querySelector("#"+ color + "_dice_container").classList.add("dice_border_animation");
-    dic[i].addEventListener("click", roll_dice);
+    dices[i].addEventListener("click", roll_dice);
     timing();
     if (document.getElementById("run_automatically_switch_input").checked == true) {
       setTimeout(function () {
-        dic[i].click();
+        dices[i].click();
       }, 1000);
     }
   }
