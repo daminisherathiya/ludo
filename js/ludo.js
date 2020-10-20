@@ -563,7 +563,8 @@ function leave_stage(increase_dot = true) {
         count_dot = red_dot;
         red_dot++;
       }
-      var dot = document.querySelector("#dot" + i + "_" + count_dot);
+      var color = get_color_from_idx(i);
+      var dot = document.querySelector("#dot_of_" + color + "_" + count_dot);
       dot.style.background = "#f51c40";
     }
     dic[i].click();
