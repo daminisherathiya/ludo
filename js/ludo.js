@@ -1,8 +1,8 @@
 ﻿var dic = [
-  document.getElementById("dice-0"),
-  document.getElementById("dice-1"),
-  document.getElementById("dice-2"),
-  document.getElementById("dice-3"),
+  document.getElementById("green_dice"),
+  document.getElementById("yellow_dice"),
+  document.getElementById("blue_dice"),
+  document.getElementById("red_dice"),
 ];
 
 var no_of_dice_rolls = 0;
