@@ -6,10 +6,10 @@
 ];
 
 var no_of_dice_rolls_till_now = 0;
-var turn_of_the_player = 0;
+var turn_of_the_player = 0; //0 => green, 1=> blue, 2 => yellow, 3 => red 
 var total_players = 4;
 var rank = 1;
-var player_left = false;
+var player_has_left = false;
 var turn = 0;
 var winner_src = "./images/winners/";
 var token_src = "./images/tokens/";
@@ -210,7 +210,7 @@ function call_to_next_player(count) {
   disable_progressbar();
   if (
     total_players == 1 ||
-    player_left ||
+    player_has_left ||
     (random_dice != 6 && count != 18 && turn_again == false)
   ) {
     turn_of_the_player++;
@@ -300,7 +300,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
       count == 18 &&
       document.getElementsByClassName("tokens_of_" + turn_of_the_player).length == 0
     ) {
-      player_left = true;
+      player_has_left = true;
       total_players--;
       var winner_img = set_img_at_given_place_id(
         winner_src,
@@ -527,7 +527,7 @@ function player_went() {
   var left_img = set_img_at_given_place_id(left_src, color, "", "winner_" + turn_of_the_player);
   left_img.classList.add("winner");
   total_players--;
-  player_left = true;
+  player_has_left = true;
   call_to_next_player();
 }
 function leave_stage(increase_dot = true) {
@@ -658,7 +658,7 @@ function enable_dice() {
   turn++;
   token_inside_home = [];
   token_outside_home = [];
-  player_left = false;
+  player_has_left = false;
   if (
     total_players == 1 &&
     document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
@@ -686,7 +686,7 @@ function enable_dice() {
   var color = get_color_from_idx(turn_of_the_player);
   var available = document.getElementsByClassName("tokens_of_" + turn_of_the_player);
   if (available.length == 0) {
-    player_left = true;
+    player_has_left = true;
     call_to_next_player();
   } else {
     document.querySelector("#"+ color + "_dice_container" + " img").classList.add("dice_margin");
