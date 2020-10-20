@@ -10,7 +10,7 @@ var turn_of_the_player = 0; //0 => green, 1=> blue, 2 => yellow, 3 => red
 var total_players = 4;
 var rank = 1;
 var player_has_left = false;
-var turn = 0;
+var count_to_avoid_race_conditions = 0;
 var winner_src = "./images/winners/";
 var token_src = "./images/tokens/";
 var left_src = "./images/left_users/";
@@ -58,17 +58,17 @@ function any_chance_to_move_token() {
   });
 }
 function automatic_clicked_token(for_turn) {
-  if (for_turn < turn) {
+  if (for_turn < count_to_avoid_race_conditions) {
     return;
   }
-  turn++;
+  count_to_avoid_race_conditions++;
   var allowed_to_move_token = true;
   var already_come = false;
   if (token_inside_home.length != 0) {
     already_come = true;
     setTimeout(function () {
       allowed_to_move_token = false;
-      if (for_turn + 1 == turn) {
+      if (for_turn + 1 == count_to_avoid_race_conditions) {
         token_inside_home[0].click();
       }
     }, 1000);
@@ -81,7 +81,7 @@ function automatic_clicked_token(for_turn) {
             random_dice,
             token_outside_home[z]
           );
-          if (for_turn + 1 == turn) {
+          if (for_turn + 1 == count_to_avoid_race_conditions) {
             token_outside_home[z].click();
           }
         }
@@ -151,7 +151,7 @@ function roll_dice() {
       },
       time,
       z,
-      turn
+      count_to_avoid_race_conditions
     );
     time = time + 50;
   }
@@ -359,6 +359,7 @@ function run_token(
         var remove_animation;
         setTimeout(
           function (current_token_id, turn_of_the_player) {
+            var color = get_color_from_idx(turn_of_the_player);
             remove_animation = document.querySelector(
               "#" + current_token_id + " span.running_" + color + "_token_animation"
             );
@@ -399,7 +400,7 @@ function run_token(
 }
 
 function move_token(event_inn) {
-  turn++;
+  count_to_avoid_race_conditions++;
   for (var z = 0; z < token_inside_home.length; z++) {
     token_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
@@ -437,7 +438,7 @@ function remove_event_listener() {
   });
 }
 function six_token(event_inn) {
-  turn++;
+  count_to_avoid_race_conditions++;
   for (var z = 0; z < token_inside_home.length; z++) {
     token_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
@@ -574,7 +575,7 @@ function leave_stage(increase_dot = true) {
         automatic_clicked_token(for_turn);
       },
       (7 + random_dice) * 50,
-      turn
+      count_to_avoid_race_conditions
     );
   }
 }
@@ -655,7 +656,7 @@ function enable_dice() {
   // if (no_of_dice_rolls_till_now > 5) {
   //   return;
   // }
-  turn++;
+  count_to_avoid_race_conditions++;
   token_inside_home = [];
   token_outside_home = [];
   player_has_left = false;
