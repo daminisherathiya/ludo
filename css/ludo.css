@@ -617,12 +617,12 @@ img {
   width: 60px;
 }
 
-.arrow_top_bottom {
+.top_and_botton_arrows {
   position: absolute;
   left: 37%;
   top: 13%;
 }
-.arrow_left_right {
+.left_and_right_arrow {
   position: absolute;
   top: 16%;
   left: 18%;
@@ -685,7 +685,7 @@ img {
     -webkit-text-stroke: 0.2px white;
   }
 
-  .arrow_left_right {
+  .left_and_right_arrow {
     top: 12%;
   }
 
@@ -799,11 +799,11 @@ img {
     font-size: 17px;
   }
 
-  .arrow_top_bottom,
-  .arrow_left_right {
+  .top_and_botton_arrows,
+  .left_and_right_arrow {
     font-size: 10px;
   }
-  .arrow_left_right {
+  .left_and_right_arrow {
     top: 23.5%;
   }
 
@@ -929,10 +929,10 @@ img {
     width: 285px;
   }
 
-  .arrow_left_right {
+  .left_and_right_arrow {
     top: 53.5%;
   }
-  .arrow_top_bottom {
+  .top_and_botton_arrows {
     top: 47%;
   }
 
