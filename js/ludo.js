@@ -29,7 +29,7 @@ var token_outside_home = [];
 var timeouts = [];
 // var allowed_to_move_token = true;
 function set_pointer_event() {
-  if (document.getElementById("my_check").checked) {
+  if (document.getElementById("run_automatically_switch_input").checked) {
     disable_pointer_event();
   } else {
     enable_pointer_event();
@@ -132,7 +132,7 @@ function roll_dice() {
             );
           }
           any_chance_to_move_token();
-          if (document.getElementById("my_check").checked == true) {
+          if (document.getElementById("run_automatically_switch_input").checked == true) {
             automatic_clicked_token(for_turn);
           }
           if (
@@ -693,7 +693,7 @@ function enable_dice() {
     document.querySelector("#"+ color + "_dice_container").classList.add("dice_border_animation");
     dic[i].addEventListener("click", roll_dice);
     timing();
-    if (document.getElementById("my_check").checked == true) {
+    if (document.getElementById("run_automatically_switch_input").checked == true) {
       setTimeout(function () {
         dic[i].click();
       }, 1000);
@@ -725,7 +725,7 @@ function disable_pointer_event() {
   }
 }
 
-document.getElementById("my_check").addEventListener("change", function () {
+document.getElementById("run_automatically_switch_input").addEventListener("change", function () {
   if (this.checked) {
     disable_pointer_event();
     leave_stage(false);

@@ -94,7 +94,7 @@ td {
   top: 2px;
 }
 
-.run_automatically {
+.run_automatically_container {
   color: #e1acac;
   font-size: 20px;
   text-align: center;
@@ -106,13 +106,13 @@ td {
 for the on/off button from somewhere
 else.
 Code starting from here: */
-.switch {
+.run_automatically_switch {
   position: relative;
   display: inline-block;
   width: 48px;
   height: 21px;
 }
-.switch input {
+.run_automatically_switch input {
   opacity: 0;
   width: 0;
   height: 0;
