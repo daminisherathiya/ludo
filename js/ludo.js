@@ -5,7 +5,7 @@
   document.getElementById("red_dice"),
 ];
 
-var no_of_dice_rolls = 0;
+var no_of_dice_rolls_till_now = 0;
 var i = 0;
 var total_players = 4;
 var rank = 1;
@@ -651,8 +651,8 @@ function disable_progressbar() {
 }
 
 function enable_dice() {
-  // no_of_dice_rolls ++;
-  // if (no_of_dice_rolls > 5) {
+  // no_of_dice_rolls_till_now ++;
+  // if (no_of_dice_rolls_till_now > 5) {
   //   return;
   // }
   turn++;
