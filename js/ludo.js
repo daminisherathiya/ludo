@@ -109,16 +109,17 @@ function roll_dice() {
   });
   any_chance_to_move_token();
   var time = 0;
+  var color = get_color_from_idx(i);
   for (var z = 0; z < 6 + random_dice; z++) {
     setTimeout(
       function (z, for_turn) {
         dic[i].src = "./images/dices/" + ((z % 6) + 1) + ".png";
         if (z >= 6 && (z % 6) + 1 == random_dice) {
           document
-            .querySelector("#d-" + i + " img")
+            .querySelector("#"+ color + "_dice_container" + " img")
             .classList.remove("dice_margin");
           document
-            .querySelector("#d-" + i)
+            .querySelector("#"+ color + "_dice_container")
             .classList.remove("dice_border_animation");
           for (var z = 0; z < token_inside_home.length; z++) {
             token_inside_home[z].parentNode.classList.add(
@@ -491,8 +492,9 @@ function set_remainin_token(current_token_id, p_total_token, count) {
   }
 }
 function remove_all_tokens_of_this_player() {
-  document.querySelector("#d-" + i + " img").classList.remove("dice_margin");
-  document.querySelector("#d-" + i).classList.remove("dice_border_animation");
+  var color = get_color_from_idx(i);
+  document.querySelector("#"+ color + "_dice_container" + " img").classList.remove("dice_margin");
+  document.querySelector("#"+ color + "_dice_container").classList.remove("dice_border_animation");
   for (var z = 0; z < token_inside_home.length; z++) {
     token_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
@@ -680,13 +682,14 @@ function enable_dice() {
   if (game_over) {
     return;
   }
+  var color = get_color_from_idx(i);
   var available = document.getElementsByClassName("tokens_of_" + i);
   if (available.length == 0) {
     player_left = true;
     call_to_next_player();
   } else {
-    document.querySelector("#d-" + i + " img").classList.add("dice_margin");
-    document.querySelector("#d-" + i).classList.add("dice_border_animation");
+    document.querySelector("#"+ color + "_dice_container" + " img").classList.add("dice_margin");
+    document.querySelector("#"+ color + "_dice_container").classList.add("dice_border_animation");
     dic[i].addEventListener("click", roll_dice);
     timing();
     if (document.getElementById("my_check").checked == true) {
