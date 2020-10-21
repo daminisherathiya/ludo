@@ -28,14 +28,14 @@ var at_least_one_outside_token_can_be_moved = false;
 var tokens_inside_home = [];
 var tokens_outside_home = [];
 var timer_settimeouts = [];
-function set_pointer_event() {
+function set_pointer_event_depending_on_automatic_or_not() {
   if (document.getElementById("run_automatically_switch_input").checked) {
     disable_pointer_event();
   } else {
     enable_pointer_event();
   }
 }
-set_pointer_event();
+set_pointer_event_depending_on_automatic_or_not();
 enable_dice();
 
 function token_will_be_moved(random_dice, item) {
@@ -316,7 +316,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
     }
     img.classList.add("outside");
     img.classList.remove("running_token");
-    set_pointer_event();
+    set_pointer_event_depending_on_automatic_or_not();
     set_remainin_token(token_place_id, p_total_token, count);
     if (!again_the_same_players_turn) {
       call_to_next_player(count);
@@ -340,7 +340,7 @@ function run_token(
     var img = set_img_at_given_place_id(token_images_directory_path, color, alt, token_place_id);
     img.classList.add("tokens_of_" + turn_of_the_player);
     img.classList.add("outside");
-    set_pointer_event();
+    set_pointer_event_depending_on_automatic_or_not();
     set_remainin_token(token_place_id, p_total_token, 0);
     call_to_next_player();
     return;
