@@ -6,7 +6,7 @@
 ];
 
 var no_of_dice_rolls_till_now = 0;
-var turn_of_the_player = 0; //0 => green, 1=> blue, 2 => yellow, 3 => red 
+var turn_of_the_player = 0; // 0 => green, 1=> blue, 2 => yellow, 3 => red 
 var total_players = 4;
 var rank = 1;
 var player_has_left = false;
@@ -14,20 +14,20 @@ var count_to_avoid_race_conditions = 0;
 var winner_images_directory_path = "./images/winners/";
 var token_images_directory_path = "./images/tokens/";
 var left_user_images_directory_path = "./images/left_users/";
-var dice_images_directory_path = "./images/dices/";  //Show a random dice for the green player upon start.
-var green_player_automatic_turns_used = 0;  //If user do not complete their turn in the allowed time, then we will run tokens automatically for 5 times, but 6th time we will kick them out.
+var dice_images_directory_path = "./images/dices/";
+var green_player_automatic_turns_used = 0;  // If user do not complete their turn in the allowed time, then we will run tokens automatically for 5 times, but 6th time we will kick them out.
 var yellow_player_automatic_turns_used = 0;
 var blue_player_automatic_turns_used = 0;
 var red_player_automatic_turns_used = 0;
 var game_over = false;
-var token_is_running = false;  //Used to avoid race conditions.
-var again_the_same_players_turn = false;  //When the player gets 6 upon the dice roll, or kills other player's tokens, etc.
+var token_is_running = false;  // Used to avoid race conditions.
+var again_the_same_players_turn = false;  // When the player gets 6 upon the dice roll, or kills other player's tokens, etc.
 var random_dice = Math.floor(6 * Math.random()) + 1;
-dices[turn_of_the_player].src = dice_images_directory_path + random_dice + ".png";
+dices[turn_of_the_player].src = dice_images_directory_path + random_dice + ".png";  // Show a random dice for the green player upon start.
 var at_least_one_outside_token_can_be_moved = false;
 var tokens_inside_home = [];
 var tokens_outside_home = [];
-var timer_settimeouts = [];
+var timer_settimeouts = [];  // Used to remove timer when the user finishes their turn.
 function set_pointer_event_depending_on_automatic_or_not() {
   if (document.getElementById("run_automatically_switch_input").checked) {
     disable_pointer_event();
@@ -36,7 +36,7 @@ function set_pointer_event_depending_on_automatic_or_not() {
   }
 }
 set_pointer_event_depending_on_automatic_or_not();
-enable_dice();  //Entry point. All magic starts from here.
+enable_dice();  // Entry point. All magic starts from here.
 
 function token_will_be_moved(random_dice, item) {
   var cid = item.parentNode.getAttribute("id");
@@ -415,7 +415,6 @@ function move_token(event_inn) {
   var id_n_count = next_address(current_token_id, random_dice);
   var token_place_id = id_n_count[0];
   var count = id_n_count[1];
-  // var count = parseInt(current_token_id.substring(3)) + random_dice;
   var previously_total_token = document.querySelectorAll(
     "#" + current_token_id + " img"
   );
