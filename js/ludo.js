@@ -27,7 +27,7 @@ dices[turn_of_the_player].src = dice_images_directory_path + random_dice + ".png
 var at_least_one_outside_token_can_be_moved = false;
 var tokens_inside_home = [];
 var tokens_outside_home = [];
-var timeouts = [];
+var timer_settimeouts = [];
 function set_pointer_event() {
   if (document.getElementById("run_automatically_switch_input").checked) {
     disable_pointer_event();
@@ -604,7 +604,7 @@ function highlight_stage(string, highlight, time) {
     );
     length--;
     time = time + 15;
-    timeouts.push(time_out);
+    timer_settimeouts.push(time_out);
   }
   return time;
 }
@@ -621,7 +621,7 @@ function timing() {
   add_progressbar("2", "timer_border_left");
   add_progressbar("3", "timer_border_bottom");
   add_progressbar("4", "timer_border_right");
-  timeouts = [];
+  timer_settimeouts = [];
   var highlight = document.querySelectorAll(".highlight_" + turn_of_the_player);
   var time = 50;
   time = highlight_stage("left", highlight, time);
@@ -641,8 +641,8 @@ function disable_progressbar() {
     var top_border = document.querySelector("#" + color + "_user" + " .timer_border_top");
     top_border.remove(top_border);
   }
-  for (var z = 0; z < timeouts.length; z++) {
-    clearTimeout(timeouts[z]);
+  for (var z = 0; z < timer_settimeouts.length; z++) {
+    clearTimeout(timer_settimeouts[z]);
   }
   var highlight = document.querySelectorAll(".highlight_" + turn_of_the_player);
   for (var z = 0; z < highlight.length; z++) {
