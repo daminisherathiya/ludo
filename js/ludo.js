@@ -25,7 +25,7 @@ var again_the_same_players_turn = false;  //When the player gets 6 upon the dice
 var random_dice = Math.floor(6 * Math.random()) + 1;
 dices[turn_of_the_player].src = dice_images_directory_path + random_dice + ".png";
 var at_least_one_outside_token_can_be_moved = false;
-var token_inside_home = [];
+var tokens_inside_home = [];
 var token_outside_home = [];
 var timeouts = [];
 function set_pointer_event() {
@@ -64,12 +64,12 @@ function automatic_clicked_token(for_turn) {
   count_to_avoid_race_conditions++;
   var allowed_to_move_token = true;
   var already_come = false;
-  if (token_inside_home.length != 0) {
+  if (tokens_inside_home.length != 0) {
     already_come = true;
     setTimeout(function () {
       allowed_to_move_token = false;
       if (for_turn + 1 == count_to_avoid_race_conditions) {
-        token_inside_home[0].click();
+        tokens_inside_home[0].click();
       }
     }, 1000);
   }
@@ -94,10 +94,10 @@ function roll_dice() {
   dices[turn_of_the_player].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
   // random_dice = 6;
-  // token_inside_home = [];
+  // tokens_inside_home = [];
   if (random_dice == 6) {
-    token_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
-    token_inside_home.forEach(function (item) {
+    tokens_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
+    tokens_inside_home.forEach(function (item) {
       item.addEventListener("click", six_token);
     });
   }
@@ -121,8 +121,8 @@ function roll_dice() {
           document
             .querySelector("#"+ color + "_dice_container")
             .classList.remove("dice_border_animation");
-          for (var z = 0; z < token_inside_home.length; z++) {
-            token_inside_home[z].parentNode.classList.add(
+          for (var z = 0; z < tokens_inside_home.length; z++) {
+            tokens_inside_home[z].parentNode.classList.add(
               "home_token_animation"
             );
           }
@@ -137,7 +137,7 @@ function roll_dice() {
           }
           if (
             (random_dice == 6 &&
-              token_inside_home.length == 0 &&
+              tokens_inside_home.length == 0 &&
               at_least_one_outside_token_can_be_moved == false) ||
             (random_dice != 6 && at_least_one_outside_token_can_be_moved == false)
           ) {
@@ -401,8 +401,8 @@ function run_token(
 
 function move_token(event_inn) {
   count_to_avoid_race_conditions++;
-  for (var z = 0; z < token_inside_home.length; z++) {
-    token_inside_home[z].parentNode.classList.remove("home_token_animation");
+  for (var z = 0; z < tokens_inside_home.length; z++) {
+    tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
   for (var z = 0; z < token_outside_home.length; z++) {
     token_outside_home[z].parentNode.classList.remove(
@@ -430,7 +430,7 @@ function move_token(event_inn) {
 }
 
 function remove_event_listener() {
-  token_inside_home.forEach(function (items) {
+  tokens_inside_home.forEach(function (items) {
     items.removeEventListener("click", six_token);
   });
   token_outside_home.forEach(function (items) {
@@ -439,8 +439,8 @@ function remove_event_listener() {
 }
 function six_token(event_inn) {
   count_to_avoid_race_conditions++;
-  for (var z = 0; z < token_inside_home.length; z++) {
-    token_inside_home[z].parentNode.classList.remove("home_token_animation");
+  for (var z = 0; z < tokens_inside_home.length; z++) {
+    tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
   for (var z = 0; z < token_outside_home.length; z++) {
     token_outside_home[z].parentNode.classList.remove(
@@ -496,8 +496,8 @@ function remove_all_tokens_of_this_player() {
   var color = get_color_from_idx(turn_of_the_player);
   document.querySelector("#"+ color + "_dice_container" + " img").classList.remove("dice_margin");
   document.querySelector("#"+ color + "_dice_container").classList.remove("dice_border_animation");
-  for (var z = 0; z < token_inside_home.length; z++) {
-    token_inside_home[z].parentNode.classList.remove("home_token_animation");
+  for (var z = 0; z < tokens_inside_home.length; z++) {
+    tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
   for (var z = 0; z < token_outside_home.length; z++) {
     token_outside_home[z].parentNode.classList.remove(
@@ -657,7 +657,7 @@ function enable_dice() {
   //   return;
   // }
   count_to_avoid_race_conditions++;
-  token_inside_home = [];
+  tokens_inside_home = [];
   token_outside_home = [];
   player_has_left = false;
   if (
