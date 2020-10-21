@@ -36,7 +36,7 @@ function set_pointer_event_depending_on_automatic_or_not() {
   }
 }
 set_pointer_event_depending_on_automatic_or_not();
-enable_dice();
+enable_dice();  //Entry point. All magic starts from here.
 
 function token_will_be_moved(random_dice, item) {
   var cid = item.parentNode.getAttribute("id");
