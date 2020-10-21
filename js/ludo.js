@@ -19,7 +19,7 @@ var yellow_player_automatic_turns_used = 0;
 var blue_player_automatic_turns_used = 0;
 var red_player_automatic_turns_used = 0;
 var game_over = false;
-var automatic = false;
+var token_is_running = false;
 var turn_again = false;
 var random_dice = Math.floor(6 * Math.random()) + 1;
 dices[turn_of_the_player].src = "./images/dices/" + random_dice + ".png";
@@ -409,7 +409,7 @@ function move_token(event_inn) {
     );
   }
   remove_event_listener();
-  automatic = true;
+  token_is_running = true;
   var current_token_id = event_inn.target.parentNode.getAttribute("id");
   var id_n_count = next_address(current_token_id, random_dice);
   var token_place_id = id_n_count[0];
@@ -447,7 +447,7 @@ function six_token(event_inn) {
     );
   }
   remove_event_listener();
-  automatic = true;
+  token_is_running = true;
   var alt = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
   var token_place_id = "d_" + turn_of_the_player.toString() + "0";
@@ -531,7 +531,7 @@ function player_went() {
   call_to_next_player();
 }
 function leave_stage(increase_dot = true) {
-  if (automatic == false) {
+  if (token_is_running == false) {
     if (increase_dot) {
       var count_dot;
       if (turn_of_the_player == 0) {
@@ -674,7 +674,7 @@ function enable_dice() {
     winner_img.classList.add("winner");
     return;
   }
-  automatic = false;
+  token_is_running = false;
   dices[turn_of_the_player].style.display = "block";
   dices[(turn_of_the_player + 1) % 4].style.display = "none";
   dices[(turn_of_the_player + 2) % 4].style.display = "none";
