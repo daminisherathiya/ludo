@@ -14,10 +14,10 @@ var count_to_avoid_race_conditions = 0;
 var winner_images_directory_path = "./images/winners/";
 var token_images_directory_path = "./images/tokens/";
 var left_user_images_directory_path = "./images/left_users/";
-var green_dot = 1;
-var yellow_dot = 1;
-var blue_dot = 1;
-var red_dot = 1;
+var green_player_automatic_turns_used = 0;  //If user do not complete their turn in the allowed time, then we will run tokens automatically for 5 times, but 6th time we will kick them out.
+var yellow_player_automatic_turns_used = 0;
+var blue_player_automatic_turns_used = 0;
+var red_player_automatic_turns_used = 0;
 var game_over = false;
 var automatic = false;
 var turn_again = false;
@@ -27,7 +27,6 @@ var vis = false;
 var token_inside_home = [];
 var token_outside_home = [];
 var timeouts = [];
-// var allowed_to_move_token = true;
 function set_pointer_event() {
   if (document.getElementById("run_automatically_switch_input").checked) {
     disable_pointer_event();
@@ -536,33 +535,33 @@ function leave_stage(increase_dot = true) {
     if (increase_dot) {
       var count_dot;
       if (turn_of_the_player == 0) {
-        if (green_dot == 6) {
+        if (green_player_automatic_turns_used == 5) {
           player_went();
           return;
         }
-        count_dot = green_dot;
-        green_dot++;
+        count_dot = green_player_automatic_turns_used;
+        green_player_automatic_turns_used++;
       } else if (turn_of_the_player == 1) {
-        if (yellow_dot == 6) {
+        if (yellow_player_automatic_turns_used == 5) {
           player_went();
           return;
         }
-        count_dot = yellow_dot;
-        yellow_dot++;
+        count_dot = yellow_player_automatic_turns_used;
+        yellow_player_automatic_turns_used++;
       } else if (turn_of_the_player == 2) {
-        if (blue_dot == 6) {
+        if (blue_player_automatic_turns_used == 5) {
           player_went();
           return;
         }
-        count_dot = blue_dot;
-        blue_dot++;
+        count_dot = blue_player_automatic_turns_used;
+        blue_player_automatic_turns_used++;
       } else if (turn_of_the_player == 3) {
-        if (red_dot == 6) {
+        if (red_player_automatic_turns_used == 5) {
           player_went();
           return;
         }
-        count_dot = red_dot;
-        red_dot++;
+        count_dot = red_player_automatic_turns_used;
+        red_player_automatic_turns_used++;
       }
       var color = get_color_from_idx(turn_of_the_player);
       var dot = document.querySelector("#dot_of_" + color + "_" + count_dot);
