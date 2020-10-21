@@ -19,8 +19,8 @@ var yellow_player_automatic_turns_used = 0;
 var blue_player_automatic_turns_used = 0;
 var red_player_automatic_turns_used = 0;
 var game_over = false;
-var token_is_running = false;
-var turn_again = false;
+var token_is_running = false;  //Used to avoid race conditions.
+var again_the_same_players_turn = false;  //When the player gets 6 upon the dice roll, or kills other player's tokens, etc.
 var random_dice = Math.floor(6 * Math.random()) + 1;
 dices[turn_of_the_player].src = "./images/dices/" + random_dice + ".png";
 var vis = false;
@@ -210,7 +210,7 @@ function call_to_next_player(count) {
   if (
     total_players == 1 ||
     player_has_left ||
-    (random_dice != 6 && count != 18 && turn_again == false)
+    (random_dice != 6 && count != 18 && again_the_same_players_turn == false)
   ) {
     turn_of_the_player++;
   }
@@ -276,7 +276,7 @@ function backword(current_token_id, alt, last_token) {
 }
 function set_positions(token_place_id, count, img, p_total_token, alt) {
   var safe = document.querySelector("#" + token_place_id + ".safe img");
-  turn_again = false;
+  again_the_same_players_turn = false;
   if (safe == null && p_total_token.length > 0) {
     var last_token = p_total_token[p_total_token.length - 1].getAttribute(
       "alt"
@@ -287,7 +287,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
         alt.substring(2, 3) != alt_name.substring(2, 3) &&
         item.getAttribute("class") != "running_token"
       ) {
-        turn_again = true;
+        again_the_same_players_turn = true;
         backword(token_place_id, alt_name, last_token);
       }
     });
@@ -317,7 +317,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
     img.classList.remove("running_token");
     set_pointer_event();
     set_remainin_token(token_place_id, p_total_token, count);
-    if (!turn_again) {
+    if (!again_the_same_players_turn) {
       call_to_next_player(count);
     }
   }, 1);
