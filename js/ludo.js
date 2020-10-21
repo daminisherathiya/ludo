@@ -26,7 +26,7 @@ var random_dice = Math.floor(6 * Math.random()) + 1;
 dices[turn_of_the_player].src = dice_images_directory_path + random_dice + ".png";
 var at_least_one_outside_token_can_be_moved = false;
 var tokens_inside_home = [];
-var token_outside_home = [];
+var tokens_outside_home = [];
 var timeouts = [];
 function set_pointer_event() {
   if (document.getElementById("run_automatically_switch_input").checked) {
@@ -48,7 +48,7 @@ function token_will_be_moved(random_dice, item) {
 }
 function any_chance_to_move_token() {
   at_least_one_outside_token_can_be_moved = false;
-  token_outside_home.forEach(function (item) {
+  tokens_outside_home.forEach(function (item) {
     if (token_will_be_moved(random_dice, item)) {
       at_least_one_outside_token_can_be_moved = true;
     } else {
@@ -73,16 +73,16 @@ function automatic_clicked_token(for_turn) {
       }
     }, 1000);
   }
-  if (!already_come && at_least_one_outside_token_can_be_moved == true && token_outside_home.length != 0) {
+  if (!already_come && at_least_one_outside_token_can_be_moved == true && tokens_outside_home.length != 0) {
     setTimeout(function () {
       for (var z = 0; z < 4; z++) {
-        if (allowed_to_move_token && token_outside_home.length > z) {
+        if (allowed_to_move_token && tokens_outside_home.length > z) {
           allowed_to_move_token = !token_will_be_moved(
             random_dice,
-            token_outside_home[z]
+            tokens_outside_home[z]
           );
           if (for_turn + 1 == count_to_avoid_race_conditions) {
-            token_outside_home[z].click();
+            tokens_outside_home[z].click();
           }
         }
       }
@@ -101,10 +101,10 @@ function roll_dice() {
       item.addEventListener("click", six_token);
     });
   }
-  token_outside_home = document.querySelectorAll(
+  tokens_outside_home = document.querySelectorAll(
     "td .tokens_of_" + turn_of_the_player + ".outside"
   );
-  token_outside_home.forEach(function (item) {
+  tokens_outside_home.forEach(function (item) {
     item.addEventListener("click", move_token);
   });
   any_chance_to_move_token();
@@ -126,8 +126,8 @@ function roll_dice() {
               "home_token_animation"
             );
           }
-          for (var z = 0; z < token_outside_home.length; z++) {
-            token_outside_home[z].parentNode.classList.add(
+          for (var z = 0; z < tokens_outside_home.length; z++) {
+            tokens_outside_home[z].parentNode.classList.add(
               "outside_token_animation"
             );
           }
@@ -404,8 +404,8 @@ function move_token(event_inn) {
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
-  for (var z = 0; z < token_outside_home.length; z++) {
-    token_outside_home[z].parentNode.classList.remove(
+  for (var z = 0; z < tokens_outside_home.length; z++) {
+    tokens_outside_home[z].parentNode.classList.remove(
       "outside_token_animation"
     );
   }
@@ -433,7 +433,7 @@ function remove_event_listener() {
   tokens_inside_home.forEach(function (items) {
     items.removeEventListener("click", six_token);
   });
-  token_outside_home.forEach(function (items) {
+  tokens_outside_home.forEach(function (items) {
     items.removeEventListener("click", move_token);
   });
 }
@@ -442,8 +442,8 @@ function six_token(event_inn) {
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
-  for (var z = 0; z < token_outside_home.length; z++) {
-    token_outside_home[z].parentNode.classList.remove(
+  for (var z = 0; z < tokens_outside_home.length; z++) {
+    tokens_outside_home[z].parentNode.classList.remove(
       "outside_token_animation"
     );
   }
@@ -499,8 +499,8 @@ function remove_all_tokens_of_this_player() {
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
-  for (var z = 0; z < token_outside_home.length; z++) {
-    token_outside_home[z].parentNode.classList.remove(
+  for (var z = 0; z < tokens_outside_home.length; z++) {
+    tokens_outside_home[z].parentNode.classList.remove(
       "outside_token_animation"
     );
   }
@@ -658,7 +658,7 @@ function enable_dice() {
   // }
   count_to_avoid_race_conditions++;
   tokens_inside_home = [];
-  token_outside_home = [];
+  tokens_outside_home = [];
   player_has_left = false;
   if (
     total_players == 1 &&
