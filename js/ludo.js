@@ -11,9 +11,9 @@ var total_players = 4;
 var rank = 1;
 var player_has_left = false;
 var count_to_avoid_race_conditions = 0;
-var winner_src = "./images/winners/";
-var token_src = "./images/tokens/";
-var left_src = "./images/left_users/";
+var winner_images_directory_path = "./images/winners/";
+var token_images_directory_path = "./images/tokens/";
+var left_user_images_directory_path = "./images/left_users/";
 var green_dot = 1;
 var yellow_dot = 1;
 var blue_dot = 1;
@@ -253,7 +253,7 @@ function backword(current_token_id, alt, last_token) {
         );
         tt.remove(tt);
         var color = get_color_from_idx(player_id);
-        var img = set_img_at_given_place_id(token_src, color, alt, k);
+        var img = set_img_at_given_place_id(token_images_directory_path, color, alt, k);
         if (k == alt) {
           img.classList.add("single_token");
           img.classList.add("tokens_of_" + player_id);
@@ -303,7 +303,7 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
       player_has_left = true;
       total_players--;
       var winner_img = set_img_at_given_place_id(
-        winner_src,
+        winner_images_directory_path,
         rank,
         "",
         "winner_" + turn_of_the_player
@@ -337,7 +337,7 @@ function run_token(
   var time = 200;
   var color = get_color_from_idx(turn_of_the_player);
   if (current_token_id == token_place_id) {
-    var img = set_img_at_given_place_id(token_src, color, alt, token_place_id);
+    var img = set_img_at_given_place_id(token_images_directory_path, color, alt, token_place_id);
     img.classList.add("tokens_of_" + turn_of_the_player);
     img.classList.add("outside");
     set_pointer_event();
@@ -372,7 +372,7 @@ function run_token(
         if (temp_current_id === current_token_id) {
           set_remainin_token(temp_current_id, previously_total_token, 0);
         }
-        var img = set_img_at_given_place_id(token_src, color, alt, next_id);
+        var img = set_img_at_given_place_id(token_images_directory_path, color, alt, next_id);
         var span = document.createElement("span");
         var src = document.getElementById(next_id);
         src.appendChild(span);
@@ -525,7 +525,7 @@ function remove_all_tokens_of_this_player() {
 function player_went() {
   remove_all_tokens_of_this_player();
   var color = get_color_from_idx(turn_of_the_player);
-  var left_img = set_img_at_given_place_id(left_src, color, "", "winner_" + turn_of_the_player);
+  var left_img = set_img_at_given_place_id(left_user_images_directory_path, color, "", "winner_" + turn_of_the_player);
   left_img.classList.add("winner");
   total_players--;
   player_has_left = true;
@@ -667,7 +667,7 @@ function enable_dice() {
   ) {
     remove_all_tokens_of_this_player();
     var winner_img = set_img_at_given_place_id(
-      winner_src,
+      winner_images_directory_path,
       rank,
       "",
       "winner_" + turn_of_the_player
