@@ -24,7 +24,7 @@ var token_is_running = false;  //Used to avoid race conditions.
 var again_the_same_players_turn = false;  //When the player gets 6 upon the dice roll, or kills other player's tokens, etc.
 var random_dice = Math.floor(6 * Math.random()) + 1;
 dices[turn_of_the_player].src = dice_images_directory_path + random_dice + ".png";
-var vis = false;
+var at_least_one_outside_token_can_be_moved = false;
 var token_inside_home = [];
 var token_outside_home = [];
 var timeouts = [];
@@ -47,10 +47,10 @@ function token_will_be_moved(random_dice, item) {
   return false;
 }
 function any_chance_to_move_token() {
-  vis = false;
+  at_least_one_outside_token_can_be_moved = false;
   token_outside_home.forEach(function (item) {
     if (token_will_be_moved(random_dice, item)) {
-      vis = true;
+      at_least_one_outside_token_can_be_moved = true;
     } else {
       item.parentNode.classList.remove("outside_token_animation");
       item.removeEventListener("click", move_token);
@@ -73,7 +73,7 @@ function automatic_clicked_token(for_turn) {
       }
     }, 1000);
   }
-  if (!already_come && vis == true && token_outside_home.length != 0) {
+  if (!already_come && at_least_one_outside_token_can_be_moved == true && token_outside_home.length != 0) {
     setTimeout(function () {
       for (var z = 0; z < 4; z++) {
         if (allowed_to_move_token && token_outside_home.length > z) {
@@ -138,8 +138,8 @@ function roll_dice() {
           if (
             (random_dice == 6 &&
               token_inside_home.length == 0 &&
-              vis == false) ||
-            (random_dice != 6 && vis == false)
+              at_least_one_outside_token_can_be_moved == false) ||
+            (random_dice != 6 && at_least_one_outside_token_can_be_moved == false)
           ) {
             disable_progressbar();
             turn_of_the_player++;
