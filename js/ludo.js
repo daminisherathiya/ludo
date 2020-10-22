@@ -241,9 +241,24 @@ function set_img_at_given_place_id(img_src, color, alt, place_id) {
   src.appendChild(img);
   return img;
 }
+function get_idx_from_color(color) {
+  if(color == "green") {
+    return 0;
+  }
+  else if(color == "yellow") {
+    return 1;
+  }
+  else if(color == "blue") {
+    return 2;
+  }
+  else if(color == "red") {
+    return 3;
+  }
+}
 function backword(current_token_id, alt, last_token) {
   var time = 0;
-  var player_id = parseInt(alt.substring(2, 3));
+  var color_name = alt.split("_");
+  var player_id = get_idx_from_color(color_name[0]);
   var k = pre_address(current_token_id, player_id, alt);
   while (k != 0) {
     setTimeout(
@@ -282,10 +297,14 @@ function set_positions(token_place_id, count, img, p_total_token, alt) {
     var last_token = p_total_token[p_total_token.length - 1].getAttribute(
       "alt"
     );
+    var color_name = alt.split("_");
+    var idx_of_alt = get_idx_from_color(color_name[0]);
     p_total_token.forEach(function (item) {
       var alt_name = item.getAttribute("alt");
+      var color_name = alt_name.split("_");
+      var idx_of_alt_name = get_idx_from_color(color_name[0]);
       if (
-        alt.substring(2, 3) != alt_name.substring(2, 3) &&
+        idx_of_alt != idx_of_alt_name &&
         item.getAttribute("class") != "running_token"
       ) {
         again_the_same_players_turn = true;
@@ -568,7 +587,7 @@ function leave_stage(increase_dot = true) {
       dot.style.background = "#f51c40";
     }
     dices[turn_of_the_player].click();
-    
+
     setTimeout(
       function (for_turn) {
         automatic_clicked_token(for_turn);
