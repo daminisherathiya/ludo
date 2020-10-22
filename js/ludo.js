@@ -68,7 +68,7 @@ function automatic_clicked_token(for_turn) {
     already_come = true;
     setTimeout(function () {
       allowed_to_move_token = false;
-      if (for_turn + 1 == count_to_avoid_race_conditions) {
+      if (for_turn + 1 == count_to_avoid_race_conditions && token_is_running==false) {
         tokens_inside_home[0].click();
       }
     }, 1000);
@@ -76,7 +76,7 @@ function automatic_clicked_token(for_turn) {
   if (!already_come && at_least_one_outside_token_can_be_moved == true && tokens_outside_home.length != 0) {
     setTimeout(function () {
       for (var z = 0; z < 4; z++) {
-        if (allowed_to_move_token && tokens_outside_home.length > z) {
+        if (allowed_to_move_token && tokens_outside_home.length > z && token_is_running==false) {
           allowed_to_move_token = !token_will_be_moved(
             random_dice,
             tokens_outside_home[z]
@@ -400,6 +400,8 @@ function run_token(
 }
 
 function move_token(event_inn) {
+  token_is_running = true;
+  remove_event_listener();
   count_to_avoid_race_conditions++;
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
@@ -409,8 +411,6 @@ function move_token(event_inn) {
       "outside_token_animation"
     );
   }
-  remove_event_listener();
-  token_is_running = true;
   var current_token_id = event_inn.target.parentNode.getAttribute("id");
   var id_n_count = next_address(current_token_id, random_dice);
   var token_place_id = id_n_count[0];
@@ -437,6 +437,8 @@ function remove_event_listener() {
   });
 }
 function six_token(event_inn) {
+  token_is_running = true;
+  remove_event_listener();
   count_to_avoid_race_conditions++;
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
@@ -446,8 +448,6 @@ function six_token(event_inn) {
       "outside_token_animation"
     );
   }
-  remove_event_listener();
-  token_is_running = true;
   var alt = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
   var token_place_id = "d_" + turn_of_the_player.toString() + "0";
@@ -568,7 +568,7 @@ function leave_stage(increase_dot = true) {
       dot.style.background = "#f51c40";
     }
     dices[turn_of_the_player].click();
-
+    
     setTimeout(
       function (for_turn) {
         automatic_clicked_token(for_turn);
