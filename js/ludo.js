@@ -68,7 +68,7 @@ function automatic_clicked_token(for_turn) {
     already_come = true;
     setTimeout(function () {
       allowed_to_move_token = false;
-      if (for_turn + 1 == count_to_avoid_race_conditions && token_is_running==false) {
+      if (for_turn + 1 == count_to_avoid_race_conditions && token_is_running == false) {
         tokens_inside_home[0].click();
       }
     }, 1000);
@@ -76,7 +76,7 @@ function automatic_clicked_token(for_turn) {
   if (!already_come && at_least_one_outside_token_can_be_moved == true && tokens_outside_home.length != 0) {
     setTimeout(function () {
       for (var z = 0; z < 4; z++) {
-        if (allowed_to_move_token && tokens_outside_home.length > z && token_is_running==false) {
+        if (allowed_to_move_token && tokens_outside_home.length > z && token_is_running == false) {
           allowed_to_move_token = !token_will_be_moved(
             random_dice,
             tokens_outside_home[z]
@@ -116,10 +116,10 @@ function roll_dice() {
         dices[turn_of_the_player].src = "./images/dices/" + ((z % 6) + 1) + ".png";
         if (z >= 6 && (z % 6) + 1 == random_dice) {
           document
-            .querySelector("#"+ color + "_dice_container" + " img")
+            .querySelector("#" + color + "_dice_container" + " img")
             .classList.remove("dice_margin");
           document
-            .querySelector("#"+ color + "_dice_container")
+            .querySelector("#" + color + "_dice_container")
             .classList.remove("dice_border_animation");
           for (var z = 0; z < tokens_inside_home.length; z++) {
             tokens_inside_home[z].parentNode.classList.add(
@@ -157,10 +157,9 @@ function roll_dice() {
   }
 }
 
-function changed_it_in_two_digit_number(number){
+function changed_it_in_two_digit_number(number) {
   number = number.toString();
-  if(number.length==1)
-  {
+  if (number.length == 1) {
     return "0" + number;
   }
   return number;
@@ -254,16 +253,16 @@ function set_img_at_given_place_id(img_src, color, alt, place_id) {
   return img;
 }
 function get_idx_from_color(color) {
-  if(color == "green") {
+  if (color == "green") {
     return 0;
   }
-  else if(color == "yellow") {
+  else if (color == "yellow") {
     return 1;
   }
-  else if(color == "blue") {
+  else if (color == "blue") {
     return 2;
   }
-  else if(color == "red") {
+  else if (color == "red") {
     return 3;
   }
 }
@@ -493,7 +492,7 @@ function set_remainin_token(current_token_id, p_total_token, count) {
   var color = get_color_from_idx(turn_of_the_player);
   if (a_total_token_length == 1) {
     if (count == 18) {
-      a_total_token[0].classList.add("single_"+ color + "_token_inside_destination");
+      a_total_token[0].classList.add("single_" + color + "_token_inside_destination");
     } else {
       a_total_token[0].classList.remove("multiple_tokens");
       a_total_token[0].classList.add("single_token");
@@ -524,8 +523,8 @@ function set_remainin_token(current_token_id, p_total_token, count) {
 }
 function remove_all_tokens_of_this_player() {
   var color = get_color_from_idx(turn_of_the_player);
-  document.querySelector("#"+ color + "_dice_container" + " img").classList.remove("dice_margin");
-  document.querySelector("#"+ color + "_dice_container").classList.remove("dice_border_animation");
+  document.querySelector("#" + color + "_dice_container" + " img").classList.remove("dice_margin");
+  document.querySelector("#" + color + "_dice_container").classList.remove("dice_border_animation");
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
@@ -610,7 +609,7 @@ function leave_stage(increase_dot = true) {
   }
 }
 function highlight_stage(string, highlight, time) {
-  var color=get_color_from_idx(turn_of_the_player);
+  var color = get_color_from_idx(turn_of_the_player);
   var border = document.querySelector("#" + color + "_user" + " div.timer_border_" + string);
   var length = 99;
   while (length >= 0) {
@@ -720,8 +719,8 @@ function enable_dice() {
     player_has_left = true;
     call_to_next_player();
   } else {
-    document.querySelector("#"+ color + "_dice_container" + " img").classList.add("dice_margin");
-    document.querySelector("#"+ color + "_dice_container").classList.add("dice_border_animation");
+    document.querySelector("#" + color + "_dice_container" + " img").classList.add("dice_margin");
+    document.querySelector("#" + color + "_dice_container").classList.add("dice_border_animation");
     dices[turn_of_the_player].addEventListener("click", roll_dice);
     timing();
     if (document.getElementById("run_automatically_switch_input").checked == true) {
