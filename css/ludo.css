@@ -245,6 +245,7 @@ input:checked + .slider:after {
   position: relative;
   width: 405px;
   margin: auto;
+  margin-bottom: -4px;
   display: flex;
   justify-content: space-between;
 }
@@ -691,24 +692,6 @@ img {
 
   .users_panel {
     width: 375px;
-  }
-
-  .dice {
-    width: 51px;
-    height: 51px;
-  }
-  .dice_container {
-    width: 61px;
-    height: 61px;
-  }
-
-  .user {
-    height: 73px;
-    width: 73px;
-  }
-  .user img {
-    height: 71px;
-    width: 71px;
   }
 
   .winner {
