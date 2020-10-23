@@ -40,7 +40,7 @@ enable_dice();  // Entry point. All magic starts from here.
 
 function token_will_be_moved(random_dice, item) {
   var cid = item.parentNode.getAttribute("id");
-  var n = parseInt(cid.substring(3)) + random_dice;
+  var n = parseInt(cid.substring(6)) + random_dice;
   if (n < 19) {
     return true;
   }
@@ -157,12 +157,21 @@ function roll_dice() {
   }
 }
 
+function changed_it_in_two_digit_number(number){
+  number = number.toString();
+  if(number.length==1)
+  {
+    return "0" + number;
+  }
+  return number;
+}
+
 function pre_address(current_token_id, tag, alt) {
   if (current_token_id == alt) {
     return 0;
   }
-  var count = parseInt(current_token_id.substring(3)) - 1;
-  var place_tag = parseInt(current_token_id.substring(2, 3));
+  var count = parseInt(current_token_id.substring(6)) - 1;
+  var place_tag = parseInt(current_token_id.substring(5, 6));
 
   if (place_tag != tag && count < 0) {
     count = 12;
@@ -175,12 +184,13 @@ function pre_address(current_token_id, tag, alt) {
   if (count == -1) {
     return alt;
   }
-  var token_place_id = "d_" + place_tag + count;
+  var number = changed_it_in_two_digit_number(count);
+  var token_place_id = "cell_" + place_tag + number;
   return token_place_id;
 }
 function next_address(current_token_id, steps) {
-  var count = parseInt(current_token_id.substring(3)) + steps;
-  var place_tag = parseInt(current_token_id.substring(2, 3));
+  var count = parseInt(current_token_id.substring(6)) + steps;
+  var place_tag = parseInt(current_token_id.substring(5, 6));
   if (count == 12) {
     var temp_place_tag = (place_tag + 1) % 4;
     if (temp_place_tag == turn_of_the_player) {
@@ -190,7 +200,7 @@ function next_address(current_token_id, steps) {
   } else if (count > 12) {
     var temp_count = count;
     count = count - 13;
-    if (current_token_id.substring(3) < 13) {
+    if (current_token_id.substring(6) < 13) {
       place_tag = (place_tag + 1) % 4;
     } else {
       temp_count--;
@@ -199,12 +209,14 @@ function next_address(current_token_id, steps) {
       count = temp_count + 1;
     }
   }
-  var token_place_id = "d_" + place_tag + count;
-  if (count == 18) {
+
+  var number = changed_it_in_two_digit_number(count);
+  var token_place_id = "cell_" + place_tag + number;
+  if (number == 18) {
     var color = get_color_from_idx(turn_of_the_player);
     token_place_id = "destination_for_" + color + "_tokens";
   }
-  return [token_place_id, count];
+  return [token_place_id, number];
 }
 function call_to_next_player(count) {
   disable_progressbar();
@@ -469,7 +481,7 @@ function six_token(event_inn) {
   }
   var alt = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
-  var token_place_id = "d_" + turn_of_the_player.toString() + "0";
+  var token_place_id = "cell_" + turn_of_the_player.toString() + "00";
   run_token(token_place_id, token_place_id, 0, alt);
 }
 
