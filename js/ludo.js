@@ -38,18 +38,18 @@ function set_pointer_event_depending_on_automatic_or_not() {
 set_pointer_event_depending_on_automatic_or_not();
 enable_dice();  // Entry point. All magic starts from here.
 
-function token_will_be_moved(random_dice, item) {
-  var cid = item.parentNode.getAttribute("id");
-  var n = parseInt(cid.substring(6)) + random_dice;
-  if (n < 19) {
+function check_if_token_can_be_moved(random_dice, outside_token) {
+  var current_cell_id = outside_token.parentNode.getAttribute("id");  // e.g., "cell_312".
+  var n = parseInt(current_cell_id.substring(6)) + random_dice;
+  if (n < 19) {  // Check "images/cell_ids_explanation.png" for better understanding.
     return true;
   }
   return false;
 }
-function any_chance_to_move_token() {
+function set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved() {
   at_least_one_outside_token_can_be_moved = false;
   tokens_outside_home.forEach(function (item) {
-    if (token_will_be_moved(random_dice, item)) {
+    if (check_if_token_can_be_moved(random_dice, item)) {
       at_least_one_outside_token_can_be_moved = true;
     } else {
       item.parentNode.classList.remove("outside_token_animation");
@@ -77,7 +77,7 @@ function automatic_clicked_token(for_turn) {
     setTimeout(function () {
       for (var z = 0; z < 4; z++) {
         if (allowed_to_move_token && tokens_outside_home.length > z && token_is_running == false) {
-          allowed_to_move_token = !token_will_be_moved(
+          allowed_to_move_token = !check_if_token_can_be_moved(
             random_dice,
             tokens_outside_home[z]
           );
@@ -107,7 +107,7 @@ function roll_dice() {
   tokens_outside_home.forEach(function (item) {
     item.addEventListener("click", move_token);
   });
-  any_chance_to_move_token();
+  set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
   var time = 0;
   var color = get_color_from_idx(turn_of_the_player);
   for (var z = 0; z < 6 + random_dice; z++) {
@@ -131,7 +131,7 @@ function roll_dice() {
               "outside_token_animation"
             );
           }
-          any_chance_to_move_token();
+          set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
           if (document.getElementById("run_automatically_switch_input").checked == true) {
             automatic_clicked_token(for_turn);
           }
