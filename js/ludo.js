@@ -38,7 +38,7 @@ function set_pointer_event_depending_on_automatic_or_not() {
 set_pointer_event_depending_on_automatic_or_not();
 enable_dice();  // Entry point. All magic starts from here.
 
-function check_if_token_can_be_moved(random_dice, outside_token) {
+function check_if_token_can_be_moved(outside_token) {
   var current_cell_id = outside_token.parentNode.getAttribute("id");  // e.g., "cell_312".
   var n = parseInt(current_cell_id.substring(6)) + random_dice;
   if (n < 19) {  // Check "images/cell_ids_explanation.png" for better understanding.
@@ -48,12 +48,12 @@ function check_if_token_can_be_moved(random_dice, outside_token) {
 }
 function set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved() {
   at_least_one_outside_token_can_be_moved = false;
-  tokens_outside_home.forEach(function (item) {
-    if (check_if_token_can_be_moved(random_dice, item)) {
+  tokens_outside_home.forEach(function (outside_token) {
+    if (check_if_token_can_be_moved(outside_token)) {
       at_least_one_outside_token_can_be_moved = true;
     } else {
-      item.parentNode.classList.remove("outside_token_animation");
-      item.removeEventListener("click", move_token);
+      outside_token.parentNode.classList.remove("outside_token_animation");
+      outside_token.removeEventListener("click", move_token);
     }
   });
 }
@@ -71,7 +71,7 @@ function automatic_clicked_token(for_turn) {
   } else if (at_least_one_outside_token_can_be_moved == true && tokens_outside_home.length != 0) {
     setTimeout(function () {
       for (var z = 0; z < tokens_outside_home.length && !token_is_running; z++) {
-        if (check_if_token_can_be_moved(random_dice, tokens_outside_home[z]) && for_turn + 1 == count_to_avoid_race_conditions) {
+        if (check_if_token_can_be_moved(tokens_outside_home[z]) && for_turn + 1 == count_to_avoid_race_conditions) {
           tokens_outside_home[z].click();
           break;
         }
