@@ -62,28 +62,18 @@ function automatic_clicked_token(for_turn) {
     return;
   }
   count_to_avoid_race_conditions++;
-  var allowed_to_move_token = true;
-  var already_come = false;
   if (tokens_inside_home.length != 0) {
-    already_come = true;
     setTimeout(function () {
-      allowed_to_move_token = false;
       if (for_turn + 1 == count_to_avoid_race_conditions && token_is_running == false) {
         tokens_inside_home[0].click();
       }
     }, 1000);
-  }
-  if (!already_come && at_least_one_outside_token_can_be_moved == true && tokens_outside_home.length != 0) {
+  } else if (at_least_one_outside_token_can_be_moved == true && tokens_outside_home.length != 0) {
     setTimeout(function () {
-      for (var z = 0; z < 4; z++) {
-        if (allowed_to_move_token && tokens_outside_home.length > z && token_is_running == false) {
-          allowed_to_move_token = !check_if_token_can_be_moved(
-            random_dice,
-            tokens_outside_home[z]
-          );
-          if (for_turn + 1 == count_to_avoid_race_conditions) {
-            tokens_outside_home[z].click();
-          }
+      for (var z = 0; z < tokens_outside_home.length && !token_is_running; z++) {
+        if (check_if_token_can_be_moved(random_dice, tokens_outside_home[z]) && for_turn + 1 == count_to_avoid_race_conditions) {
+          tokens_outside_home[z].click();
+          break;
         }
       }
     }, 1000);
