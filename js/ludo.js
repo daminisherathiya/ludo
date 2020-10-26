@@ -109,8 +109,8 @@ function roll_dice() {
   dices[turn_of_the_player].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
   // random_dice = 6;
-  add_event_listener_for_tokens();
-  set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
+  add_event_listener_for_tokens();  // This is needed here so that "automatically_run_token" can work correctly if called in case of timeout.
+  set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved(); // This is needed here so that "automatically_run_token" can work correctly if called in case of timeout.
   var time = 0;
   for (var z = 0; z < 6 + random_dice; z++) {  // Used for animation: suppose random_dice = 3. Then first show dice_1.png and wait for some time, then show dice_2.png and wait for some time, ..., then show dice_6.png and wait for some time, then show dice_1.png and wait for some time, ..., then show dice_3.png and stop.
     setTimeout(
