@@ -162,14 +162,14 @@ function make_two_digits_number(number) {
   return number;
 }
 
-function previous_address(current_cell_id, tag, related_circle_id) {
+function previous_address(current_cell_id, related_circle_id) {
   if (current_cell_id == related_circle_id) {
     return 0;
   }
   var count = parseInt(current_cell_id.substring(6)) - 1;
   var place_tag = parseInt(current_cell_id.substring(5, 6));
 
-  if (place_tag != tag && count < 0) {
+  if (place_tag != turn_of_the_player && count < 0) {
     count = 12;
     if (place_tag == 0) {
       place_tag = 3;
@@ -267,7 +267,7 @@ function backword(current_cell_id, related_circle_id, last_token) {
   var time = 0;
   var color_name = related_circle_id.split("_");
   var player_id = get_idx_from_color(color_name[0]);
-  var k = previous_address(current_cell_id, player_id, related_circle_id);
+  var k = previous_address(current_cell_id, related_circle_id);
   while (k != 0) {
     setTimeout(
       function (k, current_cell_id, player_id, related_circle_id) {
@@ -295,7 +295,7 @@ function backword(current_cell_id, related_circle_id, last_token) {
     );
     time = time + 35;
     current_cell_id = k;
-    k = previous_address(k, player_id, related_circle_id);
+    k = previous_address(k, related_circle_id);
   }
 }
 function set_positions(token_place_id, count, img, p_total_token, related_circle_id) {
