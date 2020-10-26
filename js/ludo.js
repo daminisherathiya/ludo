@@ -327,15 +327,7 @@ function set_positions(token_place_id, count, img, p_total_token, related_circle
       count == 18 &&
       document.getElementsByClassName("tokens_of_" + turn_of_the_player).length == 0
     ) {
-      player_has_left = true;
-      total_players--;
-      var winner_img = set_img_at_given_place_id(
-        winner_images_directory_path,
-        rank,
-        "",
-        "winner_" + turn_of_the_player
-      );
-      winner_img.classList.add("winner");
+      make_winner();
       rank++;
       if (rank == 4) {
         game_over = true;
@@ -676,7 +668,23 @@ function disable_progressbar() {
     highlight[z].classList.remove("light_" + color);
   }
 }
-
+function make_winner(){
+  player_has_left = true;
+  total_players--;
+  var winner_img = set_img_at_given_place_id(
+    winner_images_directory_path,
+    rank,
+    "",
+    "winner_" + turn_of_the_player
+  );
+  winner_img.classList.add("winner");
+}
+function set_dices_display(){
+  dices[turn_of_the_player].style.display = "block";
+  dices[(turn_of_the_player + 1) % 4].style.display = "none";
+  dices[(turn_of_the_player + 2) % 4].style.display = "none";
+  dices[(turn_of_the_player + 3) % 4].style.display = "none";
+}
 function enable_dice() {
   // no_of_dice_rolls_till_now ++;
   // if (no_of_dice_rolls_till_now > 5) {
@@ -686,36 +694,26 @@ function enable_dice() {
   tokens_inside_home = [];  // Reset global variables
   tokens_outside_home = [];  // Reset global variables
   player_has_left = false;  // Reset global variables
+  token_is_running = false; // Reset global variables
   if (
     total_players == 1 &&
     document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
     rank != 4
   ) {
     remove_all_tokens_of_this_player();
-    var winner_img = set_img_at_given_place_id(
-      winner_images_directory_path,
-      rank,
-      "",
-      "winner_" + turn_of_the_player
-    );
-    winner_img.classList.add("winner");
+    make_winner();
     return;
   }
-  token_is_running = false;
-  dices[turn_of_the_player].style.display = "block";
-  dices[(turn_of_the_player + 1) % 4].style.display = "none";
-  dices[(turn_of_the_player + 2) % 4].style.display = "none";
-  dices[(turn_of_the_player + 3) % 4].style.display = "none";
-
+  set_dices_display();
   if (game_over) {
     return;
   }
-  var color = get_color_from_idx(turn_of_the_player);
   var available = document.getElementsByClassName("tokens_of_" + turn_of_the_player);
   if (available.length == 0) {
     player_has_left = true;
     call_to_next_player();
   } else {
+    var color = get_color_from_idx(turn_of_the_player);
     document.querySelector("#" + color + "_dice_container" + " img").classList.add("dice_margin");
     document.querySelector("#" + color + "_dice_container").classList.add("dice_border_animation");
     dices[turn_of_the_player].addEventListener("click", roll_dice);
