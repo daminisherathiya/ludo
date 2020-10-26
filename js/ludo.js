@@ -64,7 +64,7 @@ function automatically_run_token(passed_count_to_avoid_race_conditions) {
   count_to_avoid_race_conditions++;  // To avoid race conditions.
   if (tokens_inside_home.length != 0) {
     setTimeout(function () {
-      if (passed_count_to_avoid_race_conditions + 1 == count_to_avoid_race_conditions && token_is_running == false) {
+      if (passed_count_to_avoid_race_conditions + 1 == count_to_avoid_race_conditions && !token_is_running) {
         tokens_inside_home[0].click();
       }
     }, 1000);
@@ -93,6 +93,18 @@ function add_event_listener_for_tokens(){
     item.addEventListener("click", move_token);
   });
 }
+function add_animation_for_tokens(){
+  for (var z = 0; z < tokens_inside_home.length; z++) {
+    tokens_inside_home[z].parentNode.classList.add(
+      "home_token_animation"
+    );
+  }
+  for (var z = 0; z < tokens_outside_home.length; z++) {
+    tokens_outside_home[z].parentNode.classList.add(
+      "outside_token_animation"
+    );
+  }
+}
 function roll_dice() {
   dices[turn_of_the_player].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
@@ -100,43 +112,37 @@ function roll_dice() {
   add_event_listener_for_tokens();
   set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
   var time = 0;
-  var color = get_color_from_idx(turn_of_the_player);
-  for (var z = 0; z < 6 + random_dice; z++) {
+  for (var z = 0; z < 6 + random_dice; z++) {  // Used for animation: suppose random_dice = 3. Then first show dice_1.png and wait for some time, then show dice_2.png and wait for some time, ..., then show dice_6.png and wait for some time, then show dice_1.png and wait for some time, ..., then show dice_3.png and stop.
     setTimeout(
       function (z, passed_count_to_avoid_race_conditions) {
         dices[turn_of_the_player].src = "./images/dices/" + ((z % 6) + 1) + ".png";
-        if (z >= 6 && (z % 6) + 1 == random_dice) {
+        if (z >= 6 && (z % 6) + 1 == random_dice) {  // The animation stops here.
+          var color = get_color_from_idx(turn_of_the_player);
           document
             .querySelector("#" + color + "_dice_container" + " img")
             .classList.remove("dice_margin");
           document
             .querySelector("#" + color + "_dice_container")
             .classList.remove("dice_border_animation");
-          for (var z = 0; z < tokens_inside_home.length; z++) {
-            tokens_inside_home[z].parentNode.classList.add(
-              "home_token_animation"
-            );
-          }
-          for (var z = 0; z < tokens_outside_home.length; z++) {
-            tokens_outside_home[z].parentNode.classList.add(
-              "outside_token_animation"
-            );
-          }
-          set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
-          if (document.getElementById("run_automatically_switch_input").checked == true) {
-            automatically_run_token(passed_count_to_avoid_race_conditions);
-          }
+          
           if (
             (random_dice == 6 &&
               tokens_inside_home.length == 0 &&
-              at_least_one_outside_token_can_be_moved == false) ||
-            (random_dice != 6 && at_least_one_outside_token_can_be_moved == false)
+              !at_least_one_outside_token_can_be_moved) ||
+            (random_dice != 6 && !at_least_one_outside_token_can_be_moved)
           ) {
             disable_progressbar();
             turn_of_the_player++;
             turn_of_the_player = turn_of_the_player % 4;
             dices[turn_of_the_player].src = "./images/dices/" + random_dice + ".png";
             setTimeout(enable_dice, 500);
+            return;
+          }
+
+          add_animation_for_tokens();
+          set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
+          if (document.getElementById("run_automatically_switch_input").checked) {
+            automatically_run_token(passed_count_to_avoid_race_conditions);
           }
         }
       },
@@ -148,7 +154,7 @@ function roll_dice() {
   }
 }
 
-function changed_it_in_two_digit_number(number) {
+function make_two_digits_number(number) {
   number = number.toString();
   if (number.length == 1) {
     return "0" + number;
@@ -174,7 +180,7 @@ function pre_address(current_token_id, tag, alt) {
   if (count == -1) {
     return alt;
   }
-  var number = changed_it_in_two_digit_number(count);
+  var number = make_two_digits_number(count);
   var token_place_id = "cell_" + place_tag + number;
   return token_place_id;
 }
@@ -200,7 +206,7 @@ function next_address(current_token_id, steps) {
     }
   }
 
-  var number = changed_it_in_two_digit_number(count);
+  var number = make_two_digits_number(count);
   var token_place_id = "cell_" + place_tag + number;
   if (number == 18) {
     var color = get_color_from_idx(turn_of_the_player);
@@ -213,7 +219,7 @@ function call_to_next_player(count) {
   if (
     total_players == 1 ||
     player_has_left ||
-    (random_dice != 6 && count != 18 && again_the_same_players_turn == false)
+    (random_dice != 6 && count != 18 && !again_the_same_players_turn)
   ) {
     turn_of_the_player++;
   }
@@ -552,7 +558,7 @@ function player_went() {
   call_to_next_player();
 }
 function leave_stage(increase_dot = true) {
-  if (token_is_running == false) {
+  if (!token_is_running) {
     if (increase_dot) {
       var count_dot;
       if (turn_of_the_player == 0) {
@@ -714,7 +720,7 @@ function enable_dice() {
     document.querySelector("#" + color + "_dice_container").classList.add("dice_border_animation");
     dices[turn_of_the_player].addEventListener("click", roll_dice);
     timing();
-    if (document.getElementById("run_automatically_switch_input").checked == true) {
+    if (document.getElementById("run_automatically_switch_input").checked) {
       setTimeout(function () {
         dices[turn_of_the_player].click();
       }, 1000);
