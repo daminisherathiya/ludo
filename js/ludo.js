@@ -683,9 +683,9 @@ function enable_dice() {
   //   return;
   // }
   count_to_avoid_race_conditions++;
-  tokens_inside_home = [];
-  tokens_outside_home = [];
-  player_has_left = false;
+  tokens_inside_home = [];  // Reset global variables
+  tokens_outside_home = [];  // Reset global variables
+  player_has_left = false;  // Reset global variables
   if (
     total_players == 1 &&
     document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
