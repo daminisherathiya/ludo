@@ -162,7 +162,7 @@ function make_two_digits_number(number) {
   return number;
 }
 
-function pre_address(current_token_id, tag, alt) {
+function previous_address(current_token_id, tag, alt) {
   if (current_token_id == alt) {
     return 0;
   }
@@ -267,7 +267,7 @@ function backword(current_token_id, alt, last_token) {
   var time = 0;
   var color_name = alt.split("_");
   var player_id = get_idx_from_color(color_name[0]);
-  var k = pre_address(current_token_id, player_id, alt);
+  var k = previous_address(current_token_id, player_id, alt);
   while (k != 0) {
     setTimeout(
       function (k, current_token_id, player_id, alt) {
@@ -295,7 +295,7 @@ function backword(current_token_id, alt, last_token) {
     );
     time = time + 35;
     current_token_id = k;
-    k = pre_address(k, player_id, alt);
+    k = previous_address(k, player_id, alt);
   }
 }
 function set_positions(token_place_id, count, img, p_total_token, alt) {
