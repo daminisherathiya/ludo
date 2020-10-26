@@ -374,7 +374,7 @@ function run_token(
         remove_token.remove(remove_token);
         var remove_animation;
         setTimeout(
-          function (current_cell_id) {
+          function (current_cell_id, current_player_color) {
             remove_animation = document.querySelector(
               "#" + current_cell_id + " span.running_" + current_player_color + "_token_animation"
             );
@@ -382,7 +382,7 @@ function run_token(
           },
           500,
           current_cell_id,
-          turn_of_the_player
+          current_player_color
         );
         if (temp_current_id === current_cell_id) {
           set_remainin_token(temp_current_id, previously_total_token, 0);
