@@ -30,9 +30,9 @@ var tokens_outside_home = [];
 var timer_settimeouts = [];  // Used to remove timer when the user finishes their turn.
 function set_pointer_event_depending_on_automatic_or_not() {
   if (document.getElementById("run_automatically_switch_input").checked) {
-    disable_pointer_event();
+    disable_pointer_event_for_dices_and_tokens();
   } else {
-    enable_pointer_event();
+    enable_pointer_event_for_dices_and_tokens();
   }
 }
 set_pointer_event_depending_on_automatic_or_not();
@@ -727,36 +727,36 @@ function enable_dice() {
     }
   }
 }
-function enable_pointer_event() {
+function enable_pointer_event_for_dices_and_tokens() {
   var all_tokens = document.querySelectorAll(
     ".tokens_of_0,.tokens_of_1,.tokens_of_2,.tokens_of_3"
   );
   var all_dices = document.querySelectorAll(".dice");
   for (var z = 0; z < all_tokens.length; z++) {
-    all_tokens[z].classList.remove("disable_pointer_event");
+    all_tokens[z].classList.remove("disable_pointer_event_for_dices_and_tokens");
   }
   for (var z = 0; z < all_dices.length; z++) {
-    all_dices[z].classList.remove("disable_pointer_event");
+    all_dices[z].classList.remove("disable_pointer_event_for_dices_and_tokens");
   }
 }
-function disable_pointer_event() {
+function disable_pointer_event_for_dices_and_tokens() {
   var all_tokens = document.querySelectorAll(
     ".tokens_of_0,.tokens_of_1,.tokens_of_2,.tokens_of_3"
   );
   var all_dices = document.querySelectorAll(".dice");
   for (var z = 0; z < all_tokens.length; z++) {
-    all_tokens[z].classList.add("disable_pointer_event");
+    all_tokens[z].classList.add("disable_pointer_event_for_dices_and_tokens");
   }
   for (var z = 0; z < all_dices.length; z++) {
-    all_dices[z].classList.add("disable_pointer_event");
+    all_dices[z].classList.add("disable_pointer_event_for_dices_and_tokens");
   }
 }
 
 document.getElementById("run_automatically_switch_input").addEventListener("change", function () {
   if (this.checked) {
-    disable_pointer_event();
+    disable_pointer_event_for_dices_and_tokens();
     leave_stage(false);
   } else {
-    enable_pointer_event();
+    enable_pointer_event_for_dices_and_tokens();
   }
 });
