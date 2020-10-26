@@ -68,7 +68,7 @@ function automatically_run_token(passed_count_to_avoid_race_conditions) {
         tokens_inside_home[0].click();
       }
     }, 1000);
-  } else if (at_least_one_outside_token_can_be_moved == true && tokens_outside_home.length != 0) {
+  } else if (at_least_one_outside_token_can_be_moved && tokens_outside_home.length != 0) {
     setTimeout(function () {
       for (var z = 0; z < tokens_outside_home.length && !token_is_running; z++) {
         if (check_if_token_can_be_moved(tokens_outside_home[z]) && passed_count_to_avoid_race_conditions + 1 == count_to_avoid_race_conditions) {
@@ -79,11 +79,7 @@ function automatically_run_token(passed_count_to_avoid_race_conditions) {
     }, 1000);
   }
 }
-
-function roll_dice() {
-  dices[turn_of_the_player].removeEventListener("click", roll_dice);
-  random_dice = Math.floor(6 * Math.random()) + 1;
-  // random_dice = 6;
+function add_event_listener_for_tokens(){
   if (random_dice == 6) {
     tokens_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
     tokens_inside_home.forEach(function (item) {
@@ -96,6 +92,12 @@ function roll_dice() {
   tokens_outside_home.forEach(function (item) {
     item.addEventListener("click", move_token);
   });
+}
+function roll_dice() {
+  dices[turn_of_the_player].removeEventListener("click", roll_dice);
+  random_dice = Math.floor(6 * Math.random()) + 1;
+  // random_dice = 6;
+  add_event_listener_for_tokens();
   set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
   var time = 0;
   var color = get_color_from_idx(turn_of_the_player);
@@ -420,7 +422,7 @@ function run_token(
 
 function move_token(event_inn) {
   token_is_running = true;
-  remove_event_listener();
+  remove_event_listener_for_tokens();
   count_to_avoid_race_conditions++;
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
@@ -447,7 +449,7 @@ function move_token(event_inn) {
   );
 }
 
-function remove_event_listener() {
+function remove_event_listener_for_tokens() {
   tokens_inside_home.forEach(function (items) {
     items.removeEventListener("click", six_token);
   });
@@ -457,7 +459,7 @@ function remove_event_listener() {
 }
 function six_token(event_inn) {
   token_is_running = true;
-  remove_event_listener();
+  remove_event_listener_for_tokens();
   count_to_avoid_race_conditions++;
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
