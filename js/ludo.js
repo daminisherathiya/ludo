@@ -590,7 +590,7 @@ function leave_stage(increase_dot = true) {
     );
   }
 }
-function highlight_stage(string, highlight, time) {
+function highlight_stage(string, home_borders, time) {
   var border = document.querySelector("#" + current_player_color + "_user" + " div.timer_border_" + string);
   var length = 99;
   while (length >= 0) {
@@ -601,8 +601,8 @@ function highlight_stage(string, highlight, time) {
         } else {
           border.style.width = length + "%";
         }
-        for (var z = 0; z < highlight.length && length % 15 == 0; z++) {
-          highlight[z].classList.toggle("light_" + current_player_color);
+        for (var z = 0; z < home_borders.length && length % 15 == 0; z++) {
+          home_borders[z].classList.toggle("light_" + current_player_color);
         }
         if (length == 0 && string == "top") {
           leave_stage();
@@ -630,12 +630,12 @@ function start_timer() {
   add_progressbar("3", "timer_border_bottom");
   add_progressbar("4", "timer_border_right");
   timer_settimeouts = [];
-  var highlight = document.querySelectorAll(".highlight_" + current_player_color);
+  var home_borders = document.querySelectorAll(".highlight_" + current_player_color);
   var time = 50;
-  time = highlight_stage("left", highlight, time);
-  time = highlight_stage("bottom", highlight, time);
-  time = highlight_stage("right", highlight, time);
-  highlight_stage("top", highlight, time);
+  time = highlight_stage("left", home_borders, time);
+  time = highlight_stage("bottom", home_borders, time);
+  time = highlight_stage("right", home_borders, time);
+  highlight_stage("top", home_borders, time);
 }
 function disable_progressbar() {
   var left_border = document.querySelector("#" + current_player_color + "_user" + " .timer_border_left");
@@ -651,9 +651,9 @@ function disable_progressbar() {
   for (var z = 0; z < timer_settimeouts.length; z++) {
     clearTimeout(timer_settimeouts[z]);
   }
-  var highlight = document.querySelectorAll(".highlight_" + current_player_color);
-  for (var z = 0; z < highlight.length; z++) {
-    highlight[z].classList.remove("light_" + current_player_color);
+  var home_borders = document.querySelectorAll(".highlight_" + current_player_color);
+  for (var z = 0; z < home_borders.length; z++) {
+    home_borders[z].classList.remove("light_" + current_player_color);
   }
 }
 function make_winner(){
