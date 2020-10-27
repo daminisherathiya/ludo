@@ -16,10 +16,7 @@ var winner_images_directory_path = "./images/winners/";
 var token_images_directory_path = "./images/tokens/";
 var left_user_images_directory_path = "./images/left_users/";
 var dice_images_directory_path = "./images/dices/";
-var green_player_automatic_turns_used = 0;  // If user do not complete their turn in the allowed time, then we will run tokens automatically for 5 times, but 6th time we will kick them out.
-var yellow_player_automatic_turns_used = 0;
-var blue_player_automatic_turns_used = 0;
-var red_player_automatic_turns_used = 0;
+var automatic_turns_used = [0, 0, 0, 0];  // 0 => green, 1=> blue, 2 => yellow, 3 => red.
 var game_over = false;
 var token_is_running = false;  // Used to avoid race conditions.
 var again_the_same_players_turn = false;  // When the player gets 6 upon the dice roll, or kills other player's tokens, etc.
@@ -535,47 +532,24 @@ function remove_all_tokens_of_this_player() {
     svg[z].remove(svg[z]);
   }
 }
-function player_went() {
+function kickout_player() {
   remove_all_tokens_of_this_player();
-  var left_img = set_img_at_given_place_id(left_user_images_directory_path, current_player_color, "", "winner_" + turn_of_the_player);
-  left_img.classList.add("winner");
+  var left_img = set_img_at_given_place_id(left_user_images_directory_path, current_player_color, "", "left_user_" + turn_of_the_player);
+  left_img.classList.add("left_user");
   total_players--;
   player_has_left = true;
   call_to_next_player();
 }
-function leave_stage(increase_dot = true) {
-  if (!token_is_running) {
+function automatically_roll_dice_and_run_token(increase_dot = true) {
+  if (!token_is_running) {  // If we enable "Run Automatically" and at the same time the timer finishes, then this function can be called two times. So, to avoid such race conditions, this condition is used.
     if (increase_dot) {
-      var count_dot;
-      if (turn_of_the_player == 0) {
-        if (green_player_automatic_turns_used == 5) {
-          player_went();
-          return;
-        }
-        count_dot = green_player_automatic_turns_used;
-        green_player_automatic_turns_used++;
-      } else if (turn_of_the_player == 1) {
-        if (yellow_player_automatic_turns_used == 5) {
-          player_went();
-          return;
-        }
-        count_dot = yellow_player_automatic_turns_used;
-        yellow_player_automatic_turns_used++;
-      } else if (turn_of_the_player == 2) {
-        if (blue_player_automatic_turns_used == 5) {
-          player_went();
-          return;
-        }
-        count_dot = blue_player_automatic_turns_used;
-        blue_player_automatic_turns_used++;
-      } else if (turn_of_the_player == 3) {
-        if (red_player_automatic_turns_used == 5) {
-          player_went();
-          return;
-        }
-        count_dot = red_player_automatic_turns_used;
-        red_player_automatic_turns_used++;
+      if(automatic_turns_used[turn_of_the_player]==5){
+        kickout_player();
+        return;
       }
+      var count_dot;
+      count_dot=automatic_turns_used[turn_of_the_player];
+      automatic_turns_used[turn_of_the_player]++;
       var dot = document.querySelector("#dot_of_" + current_player_color + "_" + count_dot);
       dot.style.background = "#f51c40";
     }
@@ -590,13 +564,13 @@ function leave_stage(increase_dot = true) {
     );
   }
 }
-function highlight_stage(string, home_borders, time) {
-  var border = document.querySelector("#" + current_player_color + "_user" + " div.timer_border_" + string);
+function highlight_stage(border_side, home_borders, time) {
+  var border = document.querySelector("#" + current_player_color + "_user" + " div.timer_border_" + border_side);
   var length = 99;
   while (length >= 0) {
     var time_out = setTimeout(
       function (length) {
-        if (string == "left" || string == "right") {
+        if (border_side == "left" || border_side == "right") {
           border.style.height = length + "%";
         } else {
           border.style.width = length + "%";
@@ -604,8 +578,8 @@ function highlight_stage(string, home_borders, time) {
         for (var z = 0; z < home_borders.length && length % 15 == 0; z++) {
           home_borders[z].classList.toggle("light_" + current_player_color);
         }
-        if (length == 0 && string == "top") {
-          leave_stage();
+        if (length == 0 && border_side == "top") {
+          automatically_roll_dice_and_run_token();
         }
       },
       time,
@@ -741,7 +715,7 @@ function disable_pointer_event_for_dices_and_tokens() {
 document.getElementById("run_automatically_switch_input").addEventListener("change", function () {
   if (this.checked) {
     disable_pointer_event_for_dices_and_tokens();
-    leave_stage(false);
+    automatically_roll_dice_and_run_token(false);
   } else {
     enable_pointer_event_for_dices_and_tokens();
   }
