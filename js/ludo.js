@@ -549,11 +549,9 @@ function automatically_roll_dice_and_run_token(increase_dot = true) {
         kickout_player();
         return;
       }
-      var count_dot;
-      count_dot=automatic_turns_used[turn_of_the_player];
-      automatic_turns_used[turn_of_the_player]++;
       var dot = document.querySelector("#dot_of_" + current_player_color + "_" + count_dot);
       dot.style.background = "#f51c40";
+      automatic_turns_used[turn_of_the_player]++;
     }
     dices[turn_of_the_player].click();
 
