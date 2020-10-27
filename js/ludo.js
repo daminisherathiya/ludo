@@ -503,7 +503,7 @@ function set_remainin_token(current_cell_id, p_total_token, count) {
       .classList.add("cell_containing_" + a_total_token_length + "_tokens");
   }
 }
-function remove_all_tokens_of_this_player() {
+function remove_all_animation_and_tokens_of_current_player() {
   document.querySelector("#" + current_player_color + "_dice_container" + " img").classList.remove("dice_margin");
   document.querySelector("#" + current_player_color + "_dice_container").classList.remove("dice_border_animation");
   for (var z = 0; z < tokens_inside_home.length; z++) {
@@ -514,26 +514,28 @@ function remove_all_tokens_of_this_player() {
       "outside_token_animation"
     );
   }
-  var toc1 = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
-  var toc2 = document.querySelectorAll("td .tokens_of_" + turn_of_the_player + ".outside");
-  var svg = document.querySelectorAll("#destination_for_" + current_player_color + "_tokens" + " img");
+  tokens_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
   for (var z = 0; z < toc1.length; z++) {
-    toc1[z].remove(toc1[z]);
+    tokens_inside_home[z].remove(tokens_inside_home[z]);
   }
-  for (var z = 0; z < toc2.length; z++) {
-    var current_cell_id = toc2[z].parentNode.getAttribute("id");
+
+  tokens_outside_home = document.querySelectorAll("td .tokens_of_" + turn_of_the_player + ".outside");
+  for (var z = 0; z < tokens_outside_home.length; z++) {
+    var current_cell_id = tokens_outside_home[z].parentNode.getAttribute("id");
     var p_total_token = document.querySelectorAll(
       "#" + current_cell_id + " img"
     );
-    toc2[z].remove(toc2[z]);
+    tokens_outside_home[z].remove(tokens_outside_home[z]);
     set_remainin_token(current_cell_id, p_total_token, 0);
   }
-  for (var z = 0; z < svg.length; z++) {
-    svg[z].remove(svg[z]);
+
+  var tokens_inside_destination = document.querySelectorAll("#destination_for_" + current_player_color + "_tokens" + " img");
+  for (var z = 0; z < tokens_inside_destination.length; z++) {
+    tokens_inside_destination[z].remove(tokens_inside_destination[z]);
   }
 }
 function kickout_player() {
-  remove_all_tokens_of_this_player();
+  remove_all_animation_and_tokens_of_current_player();
   var left_img = set_img_at_given_place_id(left_user_images_directory_path, current_player_color, "", "left_user_" + turn_of_the_player);
   left_img.classList.add("left_user");
   total_players--;
@@ -663,7 +665,7 @@ function enable_dice() {
     document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
     rank != 4
   ) {
-    remove_all_tokens_of_this_player();
+    remove_all_animation_and_tokens_of_current_player();
     make_winner();
     return;
   }
