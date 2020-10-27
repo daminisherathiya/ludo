@@ -640,13 +640,13 @@ function start_timer() {
 function disable_progressbar() {
   var left_border = document.querySelector("#" + current_player_color + "_user" + " .timer_border_left");
   if (left_border != null) {
-    left_border.remove(left_border);
+    left_border.remove();
     var bottom_border = document.querySelector("#" + current_player_color + "_user" + " .timer_border_bottom");
-    bottom_border.remove(bottom_border);
+    bottom_border.remove();
     var right_border = document.querySelector("#" + current_player_color + "_user" + " .timer_border_right");
-    right_border.remove(right_border);
+    right_border.remove();
     var top_border = document.querySelector("#" + current_player_color + "_user" + " .timer_border_top");
-    top_border.remove(top_border);
+    top_border.remove();
   }
   for (var z = 0; z < timer_settimeouts.length; z++) {
     clearTimeout(timer_settimeouts[z]);
