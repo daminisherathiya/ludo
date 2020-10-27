@@ -617,18 +617,18 @@ function highlight_stage(string, home_borders, time) {
   }
   return time;
 }
-function add_progressbar(string, border) {
+function add_progressbar(border_class) {
   var new_div = document.createElement("div");
-  var id = document.getElementById(current_player_color + "_user");
-  id.appendChild(new_div);
-  id = document.querySelector("#" + current_player_color + "_user" + " div:nth-of-type(" + string + ")");
-  id.classList.add(border);
+  var user = document.getElementById(current_player_color + "_user");
+  user.appendChild(new_div);
+  new_div.classList.add(border_class);
 }
 function start_timer() {
-  add_progressbar("1", "timer_border_top");
-  add_progressbar("2", "timer_border_left");
-  add_progressbar("3", "timer_border_bottom");
-  add_progressbar("4", "timer_border_right");
+  // The timer border is made using 4 different divs. One div will have the left border, one will have the bottom border, one will have the right border, and one will have the top border.
+  add_progressbar("timer_border_left");
+  add_progressbar("timer_border_bottom");
+  add_progressbar("timer_border_right");
+  add_progressbar("timer_border_top");
   timer_settimeouts = [];
   var home_borders = document.querySelectorAll(".highlight_" + current_player_color);
   var time = 50;
