@@ -162,14 +162,14 @@ function make_two_digits_number(number) {
   return number;
 }
 
-function previous_address(current_cell_id, related_circle_id) {
+function previous_address(current_cell_id, tag, related_circle_id) {
   if (current_cell_id == related_circle_id) {
     return 0;
   }
   var count = parseInt(current_cell_id.substring(6)) - 1;
   var place_tag = parseInt(current_cell_id.substring(5, 6));
 
-  if (place_tag != turn_of_the_player && count < 0) {
+  if (place_tag != tag && count < 0) {
     count = 12;
     if (place_tag == 0) {
       place_tag = 3;
@@ -266,15 +266,15 @@ function backword(current_cell_id, related_circle_id, last_token) {
   var time = 0;
   var color_name = related_circle_id.split("_");
   var player_id = get_idx_from_color(color_name[0]);
-  var k = previous_address(current_cell_id, related_circle_id);
+  var k = previous_address(current_cell_id, player_id, related_circle_id);
   while (k != 0) {
     setTimeout(
-      function (k, current_cell_id, player_id, related_circle_id) {
+      function (k, current_cell_id, related_circle_id, player_id, color_name) {
         var tt = document.querySelector(
           "#" + current_cell_id + " img[alt=" + related_circle_id + "]"
         );
         tt.remove(tt);
-        var img = set_img_at_given_place_id(token_images_directory_path, current_player_color, related_circle_id, k);
+        var img = set_img_at_given_place_id(token_images_directory_path, color_name, related_circle_id, k);
         if (k == related_circle_id) {
           img.classList.add("single_token");
           img.classList.add("tokens_of_" + player_id);
@@ -288,12 +288,13 @@ function backword(current_cell_id, related_circle_id, last_token) {
       time,
       k,
       current_cell_id,
+      related_circle_id,
       player_id,
-      related_circle_id
+      color_name[0]
     );
     time = time + 35;
     current_cell_id = k;
-    k = previous_address(k, related_circle_id);
+    k = previous_address(k, player_id, related_circle_id);
   }
 }
 function set_positions(token_place_id, count, img, p_total_token, related_circle_id) {
@@ -367,7 +368,7 @@ function run_token(
   var temp_current_id = current_cell_id;
   while (current_cell_id !== token_place_id) {
     setTimeout(
-      function (next_id, current_cell_id, turn_of_the_player, related_circle_id) {
+      function (next_id, current_cell_id, current_player_color, related_circle_id) {
         var remove_token = document.querySelector(
           "#" + current_cell_id + " img[alt=" + related_circle_id + "]"
         );
@@ -404,7 +405,7 @@ function run_token(
       time,
       next_id,
       current_cell_id,
-      turn_of_the_player,
+      current_player_color,
       related_circle_id
     );
     time = time + 200;
