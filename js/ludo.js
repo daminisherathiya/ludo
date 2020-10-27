@@ -630,7 +630,7 @@ function start_timer() {
   add_progressbar("3", "timer_border_bottom");
   add_progressbar("4", "timer_border_right");
   timer_settimeouts = [];
-  var highlight = document.querySelectorAll(".highlight_" + turn_of_the_player);
+  var highlight = document.querySelectorAll(".highlight_" + current_player_color);
   var time = 50;
   time = highlight_stage("left", highlight, time);
   time = highlight_stage("bottom", highlight, time);
@@ -651,7 +651,7 @@ function disable_progressbar() {
   for (var z = 0; z < timer_settimeouts.length; z++) {
     clearTimeout(timer_settimeouts[z]);
   }
-  var highlight = document.querySelectorAll(".highlight_" + turn_of_the_player);
+  var highlight = document.querySelectorAll(".highlight_" + current_player_color);
   for (var z = 0; z < highlight.length; z++) {
     highlight[z].classList.remove("light_" + current_player_color);
   }
