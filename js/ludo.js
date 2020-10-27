@@ -515,7 +515,7 @@ function remove_all_animation_and_tokens_of_current_player() {
     );
   }
   tokens_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
-  for (var z = 0; z < toc1.length; z++) {
+  for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].remove(tokens_inside_home[z]);
   }
 
@@ -549,7 +549,7 @@ function automatically_roll_dice_and_run_token(increase_dot = true) {
         kickout_player();
         return;
       }
-      var dot = document.querySelector("#dot_of_" + current_player_color + "_" + count_dot);
+      var dot = document.querySelector("#dot_of_" + current_player_color + "_" + automatic_turns_used[turn_of_the_player]);
       dot.style.background = "#f51c40";
       automatic_turns_used[turn_of_the_player]++;
     }
