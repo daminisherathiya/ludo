@@ -6,18 +6,18 @@
 ];
 
 var no_of_dice_rolls_till_now = 0;
-var turn_of_the_player = 0; // 0 => green, 1=> blue, 2 => yellow, 3 => red 
+var turn_of_the_player = 0;  // 0 => green, 1=> blue, 2 => yellow, 3 => red 
 var total_players = 4;
-var rank = 1;
+var rank_to_be_given_next = 1;
 var current_player_color;
-var player_has_left = false;
+var current_player_has_left = false;
 var count_to_avoid_race_conditions = 0;
 var winner_images_directory_path = "./images/winners/";
 var token_images_directory_path = "./images/tokens/";
 var left_user_images_directory_path = "./images/left_users/";
 var dice_images_directory_path = "./images/dices/";
 var automatic_turns_used = [0, 0, 0, 0];  // 0 => green, 1=> blue, 2 => yellow, 3 => red.
-var game_over = false;
+var game_is_over = false;
 var token_is_running = false;  // Used to avoid race conditions.
 var again_the_same_players_turn = false;  // When the player gets 6 upon the dice roll, or kills other player's tokens, etc.
 var random_dice = Math.floor(6 * Math.random()) + 1;
@@ -26,6 +26,7 @@ var at_least_one_outside_token_can_be_moved = false;
 var tokens_inside_home = [];
 var tokens_outside_home = [];
 var timer_settimeouts = [];  // Used to remove timer when the user finishes their turn.
+
 function set_pointer_event_depending_on_automatic_or_not() {
   if (document.getElementById("run_automatically_switch_input").checked) {
     disable_pointer_event_for_dices_and_tokens();
@@ -108,7 +109,7 @@ function roll_dice() {
   random_dice = Math.floor(6 * Math.random()) + 1;
   // random_dice = 6;
   add_event_listener_for_tokens();  // This is needed here so that "automatically_run_token" can work correctly if called in case of timeout.
-  set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved(); // This is needed here so that "automatically_run_token" can work correctly if called in case of timeout.
+  set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();  // This is needed here so that "automatically_run_token" can work correctly if called in case of timeout.
   var time = 0;
   for (var z = 0; z < 6 + random_dice; z++) {  // Used for animation: suppose random_dice = 3. Then first show dice_1.png and wait for some time, then show dice_2.png and wait for some time, ..., then show dice_6.png and wait for some time, then show dice_1.png and wait for some time, ..., then show dice_3.png and stop.
     setTimeout(
@@ -214,7 +215,7 @@ function call_to_next_player(count) {
   disable_progressbar();
   if (
     total_players == 1 ||
-    player_has_left ||
+    current_player_has_left ||
     (random_dice != 6 && count != 18 && !again_the_same_players_turn)
   ) {
     turn_of_the_player++;
@@ -324,9 +325,9 @@ function set_positions(token_place_id, count, img, p_total_token, related_circle
       document.getElementsByClassName("tokens_of_" + turn_of_the_player).length == 0
     ) {
       make_winner();
-      rank++;
-      if (rank == 4) {
-        game_over = true;
+      rank_to_be_given_next++;
+      if (rank_to_be_given_next == 4) {
+        game_is_over = true;
       }
     }
     img.classList.add("outside");
@@ -539,7 +540,7 @@ function kickout_player() {
   var left_img = set_img_at_given_place_id(left_user_images_directory_path, current_player_color, "", "left_user_" + turn_of_the_player);
   left_img.classList.add("left_user");
   total_players--;
-  player_has_left = true;
+  current_player_has_left = true;
   call_to_next_player();
 }
 function automatically_roll_dice_and_run_token(increase_dot = true) {
@@ -631,11 +632,11 @@ function disable_progressbar() {
   }
 }
 function make_winner(){
-  player_has_left = true;
+  current_player_has_left = true;
   total_players--;
   var winner_img = set_img_at_given_place_id(
     winner_images_directory_path,
-    rank,
+    rank_to_be_given_next,
     "",
     "winner_" + turn_of_the_player
   );
@@ -655,25 +656,25 @@ function enable_dice() {
   count_to_avoid_race_conditions++;
   tokens_inside_home = [];  // Reset global variables
   tokens_outside_home = [];  // Reset global variables
-  player_has_left = false;  // Reset global variables
-  token_is_running = false; // Reset global variables
+  current_player_has_left = false;  // Reset global variables
+  token_is_running = false;  // Reset global variables
   current_player_color = get_color_from_idx(turn_of_the_player);
   if (
     total_players == 1 &&
     document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
-    rank != 4
+    rank_to_be_given_next != 4
   ) {
     remove_all_animation_and_tokens_of_current_player();
     make_winner();
     return;
   }
   set_dices_display();
-  if (game_over) {
+  if (game_is_over) {
     return;
   }
   var tokens_of_the_player = document.getElementsByClassName("tokens_of_" + turn_of_the_player);
   if (tokens_of_the_player.length == 0) {
-    player_has_left = true;
+    current_player_has_left = true;
     call_to_next_player();
   } else {
     document.querySelector("#" + current_player_color + "_dice_container" + " img").classList.add("dice_margin");
