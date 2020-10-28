@@ -170,8 +170,8 @@ function make_two_digits_number(number) {
   return number;
 }
 
-function previous_address(current_cell_id, tag, related_circle_id) {
-  if (current_cell_id == related_circle_id) {
+function previous_address(current_cell_id, tag, related_circle_id_of_token) {
+  if (current_cell_id == related_circle_id_of_token) {
     return 0;
   }
   var count = parseInt(current_cell_id.substring(6)) - 1;
@@ -186,7 +186,7 @@ function previous_address(current_cell_id, tag, related_circle_id) {
     }
   }
   if (count == -1) {
-    return related_circle_id;
+    return related_circle_id_of_token;
   }
   var number = make_two_digits_number(count);
   var token_place_id = "cell_" + place_tag + number;
@@ -252,10 +252,10 @@ function get_color_from_idx(idx) {
   }
 }
 
-function set_img_at_given_place_id(img_src, current_player_color, related_circle_id, place_id) {
+function set_img_at_given_place_id(img_src, current_player_color, related_circle_id_of_token, place_id) {
   var img = document.createElement("img");
   img.src = img_src + current_player_color + ".png";
-  img.alt = related_circle_id;
+  img.alt = related_circle_id_of_token;
   var src = document.getElementById(place_id);
   src.appendChild(img);
   return img;
@@ -276,23 +276,23 @@ function get_idx_from_color(current_player_color) {
   }
 }
 
-function backword(current_cell_id, related_circle_id, last_token) {
+function backword(current_cell_id, related_circle_id_of_token, last_token) {
   var time = 0;
-  var color_name = related_circle_id.split("_");
+  var color_name = related_circle_id_of_token.split("_");
   var player_id = get_idx_from_color(color_name[0]);
-  var k = previous_address(current_cell_id, player_id, related_circle_id);
+  var k = previous_address(current_cell_id, player_id, related_circle_id_of_token);
   while (k != 0) {
     setTimeout(
-      function (k, current_cell_id, related_circle_id, player_id, color_name) {
+      function (k, current_cell_id, related_circle_id_of_token, player_id, color_name) {
         var tt = document.querySelector(
-          "#" + current_cell_id + " img[alt=" + related_circle_id + "]"
+          "#" + current_cell_id + " img[alt=" + related_circle_id_of_token + "]"
         );
         tt.remove(tt);
-        var img = set_img_at_given_place_id(token_images_directory_path, color_name, related_circle_id, k);
-        if (k == related_circle_id) {
+        var img = set_img_at_given_place_id(token_images_directory_path, color_name, related_circle_id_of_token, k);
+        if (k == related_circle_id_of_token) {
           img.classList.add("single_token");
           img.classList.add("tokens_of_" + player_id);
-          if (last_token == related_circle_id) {
+          if (last_token == related_circle_id_of_token) {
             call_to_next_player();
           }
         } else {
@@ -302,24 +302,24 @@ function backword(current_cell_id, related_circle_id, last_token) {
       time,
       k,
       current_cell_id,
-      related_circle_id,
+      related_circle_id_of_token,
       player_id,
       color_name[0]
     );
     time = time + 35;
     current_cell_id = k;
-    k = previous_address(k, player_id, related_circle_id);
+    k = previous_address(k, player_id, related_circle_id_of_token);
   }
 }
 
-function set_positions(token_place_id, count, img, p_total_token, related_circle_id) {
+function set_positions(token_place_id, count, img, p_total_token, related_circle_id_of_token) {
   var safe = document.querySelector("#" + token_place_id + ".safe img");
   again_the_same_players_turn = false;
   if (safe == null && p_total_token.length > 0) {
     var last_token = p_total_token[p_total_token.length - 1].getAttribute(
       "alt"
     );
-    var color_name = related_circle_id.split("_");
+    var color_name = related_circle_id_of_token.split("_");
     var idx_of_alt = get_idx_from_color(color_name[0]);
     p_total_token.forEach(function (item) {
       var alt_name = item.getAttribute("alt");
@@ -361,7 +361,7 @@ function run_token(
   current_cell_id,
   token_place_id,
   count,
-  related_circle_id,
+  related_circle_id_of_token,
   previously_total_token
 ) {
   var p_total_token = document.querySelectorAll("#" + token_place_id + " img");
@@ -370,7 +370,7 @@ function run_token(
   var next_id = id_n_count[0];
   var time = 200;
   if (current_cell_id == token_place_id) {
-    var img = set_img_at_given_place_id(token_images_directory_path, current_player_color, related_circle_id, token_place_id);
+    var img = set_img_at_given_place_id(token_images_directory_path, current_player_color, related_circle_id_of_token, token_place_id);
     img.classList.add("tokens_of_" + turn_of_the_player);
     img.classList.add("outside");
     set_pointer_event_depending_on_automatic_or_not();
@@ -384,9 +384,9 @@ function run_token(
   var temp_current_id = current_cell_id;
   while (current_cell_id !== token_place_id) {
     setTimeout(
-      function (next_id, current_cell_id, current_player_color, related_circle_id) {
+      function (next_id, current_cell_id, current_player_color, related_circle_id_of_token) {
         var remove_token = document.querySelector(
-          "#" + current_cell_id + " img[alt=" + related_circle_id + "]"
+          "#" + current_cell_id + " img[alt=" + related_circle_id_of_token + "]"
         );
         remove_token.remove(remove_token);
         var remove_animation;
@@ -404,7 +404,7 @@ function run_token(
         if (temp_current_id === current_cell_id) {
           set_remainin_token(temp_current_id, previously_total_token, 0);
         }
-        var img = set_img_at_given_place_id(token_images_directory_path, current_player_color, related_circle_id, next_id);
+        var img = set_img_at_given_place_id(token_images_directory_path, current_player_color, related_circle_id_of_token, next_id);
         var span = document.createElement("span");
         var src = document.getElementById(next_id);
         src.appendChild(span);
@@ -415,14 +415,14 @@ function run_token(
             "#" + token_place_id + " span.running_" + current_player_color + "_token_animation"
           );
           remove_animation.remove(remove_animation);
-          set_positions(token_place_id, count, img, p_total_token, related_circle_id);
+          set_positions(token_place_id, count, img, p_total_token, related_circle_id_of_token);
         }
       },
       time,
       next_id,
       current_cell_id,
       current_player_color,
-      related_circle_id
+      related_circle_id_of_token
     );
     time = time + 200;
     current_cell_id = next_id;
@@ -450,12 +450,12 @@ function move_token(event_inn) {
   var previously_total_token = document.querySelectorAll(
     "#" + current_cell_id + " img"
   );
-  var related_circle_id = event_inn.target.getAttribute("alt");
+  var related_circle_id_of_token = event_inn.target.getAttribute("alt");
   run_token(
     current_cell_id,
     token_place_id,
     count,
-    related_circle_id,
+    related_circle_id_of_token,
     previously_total_token
   );
 }
@@ -481,10 +481,10 @@ function six_token(event_inn) {
       "outside_token_animation"
     );
   }
-  var related_circle_id = event_inn.target.getAttribute("alt");
+  var related_circle_id_of_token = event_inn.target.getAttribute("alt");
   event_inn.target.remove(event_inn.target);
   var token_place_id = "cell_" + turn_of_the_player.toString() + "00";
-  run_token(token_place_id, token_place_id, 0, related_circle_id);
+  run_token(token_place_id, token_place_id, 0, related_circle_id_of_token);
 }
 
 function set_remainin_token(current_cell_id, p_total_token, count) {
