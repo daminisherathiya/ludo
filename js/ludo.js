@@ -170,53 +170,54 @@ function make_two_digits_number(number) {
   return number;
 }
 
-function previous_address(current_cell_id, tag, related_circle_id_of_token) {
+function previous_address(current_cell_id, player_id_of_token, related_circle_id_of_token) {
   if (current_cell_id == related_circle_id_of_token) {
     return 0;
   }
-  var count = parseInt(current_cell_id.substring(6)) - 1;
-  var place_tag = parseInt(current_cell_id.substring(5, 6));
+  // Check "images/cell_ids_explanation.png" for better understanding.
+  var previous_cell_id_last_two_digits = parseInt(current_cell_id.substring(6)) - 1;
+  var current_cell_id_region = parseInt(current_cell_id.substring(5, 6));
 
-  if (place_tag != tag && count < 0) {
-    count = 12;
-    if (place_tag == 0) {
-      place_tag = 3;
+  if (current_cell_id_region != player_id_of_token && previous_cell_id_last_two_digits < 0) {
+    previous_cell_id_last_two_digits = 12;
+    if (current_cell_id_region == 0) {
+      current_cell_id_region = 3;
     } else {
-      place_tag = (place_tag - 1) % 4;
+      current_cell_id_region = (current_cell_id_region - 1) % 4;
     }
   }
-  if (count == -1) {
+  if (previous_cell_id_last_two_digits == -1) {
     return related_circle_id_of_token;
   }
-  var number = make_two_digits_number(count);
-  var token_place_id = "cell_" + place_tag + number;
+  var number = make_two_digits_number(previous_cell_id_last_two_digits);
+  var token_place_id = "cell_" + current_cell_id_region + number;
   return token_place_id;
 }
 
 function next_address(current_cell_id, steps) {
   var count = parseInt(current_cell_id.substring(6)) + steps;
-  var place_tag = parseInt(current_cell_id.substring(5, 6));
+  var current_cell_id_region = parseInt(current_cell_id.substring(5, 6));
   if (count == 12) {
-    var temp_place_tag = (place_tag + 1) % 4;
-    if (temp_place_tag == turn_of_the_player) {
+    var temp_current_cell_id_region = (current_cell_id_region + 1) % 4;
+    if (temp_current_cell_id_region == turn_of_the_player) {
       count = count + 1;
-      place_tag = temp_place_tag;
+      current_cell_id_region = temp_current_cell_id_region;
     }
   } else if (count > 12) {
     var temp_count = count;
     count = count - 13;
     if (current_cell_id.substring(6) < 13) {
-      place_tag = (place_tag + 1) % 4;
+      current_cell_id_region = (current_cell_id_region + 1) % 4;
     } else {
       temp_count--;
     }
-    if (place_tag == turn_of_the_player) {
+    if (current_cell_id_region == turn_of_the_player) {
       count = temp_count + 1;
     }
   }
 
   var number = make_two_digits_number(count);
-  var token_place_id = "cell_" + place_tag + number;
+  var token_place_id = "cell_" + current_cell_id_region + number;
   if (number == 18) {
     token_place_id = "destination_for_" + current_player_color + "_tokens";
   }
