@@ -629,7 +629,8 @@ img {
   left: 18%;
 }
 
-.winner, .left_user {
+.winner,
+.left_user {
   width: 107px;
   height: 107px;
   position: absolute;
@@ -694,7 +695,8 @@ img {
     width: 375px;
   }
 
-  .winner, .left_user {
+  .winner,
+  .left_user {
     width: 99px;
     height: 99px;
   }
@@ -812,7 +814,8 @@ img {
     width: 63px;
   }
 
-  .winner, .left_user {
+  .winner,
+  .left_user {
     width: 86px;
     height: 86px;
   }
@@ -919,7 +922,8 @@ img {
     top: 47%;
   }
 
-  .winner, .left_user {
+  .winner,
+  .left_user {
     width: 66px;
     height: 66px;
   }
