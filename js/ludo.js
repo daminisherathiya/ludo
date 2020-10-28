@@ -178,50 +178,53 @@ function previous_address(current_cell_id, player_id_of_token, related_circle_id
   var previous_cell_id_last_two_digits = parseInt(current_cell_id.substring(6)) - 1;
   var current_cell_id_region = parseInt(current_cell_id.substring(5, 6));
 
-  if (current_cell_id_region != player_id_of_token && previous_cell_id_last_two_digits < 0) {
-    previous_cell_id_last_two_digits = 12;
-    if (current_cell_id_region == 0) {
-      current_cell_id_region = 3;
-    } else {
-      current_cell_id_region = (current_cell_id_region - 1) % 4;
-    }
-  }
-  if (previous_cell_id_last_two_digits == -1) {
+  if (player_id_of_token == current_cell_id_region && previous_cell_id_last_two_digits == -1) {
     return related_circle_id_of_token;
   }
-  var number = make_two_digits_number(previous_cell_id_last_two_digits);
-  var token_place_id = "cell_" + current_cell_id_region + number;
-  return token_place_id;
+  if (player_id_of_token != current_cell_id_region && previous_cell_id_last_two_digits == -1) {
+    previous_cell_id_last_two_digits = 12;
+    current_cell_id_region = (current_cell_id_region - 1 + 4) % 4;
+  }
+  return "cell_" + current_cell_id_region + make_two_digits_number(previous_cell_id_last_two_digits);
 }
 
-function next_address(current_cell_id, steps) {
-  var count = parseInt(current_cell_id.substring(6)) + steps;
+function next_address(current_cell_id) {
+  // Check "images/cell_ids_explanation.png" for better understanding.
+  var next_cell_id_last_two_digits = parseInt(current_cell_id.substring(6)) + 1;
   var current_cell_id_region = parseInt(current_cell_id.substring(5, 6));
-  if (count == 12) {
-    var temp_current_cell_id_region = (current_cell_id_region + 1) % 4;
-    if (temp_current_cell_id_region == turn_of_the_player) {
-      count = count + 1;
-      current_cell_id_region = temp_current_cell_id_region;
-    }
-  } else if (count > 12) {
-    var temp_count = count;
-    count = count - 13;
-    if (current_cell_id.substring(6) < 13) {
-      current_cell_id_region = (current_cell_id_region + 1) % 4;
-    } else {
-      temp_count--;
-    }
-    if (current_cell_id_region == turn_of_the_player) {
-      count = temp_count + 1;
-    }
-  }
+  var next_cell_id_region = (current_cell_id_region + 1) % 4;
 
-  var number = make_two_digits_number(count);
-  var token_place_id = "cell_" + current_cell_id_region + number;
-  if (number == 18) {
-    token_place_id = "destination_for_" + current_player_color + "_tokens";
+  if (next_cell_id_last_two_digits == 18) {
+    return [
+      "destination_for_" + current_player_color + "_tokens",
+      make_two_digits_number(next_cell_id_last_two_digits)
+    ];
+  } else if (next_cell_id_last_two_digits == 12) {
+    if (next_cell_id_region == turn_of_the_player) {
+      next_cell_id_last_two_digits++;
+      return [
+        "cell_" + next_cell_id_region + make_two_digits_number(next_cell_id_last_two_digits),
+        make_two_digits_number(next_cell_id_last_two_digits)
+      ];
+    } else {
+      return [
+        "cell_" + current_cell_id_region + make_two_digits_number(next_cell_id_last_two_digits),
+        make_two_digits_number(next_cell_id_last_two_digits)
+      ];
+    }
+
+  } else if (next_cell_id_last_two_digits == 13) {
+    next_cell_id_last_two_digits = 0;
+    return [
+      "cell_" + next_cell_id_region + make_two_digits_number(next_cell_id_last_two_digits),
+      make_two_digits_number(next_cell_id_last_two_digits)
+    ];
+  } else {
+    return [
+      "cell_" + current_cell_id_region + make_two_digits_number(next_cell_id_last_two_digits),
+      make_two_digits_number(next_cell_id_last_two_digits)
+    ];
   }
-  return [token_place_id, number];
 }
 
 function call_to_next_player(count) {
@@ -366,8 +369,7 @@ function run_token(
   previously_total_token
 ) {
   var p_total_token = document.querySelectorAll("#" + token_place_id + " img");
-  var step = 1;
-  var id_n_count = next_address(current_cell_id, step);
+  var id_n_count = next_address(current_cell_id);
   var next_id = id_n_count[0];
   var time = 200;
   if (current_cell_id == token_place_id) {
@@ -427,7 +429,7 @@ function run_token(
     );
     time = time + 200;
     current_cell_id = next_id;
-    id_n_count = next_address(next_id, step);
+    id_n_count = next_address(next_id);
     next_id = id_n_count[0];
   }
 }
@@ -445,7 +447,10 @@ function move_token(event_inn) {
     );
   }
   var current_cell_id = event_inn.target.parentNode.getAttribute("id");
-  var id_n_count = next_address(current_cell_id, random_dice);
+  var id_n_count = [current_cell_id, 0];
+  for (var z = 0; z < random_dice; z++) {
+    id_n_count = next_address(id_n_count[0], random_dice);
+  }
   var token_place_id = id_n_count[0];
   var count = id_n_count[1];
   var previously_total_token = document.querySelectorAll(
