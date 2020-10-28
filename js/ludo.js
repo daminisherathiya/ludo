@@ -4,27 +4,30 @@
   document.getElementById("blue_dice"),
   document.getElementById("red_dice"),
 ];
-
-var no_of_dice_rolls_till_now = 0;
-var turn_of_the_player = 0;  // 0 => green, 1=> blue, 2 => yellow, 3 => red 
-var total_players = 4;
-var rank_to_be_given_next = 1;
-var current_player_color;
-var current_player_has_left = false;
-var count_to_avoid_race_conditions = 0;
-var winner_images_directory_path = "./images/winners/";
+var dice_images_directory_path = "./images/dices/";
 var token_images_directory_path = "./images/tokens/";
 var left_user_images_directory_path = "./images/left_users/";
-var dice_images_directory_path = "./images/dices/";
+var winner_images_directory_path = "./images/winners/";
+
+var total_players = 4;
+var turn_of_the_player = 0;  // 0 => green, 1=> blue, 2 => yellow, 3 => red.
+var current_player_color;
+var current_player_has_left = false;
 var automatic_turns_used = [0, 0, 0, 0];  // 0 => green, 1=> blue, 2 => yellow, 3 => red.
-var game_is_over = false;
-var token_is_running = false;  // Used to avoid race conditions.
 var again_the_same_players_turn = false;  // When the player gets 6 upon the dice roll, or kills other player's tokens, etc.
+
 var random_dice = Math.floor(6 * Math.random()) + 1;
 dices[turn_of_the_player].src = dice_images_directory_path + random_dice + ".png";  // Show a random dice for the green player upon start.
-var at_least_one_outside_token_can_be_moved = false;
 var tokens_inside_home = [];
 var tokens_outside_home = [];
+var at_least_one_outside_token_can_be_moved = false;
+var rank_to_be_given_next = 1;
+
+var no_of_dice_rolls_till_now = 0;
+var game_is_over = false;
+
+var count_to_avoid_race_conditions = 0;
+var token_is_running = false;  // Used to avoid race conditions.
 var timer_settimeouts = [];  // Used to remove timer when the user finishes their turn.
 
 function set_pointer_event_depending_on_automatic_or_not() {
@@ -34,7 +37,9 @@ function set_pointer_event_depending_on_automatic_or_not() {
     enable_pointer_event_for_dices_and_tokens();
   }
 }
+
 set_pointer_event_depending_on_automatic_or_not();
+
 enable_dice();  // Entry point. All magic starts from here.
 
 function check_if_token_can_be_moved(outside_token) {
@@ -45,6 +50,7 @@ function check_if_token_can_be_moved(outside_token) {
   }
   return false;
 }
+
 function set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved() {
   at_least_one_outside_token_can_be_moved = false;
   tokens_outside_home.forEach(function (outside_token) {
@@ -56,6 +62,7 @@ function set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_ou
     }
   });
 }
+
 function automatically_run_token(passed_count_to_avoid_race_conditions) {
   if (passed_count_to_avoid_race_conditions < count_to_avoid_race_conditions) {  // If count_to_avoid_race_conditions is increased, then it means another action has already run the token. So, don't run in this function.
     return;
@@ -78,7 +85,8 @@ function automatically_run_token(passed_count_to_avoid_race_conditions) {
     }, 1000);
   }
 }
-function add_event_listener_for_tokens(){
+
+function add_event_listener_for_tokens() {
   if (random_dice == 6) {
     tokens_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
     tokens_inside_home.forEach(function (item) {
@@ -92,7 +100,8 @@ function add_event_listener_for_tokens(){
     item.addEventListener("click", move_token);
   });
 }
-function add_animation_for_tokens(){
+
+function add_animation_for_tokens() {
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.add(
       "home_token_animation"
@@ -104,6 +113,7 @@ function add_animation_for_tokens(){
     );
   }
 }
+
 function roll_dice() {
   dices[turn_of_the_player].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
@@ -122,7 +132,7 @@ function roll_dice() {
           document
             .querySelector("#" + current_player_color + "_dice_container")
             .classList.remove("dice_border_animation");
-          
+
           if (
             (random_dice == 6 &&
               tokens_inside_home.length == 0 &&
@@ -182,6 +192,7 @@ function previous_address(current_cell_id, tag, related_circle_id) {
   var token_place_id = "cell_" + place_tag + number;
   return token_place_id;
 }
+
 function next_address(current_cell_id, steps) {
   var count = parseInt(current_cell_id.substring(6)) + steps;
   var place_tag = parseInt(current_cell_id.substring(5, 6));
@@ -211,6 +222,7 @@ function next_address(current_cell_id, steps) {
   }
   return [token_place_id, number];
 }
+
 function call_to_next_player(count) {
   disable_progressbar();
   if (
@@ -224,6 +236,7 @@ function call_to_next_player(count) {
   dices[turn_of_the_player].src = "./images/dices/" + random_dice + ".png";
   enable_dice();
 }
+
 function get_color_from_idx(idx) {
   if (idx === 0) {
     return "green";
@@ -238,6 +251,7 @@ function get_color_from_idx(idx) {
     return "red";
   }
 }
+
 function set_img_at_given_place_id(img_src, current_player_color, related_circle_id, place_id) {
   var img = document.createElement("img");
   img.src = img_src + current_player_color + ".png";
@@ -246,6 +260,7 @@ function set_img_at_given_place_id(img_src, current_player_color, related_circle
   src.appendChild(img);
   return img;
 }
+
 function get_idx_from_color(current_player_color) {
   if (current_player_color == "green") {
     return 0;
@@ -260,6 +275,7 @@ function get_idx_from_color(current_player_color) {
     return 3;
   }
 }
+
 function backword(current_cell_id, related_circle_id, last_token) {
   var time = 0;
   var color_name = related_circle_id.split("_");
@@ -295,6 +311,7 @@ function backword(current_cell_id, related_circle_id, last_token) {
     k = previous_address(k, player_id, related_circle_id);
   }
 }
+
 function set_positions(token_place_id, count, img, p_total_token, related_circle_id) {
   var safe = document.querySelector("#" + token_place_id + ".safe img");
   again_the_same_players_turn = false;
@@ -339,6 +356,7 @@ function set_positions(token_place_id, count, img, p_total_token, related_circle
     }
   }, 1);
 }
+
 function run_token(
   current_cell_id,
   token_place_id,
@@ -450,6 +468,7 @@ function remove_event_listener_for_tokens() {
     items.removeEventListener("click", move_token);
   });
 }
+
 function six_token(event_inn) {
   token_is_running = true;
   remove_event_listener_for_tokens();
@@ -504,6 +523,7 @@ function set_remainin_token(current_cell_id, p_total_token, count) {
       .classList.add("cell_containing_" + a_total_token_length + "_tokens");
   }
 }
+
 function remove_all_animation_and_tokens_of_current_player() {
   document.querySelector("#" + current_player_color + "_dice_container" + " img").classList.remove("dice_margin");
   document.querySelector("#" + current_player_color + "_dice_container").classList.remove("dice_border_animation");
@@ -535,6 +555,7 @@ function remove_all_animation_and_tokens_of_current_player() {
     tokens_inside_destination[z].remove(tokens_inside_destination[z]);
   }
 }
+
 function kickout_player() {
   remove_all_animation_and_tokens_of_current_player();
   var left_img = set_img_at_given_place_id(left_user_images_directory_path, current_player_color, "", "left_user_" + turn_of_the_player);
@@ -543,10 +564,11 @@ function kickout_player() {
   current_player_has_left = true;
   call_to_next_player();
 }
+
 function automatically_roll_dice_and_run_token(increase_dot = true) {
   if (!token_is_running) {  // If we enable "Run Automatically" and at the same time the timer finishes, then this function can be called two times. So, to avoid such race conditions, this condition is used.
     if (increase_dot) {
-      if(automatic_turns_used[turn_of_the_player]==5){
+      if (automatic_turns_used[turn_of_the_player] == 5) {
         kickout_player();
         return;
       }
@@ -565,6 +587,7 @@ function automatically_roll_dice_and_run_token(increase_dot = true) {
     );
   }
 }
+
 function highlight_stage(border_side, home_borders, time) {
   var border = document.querySelector("#" + current_player_color + "_user" + " div.timer_border_" + border_side);
   var length = 99;
@@ -592,12 +615,14 @@ function highlight_stage(border_side, home_borders, time) {
   }
   return time;
 }
+
 function add_progressbar(border_class) {
   var new_div = document.createElement("div");
   var user = document.getElementById(current_player_color + "_user");
   user.appendChild(new_div);
   new_div.classList.add(border_class);
 }
+
 function start_timer() {
   // The timer border is made using 4 different divs. One div will have the left border, one will have the bottom border, one will have the right border, and one will have the top border.
   add_progressbar("timer_border_left");
@@ -612,6 +637,7 @@ function start_timer() {
   time = highlight_stage("right", home_borders, time);
   highlight_stage("top", home_borders, time);
 }
+
 function disable_progressbar() {
   var left_border = document.querySelector("#" + current_player_color + "_user" + " .timer_border_left");
   if (left_border != null) {
@@ -631,7 +657,8 @@ function disable_progressbar() {
     home_borders[z].classList.remove("light_" + current_player_color);
   }
 }
-function make_winner(){
+
+function make_winner() {
   current_player_has_left = true;
   total_players--;
   var winner_img = set_img_at_given_place_id(
@@ -642,12 +669,14 @@ function make_winner(){
   );
   winner_img.classList.add("winner");
 }
-function set_dices_display(){
+
+function set_dices_display() {
   dices[turn_of_the_player].style.display = "block";
   dices[(turn_of_the_player + 1) % 4].style.display = "none";
   dices[(turn_of_the_player + 2) % 4].style.display = "none";
   dices[(turn_of_the_player + 3) % 4].style.display = "none";
 }
+
 function enable_dice() {
   // no_of_dice_rolls_till_now ++;
   // if (no_of_dice_rolls_till_now > 5) {
@@ -688,6 +717,7 @@ function enable_dice() {
     }
   }
 }
+
 function enable_pointer_event_for_dices_and_tokens() {
   var all_tokens = document.querySelectorAll(
     ".tokens_of_0,.tokens_of_1,.tokens_of_2,.tokens_of_3"
@@ -700,6 +730,7 @@ function enable_pointer_event_for_dices_and_tokens() {
     all_dices[z].classList.remove("disable_pointer_event_for_dices_and_tokens");
   }
 }
+
 function disable_pointer_event_for_dices_and_tokens() {
   var all_tokens = document.querySelectorAll(
     ".tokens_of_0,.tokens_of_1,.tokens_of_2,.tokens_of_3"
