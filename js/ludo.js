@@ -183,7 +183,8 @@ function previous_address(current_cell_id, player_id_of_token, related_circle_id
   }
   if (player_id_of_token != current_cell_id_region && previous_cell_id_last_two_digits == -1) {
     previous_cell_id_last_two_digits = 12;
-    current_cell_id_region = (current_cell_id_region - 1 + 4) % 4;
+    previous_cell_id_region  = (current_cell_id_region - 1 + 4) % 4;
+    return "cell_" + previous_cell_id_region  + make_two_digits_number(previous_cell_id_last_two_digits);
   }
   return "cell_" + current_cell_id_region + make_two_digits_number(previous_cell_id_last_two_digits);
 }
@@ -212,7 +213,6 @@ function next_address(current_cell_id) {
         make_two_digits_number(next_cell_id_last_two_digits)
       ];
     }
-
   } else if (next_cell_id_last_two_digits == 13) {
     next_cell_id_last_two_digits = 0;
     return [
@@ -696,7 +696,10 @@ function enable_dice() {
   current_player_color = get_color_from_idx(turn_of_the_player);
   if (
     total_players == 1 &&
-    document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
+    (
+      document.querySelectorAll("#winner_" + turn_of_the_player + " img").length == 0 &&
+      document.querySelectorAll("#left_user_" + turn_of_the_player + " img").length == 0
+    ) &&
     rank_to_be_given_next != 4
   ) {
     remove_all_animation_and_tokens_of_current_player();
