@@ -170,7 +170,7 @@ function make_two_digits_number(number) {
   return number;
 }
 
-function previous_address(current_cell_id, player_id_of_token, related_circle_id_of_token) {
+function get_previous_cell_id(current_cell_id, player_id_of_token, related_circle_id_of_token) {
   if (current_cell_id == related_circle_id_of_token) {
     return 0;
   }
@@ -189,7 +189,7 @@ function previous_address(current_cell_id, player_id_of_token, related_circle_id
   return "cell_" + current_cell_id_region + make_two_digits_number(previous_cell_id_last_two_digits);
 }
 
-function next_address(current_cell_id) {
+function get_next_cell_id(current_cell_id) {
   // Check "images/cell_ids_explanation.png" for better understanding.
   var next_cell_id_last_two_digits = parseInt(current_cell_id.substring(6)) + 1;
   var current_cell_id_region = parseInt(current_cell_id.substring(5, 6));
@@ -284,7 +284,7 @@ function backword(current_cell_id, related_circle_id_of_token, last_token) {
   var time = 0;
   var color_name = related_circle_id_of_token.split("_");
   var player_id = get_idx_from_color(color_name[0]);
-  var k = previous_address(current_cell_id, player_id, related_circle_id_of_token);
+  var k = get_previous_cell_id(current_cell_id, player_id, related_circle_id_of_token);
   while (k != 0) {
     setTimeout(
       function (k, current_cell_id, related_circle_id_of_token, player_id, color_name) {
@@ -312,7 +312,7 @@ function backword(current_cell_id, related_circle_id_of_token, last_token) {
     );
     time = time + 35;
     current_cell_id = k;
-    k = previous_address(k, player_id, related_circle_id_of_token);
+    k = get_previous_cell_id(k, player_id, related_circle_id_of_token);
   }
 }
 
@@ -354,7 +354,7 @@ function set_positions(token_place_id, count, img, p_total_token, related_circle
     img.classList.add("outside");
     img.classList.remove("running_token");
     set_pointer_event_depending_on_automatic_or_not();
-    set_remainin_token(token_place_id, p_total_token, count);
+    update_cell_and_cell_tokens(token_place_id, p_total_token, count);
     if (!again_the_same_players_turn) {
       disable_progressbar_and_call_to_next_player(count);
     }
@@ -369,7 +369,7 @@ function run_token(
   previously_total_token
 ) {
   var p_total_token = document.querySelectorAll("#" + token_place_id + " img");
-  var id_n_count = next_address(current_cell_id);
+  var id_n_count = get_next_cell_id(current_cell_id);
   var next_id = id_n_count[0];
   var time = 200;
   if (current_cell_id == token_place_id) {
@@ -377,7 +377,7 @@ function run_token(
     img.classList.add("tokens_of_" + turn_of_the_player);
     img.classList.add("outside");
     set_pointer_event_depending_on_automatic_or_not();
-    set_remainin_token(token_place_id, p_total_token, 0);
+    update_cell_and_cell_tokens(token_place_id, p_total_token, 0);
     disable_progressbar_and_call_to_next_player();
     return;
   }
@@ -405,7 +405,7 @@ function run_token(
           current_player_color
         );
         if (temp_current_id === current_cell_id) {
-          set_remainin_token(temp_current_id, previously_total_token, 0);
+          update_cell_and_cell_tokens(temp_current_id, previously_total_token, 0);
         }
         var img = add_image_as_child_for_given_place_id(token_images_directory_path, current_player_color, related_circle_id_of_token, next_id);
         var span = document.createElement("span");
@@ -429,7 +429,7 @@ function run_token(
     );
     time = time + 200;
     current_cell_id = next_id;
-    id_n_count = next_address(next_id);
+    id_n_count = get_next_cell_id(next_id);
     next_id = id_n_count[0];
   }
 }
@@ -449,7 +449,7 @@ function move_token(event_inn) {
   var current_cell_id = event_inn.target.parentNode.getAttribute("id");
   var id_n_count = [current_cell_id, 0];
   for (var z = 0; z < random_dice; z++) {
-    id_n_count = next_address(id_n_count[0], random_dice);
+    id_n_count = get_next_cell_id(id_n_count[0], random_dice);
   }
   var token_place_id = id_n_count[0];
   var count = id_n_count[1];
@@ -493,24 +493,24 @@ function six_token(event_inn) {
   run_token(token_place_id, token_place_id, 0, related_circle_id_of_token);
 }
 
-function set_remainin_token(current_cell_id, p_total_token, count) {
-  var a_total_token = document.querySelectorAll(
+function update_cell_and_cell_tokens(current_cell_id, p_total_token, count) {
+  var tokens_in_current_cell = document.querySelectorAll(
     "#" + current_cell_id + " img"
   );
-  a_total_token_length = a_total_token.length;
-  if (a_total_token_length == 1) {
+  number_of_tokens_in_current_cell = tokens_in_current_cell.length;
+  if (number_of_tokens_in_current_cell == 1) {
     if (count == 18) {
-      a_total_token[0].classList.add("single_" + current_player_color + "_token_inside_destination");
+      tokens_in_current_cell[0].classList.add("single_" + current_player_color + "_token_inside_destination");
     } else {
-      a_total_token[0].classList.remove("multiple_tokens");
-      a_total_token[0].classList.add("single_token");
+      tokens_in_current_cell[0].classList.remove("multiple_tokens");
+      tokens_in_current_cell[0].classList.add("single_token");
     }
   } else {
-    a_total_token.forEach(function (item) {
+    tokens_in_current_cell.forEach(function (item) {
       if (count != 18) {
         item.classList.add("multiple_tokens");
       } else {
-        item.classList.add("destination_containing_" + a_total_token_length + "_tokens");
+        item.classList.add("destination_containing_" + number_of_tokens_in_current_cell + "_tokens");
       }
     });
   }
@@ -520,13 +520,13 @@ function set_remainin_token(current_cell_id, p_total_token, count) {
   for (var k = p_total_token.length; k > 1; k--) {
     document.getElementById(current_cell_id).classList.remove("cell_containing_" + k + "_tokens");
   }
-  for (var k = 0; a_total_token_length > 1 && k < a_total_token_length; k++) {
-    a_total_token[k].classList.remove("single_token");
+  for (var k = 0; number_of_tokens_in_current_cell > 1 && k < number_of_tokens_in_current_cell; k++) {
+    tokens_in_current_cell[k].classList.remove("single_token");
   }
-  if (a_total_token_length > 1 && count != 18) {
+  if (number_of_tokens_in_current_cell > 1 && count != 18) {
     document
       .getElementById(current_cell_id)
-      .classList.add("cell_containing_" + a_total_token_length + "_tokens");
+      .classList.add("cell_containing_" + number_of_tokens_in_current_cell + "_tokens");
   }
 }
 
@@ -553,7 +553,7 @@ function remove_all_animation_and_tokens_of_current_player() {
       "#" + current_cell_id + " img"
     );
     tokens_outside_home[z].remove();
-    set_remainin_token(current_cell_id, p_total_token, 0);
+    update_cell_and_cell_tokens(current_cell_id, p_total_token, 0);
   }
 
   var tokens_inside_destination = document.querySelectorAll("#destination_for_" + current_player_color + "_tokens" + " img");
