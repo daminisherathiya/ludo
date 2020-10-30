@@ -594,30 +594,30 @@ function automatically_roll_dice_and_run_token(increase_dot = true) {
   }
 }
 
-function highlight_stage(border_side, home_borders, time) {
-  var border = document.querySelector("#" + current_player_color + "_user" + " div.timer_border_" + border_side);
-  var length = 99;
-  while (length >= 0) {
+function setup_timer_border_and_home_boarders_animation(timer_border_side, home_borders, time) {
+  var border = document.querySelector("#" + current_player_color + "_user" + " div.timer_border_" + timer_border_side);
+  var border_length = 99;
+  while (border_length >= 0) {
     var time_out = setTimeout(
-      function (length) {
-        if (border_side == "left" || border_side == "right") {
-          border.style.height = length + "%";
+      function (border_length) {
+        if (timer_border_side == "left" || timer_border_side == "right") {
+          border.style.height = border_length + "%";
         } else {
-          border.style.width = length + "%";
+          border.style.width = border_length + "%";
         }
-        for (var z = 0; z < home_borders.length && length % 15 == 0; z++) {
+        for (var z = 0; z < home_borders.border_length && border_length % 15 == 0; z++) {
           home_borders[z].classList.toggle("light_" + current_player_color);
         }
-        if (length == 0 && border_side == "top") {
+        if (border_length == 0 && timer_border_side == "top") {
           automatically_roll_dice_and_run_token();
         }
       },
       time,
-      length
+      border_length
     );
-    length--;
+    border_length--;
     time = time + 15;
-    timer_settimeouts.push(time_out);
+    timer_settimeouts.push(time_out);  // Used to remove animation once the user has taken their turn.
   }
   return time;
 }
@@ -638,10 +638,10 @@ function start_timer() {
   timer_settimeouts = [];
   var home_borders = document.querySelectorAll(".highlight_" + current_player_color);
   var time = 50;
-  time = highlight_stage("left", home_borders, time);
-  time = highlight_stage("bottom", home_borders, time);
-  time = highlight_stage("right", home_borders, time);
-  highlight_stage("top", home_borders, time);
+  time = setup_timer_border_and_home_boarders_animation("left", home_borders, time);
+  time = setup_timer_border_and_home_boarders_animation("bottom", home_borders, time);
+  time = setup_timer_border_and_home_boarders_animation("right", home_borders, time);
+  setup_timer_border_and_home_boarders_animation("top", home_borders, time);
 }
 
 function disable_progressbar() {
@@ -676,7 +676,7 @@ function make_winner() {
   winner_img.classList.add("winner");
 }
 
-function set_dices_display() {
+function set_dices_display_style() {
   dices[turn_of_the_player].style.display = "block";
   dices[(turn_of_the_player + 1) % 4].style.display = "none";
   dices[(turn_of_the_player + 2) % 4].style.display = "none";
@@ -706,7 +706,7 @@ function enable_dice() {
     make_winner();
     return;
   }
-  set_dices_display();
+  set_dices_display_style();
   if (game_is_over) {
     return;
   }
