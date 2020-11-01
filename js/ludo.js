@@ -420,14 +420,7 @@ function event_listner_for_outside_tokens(event) {
   token_is_running = true;
   remove_event_listener_for_tokens();
   count_to_avoid_race_conditions++;
-  for (var z = 0; z < tokens_inside_home.length; z++) {
-    tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
-  }
-  for (var z = 0; z < tokens_outside_home.length; z++) {
-    tokens_outside_home[z].parentNode.classList.remove(
-      "outside_token_animation"
-    );
-  }
+  remove_animation_from_tokens();
   var current_cell_id = event.target.parentNode.getAttribute("id");
   var target_cell_id = current_cell_id;
   for (var z = 0; z < random_dice; z++) {
@@ -509,10 +502,7 @@ function update_cell_and_cell_tokens(current_cell_id) {
       .classList.add("cell_containing_" + number_of_tokens_in_current_cell + "_tokens");
   }
 }
-
-function remove_all_animation_and_tokens_of_current_player() {
-  document.querySelector("#" + current_player_color + "_dice_container" + " img").classList.remove("dice_margin");
-  document.querySelector("#" + current_player_color + "_dice_container").classList.remove("dice_border_animation");
+function remove_animation_from_tokens(){
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
@@ -521,6 +511,11 @@ function remove_all_animation_and_tokens_of_current_player() {
       "outside_token_animation"
     );
   }
+}
+function remove_all_animation_and_tokens_of_current_player() {
+  document.querySelector("#" + current_player_color + "_dice_container" + " img").classList.remove("dice_margin");
+  document.querySelector("#" + current_player_color + "_dice_container").classList.remove("dice_border_animation");
+  remove_animation_from_tokens();
   tokens_inside_home = document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player);
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].remove();
