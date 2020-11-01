@@ -303,18 +303,15 @@ function set_positions(target_cell_id, img, p_total_token, related_circle_id_of_
   var is_destination_cell = target_cell_id.indexOf("destination") != -1;
   again_the_same_players_turn = false;
   if (safe == null && p_total_token.length > 0) {
-    var color_name = related_circle_id_of_token.split("_")[0];
-    var idx_of_alt = get_idx_from_color(color_name);
     p_total_token.forEach(function (item, idx, arr) {
-      var alt_name = item.getAttribute("alt");
-      var color_name = alt_name.split("_")[0];
-      var idx_of_alt_name = get_idx_from_color(color_name);
+      var already_present_token_alt = item.getAttribute("alt");
+      var already_present_token_color = item.getAttribute("alt").split("_")[0];
       if (
-        idx_of_alt != idx_of_alt_name &&
+        already_present_token_color != current_player_color &&
         item.getAttribute("class") != "running_token"
       ) {
         again_the_same_players_turn = true;
-        send_token_to_home(target_cell_id, alt_name, idx === arr.length - 1);
+        send_token_to_home(target_cell_id, already_present_token_alt, idx === arr.length - 1);
       }
     });
   }
@@ -341,14 +338,7 @@ function set_positions(target_cell_id, img, p_total_token, related_circle_id_of_
   }, 1);
 }
 
-function run_token(
-  current_cell_id,
-  target_cell_id,
-  related_circle_id_of_token,
-) {
-  var p_total_token = document.querySelectorAll("#" + target_cell_id + " img");
-  var next_id = get_next_cell_id(current_cell_id);
-  var time = 200;
+function run_token(current_cell_id, target_cell_id, related_circle_id_of_token) {
   if (current_cell_id == target_cell_id) {
     var img = add_image_as_child_for_given_place_id(token_images_directory_path, current_player_color, related_circle_id_of_token, target_cell_id);
     img.classList.add("tokens_of_" + turn_of_the_player);
@@ -358,13 +348,15 @@ function run_token(
     disable_progressbar_and_call_to_next_player();
     return;
   }
-  var span = document.createElement("span");
-  span.classList.add("running_" + current_player_color + "_token_animation");
-  document.getElementById(current_cell_id).appendChild(span);
-  var temp_current_id = current_cell_id;
+  var span_containing_animation_for_running_token = document.createElement("span");
+  span_containing_animation_for_running_token.classList.add("running_" + current_player_color + "_token_animation");
+  document.getElementById(current_cell_id).appendChild(span_containing_animation_for_running_token);
+  var is_first_iteration = true;
   while (current_cell_id !== target_cell_id) {
+    var next_cell_id = get_next_cell_id(current_cell_id);
+    var time = 200;
     setTimeout(
-      function (next_id, current_cell_id, current_player_color, related_circle_id_of_token) {
+      function (next_cell_id, current_cell_id, current_player_color, related_circle_id_of_token) {
         var remove_token = document.querySelector(
           "#" + current_cell_id + " img[alt=" + related_circle_id_of_token + "]"
         );
@@ -381,32 +373,34 @@ function run_token(
           current_cell_id,
           current_player_color
         );
-        if (temp_current_id === current_cell_id) {
-          update_cell_and_cell_tokens(temp_current_id);
+        if (is_first_iteration) {
+          is_first_iteration = false;
+          update_cell_and_cell_tokens(current_cell_id);
         }
-        var img = add_image_as_child_for_given_place_id(token_images_directory_path, current_player_color, related_circle_id_of_token, next_id);
+        var img = add_image_as_child_for_given_place_id(token_images_directory_path, current_player_color, related_circle_id_of_token, next_cell_id);
         var span = document.createElement("span");
-        var src = document.getElementById(next_id);
+        var src = document.getElementById(next_cell_id);
         src.appendChild(span);
         span.classList.add("running_" + current_player_color + "_token_animation");
         img.classList.add("running_token");
-        if (next_id == target_cell_id) {
+        if (next_cell_id == target_cell_id) {
           remove_animation = document.querySelector(
             "#" + target_cell_id + " span.running_" + current_player_color + "_token_animation"
           );
           remove_animation.remove();
-          set_positions(target_cell_id, img, p_total_token, related_circle_id_of_token);
+          var tokens_already_present_in_target_cell = document.querySelectorAll("#" + target_cell_id + " img");
+          set_positions(target_cell_id, img, tokens_already_present_in_target_cell, related_circle_id_of_token);
         }
       },
       time,
-      next_id,
+      next_cell_id,
       current_cell_id,
       current_player_color,
       related_circle_id_of_token
     );
     time = time + 200;
-    current_cell_id = next_id;
-    next_id = get_next_cell_id(next_id);
+    current_cell_id = next_cell_id;
+    next_cell_id = get_next_cell_id(next_cell_id);
   }
 }
 
@@ -421,11 +415,7 @@ function event_listner_for_outside_tokens(event) {
     target_cell_id = get_next_cell_id(target_cell_id);
   }
   var related_circle_id_of_token = event.target.getAttribute("alt");
-  run_token(
-    current_cell_id,
-    target_cell_id,
-    related_circle_id_of_token,
-  );
+  run_token(current_cell_id, target_cell_id, related_circle_id_of_token);
 }
 
 function remove_event_listener_for_tokens() {
