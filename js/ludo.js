@@ -351,10 +351,11 @@ function run_token(current_cell_id, target_cell_id, related_circle_id_of_token) 
   var span_containing_animation_for_running_token = document.createElement("span");
   span_containing_animation_for_running_token.classList.add("running_" + current_player_color + "_token_animation");
   document.getElementById(current_cell_id).appendChild(span_containing_animation_for_running_token);
+  var next_cell_id = get_next_cell_id(current_cell_id);
+  var time = 200;
   var is_first_iteration = true;
+  var tokens_already_present_in_target_cell = document.querySelectorAll("#" + target_cell_id + " img");
   while (current_cell_id !== target_cell_id) {
-    var next_cell_id = get_next_cell_id(current_cell_id);
-    var time = 200;
     setTimeout(
       function (next_cell_id, current_cell_id, current_player_color, related_circle_id_of_token) {
         var token_in_current_cell = document.querySelector(
@@ -387,7 +388,6 @@ function run_token(current_cell_id, target_cell_id, related_circle_id_of_token) 
             "#" + target_cell_id + " span.running_" + current_player_color + "_token_animation"
           );
           span_containing_animation_for_running_token_in_target_cell.remove();
-          var tokens_already_present_in_target_cell = document.querySelectorAll("#" + target_cell_id + " img");
           set_positions(target_cell_id, token_in_next_cell, tokens_already_present_in_target_cell, related_circle_id_of_token);
         }
       },
@@ -459,7 +459,7 @@ function update_cell_and_cell_tokens(current_cell_id) {
       }
     });
   }
-  if (is_destination_cell) {
+  if (is_destination_cell &&  tokens_in_current_cell.length > 1) {
     for(var z = 0 ; z < tokens_in_current_cell.length; z++) {
       tokens_in_current_cell[z].classList.remove("single_" + current_player_color + "_token_inside_destination");
     }
