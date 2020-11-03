@@ -682,10 +682,10 @@ function enable_pointer_event_for_dices_and_tokens() {
   );
   var all_dices = document.querySelectorAll("#" + get_color_from_idx(manual_player_id) + "_dice_container .dice");
   for (var z = 0; z < all_tokens.length; z++) {
-    all_tokens[z].classList.remove("disable_pointer_event_for_dices_and_tokens");
+    all_tokens[z].classList.remove("disable_pointer_event");
   }
   for (var z = 0; z < all_dices.length; z++) {
-    all_dices[z].classList.remove("disable_pointer_event_for_dices_and_tokens");
+    all_dices[z].classList.remove("disable_pointer_event");
   }
 }
 
@@ -695,10 +695,10 @@ function disable_pointer_event_for_dices_and_tokens() {
   );
   var all_dices = document.querySelectorAll(".dice");
   for (var z = 0; z < all_tokens.length; z++) {
-    all_tokens[z].classList.add("disable_pointer_event_for_dices_and_tokens");
+    all_tokens[z].classList.add("disable_pointer_event");
   }
   for (var z = 0; z < all_dices.length; z++) {
-    all_dices[z].classList.add("disable_pointer_event_for_dices_and_tokens");
+    all_dices[z].classList.add("disable_pointer_event");
   }
 }
 
