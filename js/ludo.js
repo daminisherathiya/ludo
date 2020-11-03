@@ -600,7 +600,7 @@ function setup_timer_border_and_home_boarders_animation(timer_border_side, home_
         } else {
           border.style.width = border_length + "%";
         }
-        for (var z = 0; z < home_borders.border_length && border_length % 15 == 0; z++) {
+        for (var z = 0; z < home_borders.length && border_length % 15 == 0; z++) {
           home_borders[z].classList.toggle("light_" + current_player_color);
         }
         if (border_length == 0 && timer_border_side == "top") {
