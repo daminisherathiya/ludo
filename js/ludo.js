@@ -64,6 +64,48 @@ function set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_ou
   });
 }
 
+function get_count_of_tokens_that_can_be_killed(outside_token) {
+  var current_cell_id = outside_token.parentNode.getAttribute("id");  // e.g., "cell_312".
+  var target_cell_id = current_cell_id;
+  for (var z = 0; z < random_dice; z++) {
+    target_cell_id = get_next_cell_id(target_cell_id);
+  }
+  var is_safe_cell = document.querySelector("#" + target_cell_id + ".safe img");
+  if (is_safe_cell != null) {
+    return 0;
+  }
+  var count_of_tokens_that_can_be_killed = 0;
+  var tokens_already_present_in_target_cell = document.querySelectorAll("#" + target_cell_id + " img");
+
+  tokens_already_present_in_target_cell.forEach(function(item){
+    var already_present_token_color = item.getAttribute("alt").split("_")[0];
+    if (
+      already_present_token_color != current_player_color &&
+      item.getAttribute("class") != "running_token"
+    ) {
+      count_of_tokens_that_can_be_killed++;
+    }
+  });
+  return count_of_tokens_that_can_be_killed;
+}
+
+function get_idx_of_best_outside_token_to_run(){
+  var idx_of_best_outside_token_to_run = -1;
+  var max_tokens_that_can_be_killed = -1;
+
+  for (var z = 0; z < tokens_outside_home.length; z++) {
+    if (check_if_token_can_be_moved(tokens_outside_home[z])) {
+      var count_of_tokens_that_can_be_killed = get_count_of_tokens_that_can_be_killed(tokens_outside_home[z]);
+
+      if (count_of_tokens_that_can_be_killed > max_tokens_that_can_be_killed) {
+        idx_of_best_outside_token_to_run = z;
+        max_tokens_that_can_be_killed = count_of_tokens_that_can_be_killed;
+      }
+    }
+  }
+  return idx_of_best_outside_token_to_run;
+}
+
 function automatically_run_token(passed_count_to_avoid_race_conditions) {
   if (passed_count_to_avoid_race_conditions < count_to_avoid_race_conditions) {  // If count_to_avoid_race_conditions is increased, then it means another action has already run the token. So, don't run in this function.
     return;
@@ -77,11 +119,10 @@ function automatically_run_token(passed_count_to_avoid_race_conditions) {
     }, 1000);
   } else if (at_least_one_outside_token_can_be_moved && tokens_outside_home.length != 0) {
     setTimeout(function () {
-      for (var z = 0; z < tokens_outside_home.length && !token_is_running; z++) {
-        if (check_if_token_can_be_moved(tokens_outside_home[z]) && passed_count_to_avoid_race_conditions + 1 == count_to_avoid_race_conditions) {
-          tokens_outside_home[z].click();
-          break;
-        }
+      var idx_of_best_outside_token_to_run = get_idx_of_best_outside_token_to_run();
+      if (idx_of_best_outside_token_to_run != -1 && !token_is_running && passed_count_to_avoid_race_conditions + 1 == count_to_avoid_race_conditions) {
+        tokens_outside_home[idx_of_best_outside_token_to_run].click();
+        return;
       }
     }, 1000);
   }
