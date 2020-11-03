@@ -284,7 +284,6 @@ input:checked + .slider:after {
   left: 120px;
   color:rgb(218, 255, 7);
   font-weight: bold;
-  display: none;
 }
 .manual_player_arrow {
   font-size: 20px;
