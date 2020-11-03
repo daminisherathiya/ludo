@@ -611,7 +611,7 @@ function setup_timer_border_and_home_boarders_animation(timer_border_side, home_
       border_length
     );
     border_length--;
-    time = time + 15;
+    time = time + 30;
     timer_settimeouts.push(time_out);  // Used to remove animation once the user has taken their turn.
   }
   return time;
