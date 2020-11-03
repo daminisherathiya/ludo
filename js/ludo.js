@@ -159,6 +159,11 @@ function add_animation_for_tokens() {
 function roll_dice() {
   dices[turn_of_the_player].removeEventListener("click", roll_dice);
   random_dice = Math.floor(6 * Math.random()) + 1;
+  for (var i = 0; i < 1; i++) {
+    if (random_dice != 6 && document.querySelectorAll(".circle .tokens_of_" + turn_of_the_player).length) {  // Increase the chances of getting 6 if at least one token is inside home.
+      random_dice = Math.floor(6 * Math.random()) + 1;
+    }
+  }
   // random_dice = 6;
   add_event_listener_for_tokens();  // This is needed here so that "automatically_run_token" can work correctly if called in case of timeout.
   set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();  // This is needed here so that "automatically_run_token" can work correctly if called in case of timeout.
