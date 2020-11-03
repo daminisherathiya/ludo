@@ -279,6 +279,21 @@ input:checked + .slider:after {
   border-radius: 6%;
 }
 
+.manual_player {
+  position: absolute;
+  left: 120px;
+  color:rgb(218, 255, 7);
+  font-weight: bold;
+  display: none;
+}
+.manual_player_arrow {
+  font-size: 20px;
+}
+.manual_player_text {
+  position: absolute;
+  top: 3px;
+}
+
 .disable_pointer_event {
   pointer-events: none;
 }
@@ -805,6 +820,10 @@ img {
     height: 54px;
   }
 
+  .manual_player {
+    left: 125px;
+  }
+
   .user {
     height: 65px;
     width: 65px;
@@ -849,6 +868,14 @@ img {
   .running_token {
     width: 10px;
     height: 19px;
+  }
+
+  .manual_player{
+      top: 3px;
+  }
+  .manual_player_text{
+    top: 6px;
+    font-size: 11px;
   }
 
   .running_green_token_animation,
@@ -951,6 +978,11 @@ img {
   }
   .running_token {
     height: 17px;
+  }
+
+  .manual_player{
+    left: 104px;
+    top: 0px;
   }
 
   #destination_for_green_tokens {

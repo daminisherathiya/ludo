@@ -11,6 +11,7 @@ var winner_images_directory_path = "./images/winners/";
 
 var total_players = 4;
 var turn_of_the_player = 0;  // 0 => green, 1=> blue, 2 => yellow, 3 => red.
+var manual_player_id = 3;
 var current_player_color;
 var current_player_has_left = false;
 var automatic_turns_used = [0, 0, 0, 0];  // 0 => green, 1=> blue, 2 => yellow, 3 => red.
@@ -149,7 +150,7 @@ function roll_dice() {
 
           add_animation_for_tokens();
           set_at_least_one_outside_token_can_be_moved_and_remove_animation_for_outside_tokens_that_can_not_be_moved();
-          if (document.getElementById("run_automatically_switch_input").checked) {
+          if (document.getElementById("run_automatically_switch_input").checked || (!document.getElementById("run_automatically_switch_input").checked && turn_of_the_player != manual_player_id)) {
             automatically_run_token(passed_count_to_avoid_race_conditions);
           }
         }
@@ -667,7 +668,7 @@ function enable_dice() {
     document.querySelector("#" + current_player_color + "_dice_container").classList.add("dice_border_animation");
     dices[turn_of_the_player].addEventListener("click", roll_dice);
     start_timer();
-    if (document.getElementById("run_automatically_switch_input").checked) {
+    if (document.getElementById("run_automatically_switch_input").checked || (!document.getElementById("run_automatically_switch_input").checked && turn_of_the_player != manual_player_id)) {
       setTimeout(function () {
         dices[turn_of_the_player].click();
       }, 1000);
@@ -677,9 +678,9 @@ function enable_dice() {
 
 function enable_pointer_event_for_dices_and_tokens() {
   var all_tokens = document.querySelectorAll(
-    ".tokens_of_0,.tokens_of_1,.tokens_of_2,.tokens_of_3"
+    ".tokens_of_" + manual_player_id
   );
-  var all_dices = document.querySelectorAll(".dice");
+  var all_dices = document.querySelectorAll("#" + get_color_from_idx(manual_player_id) + "_dice_container .dice");
   for (var z = 0; z < all_tokens.length; z++) {
     all_tokens[z].classList.remove("disable_pointer_event_for_dices_and_tokens");
   }
@@ -705,7 +706,9 @@ document.getElementById("run_automatically_switch_input").addEventListener("chan
   if (this.checked) {
     disable_pointer_event_for_dices_and_tokens();
     automatically_roll_dice_and_run_token(false);
+    document.getElementsByClassName("manual_player")[0].style.display="none";
   } else {
     enable_pointer_event_for_dices_and_tokens();
+    document.getElementsByClassName("manual_player")[0].style.display="block";
   }
 });
