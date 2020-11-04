@@ -32,10 +32,9 @@ var token_is_running = false;  // Used to avoid race conditions.
 var timer_settimeouts = [];  // Used to remove timer when the user finishes their turn.
 
 function set_pointer_event_depending_on_automatic_or_not() {
-  if (document.getElementById("run_automatically_switch_input").checked) {
-    disable_pointer_event_for_dices_and_tokens();
-  } else {
-    enable_pointer_event_for_dices_and_tokens();
+  disable_pointer_event_for_dices_and_tokens(); // Disable for all players.
+  if (!document.getElementById("run_automatically_switch_input").checked) {
+    enable_pointer_event_for_dices_and_tokens_of_manual_player();  // Enable for the manual player.
   }
 }
 
@@ -722,7 +721,7 @@ function enable_dice() {
   }
 }
 
-function enable_pointer_event_for_dices_and_tokens() {
+function enable_pointer_event_for_dices_and_tokens_of_manual_player() {
   var all_tokens = document.querySelectorAll(
     ".tokens_of_" + manual_player_id
   );
@@ -754,7 +753,7 @@ document.getElementById("run_automatically_switch_input").addEventListener("chan
     automatically_roll_dice_and_run_token(false);
     document.getElementsByClassName("manual_player")[0].style.display="none";
   } else {
-    enable_pointer_event_for_dices_and_tokens();
+    enable_pointer_event_for_dices_and_tokens_of_manual_player();
     document.getElementsByClassName("manual_player")[0].style.display="block";
   }
 });
