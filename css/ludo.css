@@ -44,7 +44,7 @@ td {
 .single_token {
   width: 15px;
   height: 25px;
-  margin-left: 4px;
+  margin: auto;
   margin-top: -10px;
   position: relative;
   z-index: 1;
@@ -98,7 +98,7 @@ td {
   color: #e1acac;
   font-size: 20px;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 13px;
   margin-bottom: 0;
 }
 
@@ -130,7 +130,7 @@ Code starting from here: */
 .slider:before {
   position: absolute;
   content: "";
-  height: 14px;
+  height: 13px;
   width: 14px;
   left: 4px;
   bottom: 2px;
@@ -290,7 +290,7 @@ input:checked + .slider:after {
 }
 .manual_player_text {
   position: absolute;
-  top: 3px;
+  top: 4px;
 }
 
 .disable_pointer_event {
@@ -733,7 +733,6 @@ img {
   .single_token {
     width: 12px;
     height: 21px;
-    margin-left: 4px;
     margin-top: -8px;
   }
   .cell_containing_2_tokens {
@@ -857,7 +856,6 @@ img {
   .single_token {
     width: 10px;
     height: 19px;
-    margin-left: 3px;
     margin-top: -8px;
   }
   .multiple_tokens {
@@ -968,7 +966,6 @@ img {
 
   .single_token {
     height: 17px;
-    margin-left: 2px;
     margin-top: -6px;
   }
   .multiple_tokens {
