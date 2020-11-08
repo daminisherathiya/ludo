@@ -39,9 +39,11 @@ td {
   width: 27px;
   height: 27px;
   position: relative;
-  background-clip: padding-box;
 }
 @-moz-document url-prefix() {
+  td {
+    background-clip: padding-box;
+  }
   .mozila_fix_for_home_border {
     background-clip: border-box;
     position: initial;
