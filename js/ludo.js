@@ -76,7 +76,7 @@ function get_count_of_tokens_that_can_be_killed(outside_token) {
   var count_of_tokens_that_can_be_killed = 0;
   var tokens_already_present_in_target_cell = document.querySelectorAll("#" + target_cell_id + " img");
 
-  tokens_already_present_in_target_cell.forEach(function(item){
+  tokens_already_present_in_target_cell.forEach(function (item) {
     var already_present_token_color = item.getAttribute("alt").split("_")[0];
     if (
       already_present_token_color != current_player_color &&
@@ -88,7 +88,7 @@ function get_count_of_tokens_that_can_be_killed(outside_token) {
   return count_of_tokens_that_can_be_killed;
 }
 
-function get_idx_of_best_outside_token_to_run(){
+function get_idx_of_best_outside_token_to_run() {
   var idx_of_best_outside_token_to_run = -1;
   var max_tokens_that_can_be_killed = -1;
 
@@ -229,8 +229,8 @@ function get_previous_cell_id(current_cell_id, player_id_of_token, related_circl
   }
   if (player_id_of_token != current_cell_id_region && previous_cell_id_last_two_digits == -1) {
     previous_cell_id_last_two_digits = 12;
-    previous_cell_id_region  = (current_cell_id_region - 1 + 4) % 4;
-    return "cell_" + previous_cell_id_region  + make_two_digits_number(previous_cell_id_last_two_digits);
+    previous_cell_id_region = (current_cell_id_region - 1 + 4) % 4;
+    return "cell_" + previous_cell_id_region + make_two_digits_number(previous_cell_id_last_two_digits);
   }
   return "cell_" + current_cell_id_region + make_two_digits_number(previous_cell_id_last_two_digits);
 }
@@ -246,7 +246,7 @@ function get_next_cell_id(current_cell_id) {
   } else if (next_cell_id_last_two_digits == 12) {
     if (next_cell_id_region == turn_of_the_player) {
       next_cell_id_last_two_digits++;
-      return "cell_" + next_cell_id_region + make_two_digits_number(next_cell_id_last_two_digits); 
+      return "cell_" + next_cell_id_region + make_two_digits_number(next_cell_id_last_two_digits);
     } else {
       return "cell_" + current_cell_id_region + make_two_digits_number(next_cell_id_last_two_digits);
     }
@@ -258,7 +258,7 @@ function get_next_cell_id(current_cell_id) {
   }
 }
 
-function disable_progressbar_and_call_to_next_player(is_destination_cell=false) {
+function disable_progressbar_and_call_to_next_player(is_destination_cell = false) {
   disable_progressbar();
   if (
     total_players == 1 ||
@@ -505,8 +505,8 @@ function update_cell_and_cell_tokens(current_cell_id) {
       }
     });
   }
-  if (is_destination_cell &&  tokens_in_current_cell.length > 1) {
-    for(var z = 0 ; z < tokens_in_current_cell.length; z++) {
+  if (is_destination_cell && tokens_in_current_cell.length > 1) {
+    for (var z = 0; z < tokens_in_current_cell.length; z++) {
       tokens_in_current_cell[z].classList.remove("single_" + current_player_color + "_token_inside_destination");
     }
   }
@@ -524,7 +524,7 @@ function update_cell_and_cell_tokens(current_cell_id) {
       .classList.add("cell_containing_" + number_of_tokens_in_current_cell + "_tokens");
   }
 }
-function remove_animation_from_tokens(){
+function remove_animation_from_tokens() {
   for (var z = 0; z < tokens_inside_home.length; z++) {
     tokens_inside_home[z].parentNode.classList.remove("home_token_animation");
   }
@@ -750,9 +750,9 @@ document.getElementById("run_automatically_switch_input").addEventListener("chan
   if (this.checked) {
     disable_pointer_event_for_dices_and_tokens();
     automatically_roll_dice_and_run_token(false);
-    document.getElementsByClassName("manual_player")[0].style.display="none";
+    document.getElementsByClassName("manual_player")[0].style.display = "none";
   } else {
     enable_pointer_event_for_dices_and_tokens_of_manual_player();
-    document.getElementsByClassName("manual_player")[0].style.display="block";
+    document.getElementsByClassName("manual_player")[0].style.display = "block";
   }
 });
