@@ -696,7 +696,6 @@ function enable_dice() {
     ) &&
     rank_to_be_given_next != 4
   ) {
-    remove_all_animation_and_tokens_of_current_player();
     make_winner();
     return;
   }
