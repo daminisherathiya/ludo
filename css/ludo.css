@@ -39,6 +39,22 @@ td {
   width: 27px;
   height: 27px;
   position: relative;
+  background-clip: padding-box;
+}
+@-moz-document url-prefix() {
+  .mozila_fix_for_home_border {
+    background-clip: border-box;
+    position: initial;
+  }
+}
+
+.height_of_div_containing_circle {
+  height: 50%;
+}
+@-moz-document url-prefix() {
+  .height_of_div_containing_circle {
+    height: 200%;
+  }
 }
 
 .single_token {
@@ -170,13 +186,13 @@ input:checked + .slider:after {
 /* Until code ending here. */
 
 .destination {
-  background: conic-gradient(
-    #ffde15 0% 12.5%,
-    #27abfd 12.5% 37.5%,
-    #eb1c22 37.5% 62.5%,
-    #06a049 62.5% 87.6%,
-    #ffde15 87.6% 100%
-  );
+  width: 0px;
+  height: 0px;
+  border: 40px solid;
+  border-top-color: #ffde15;
+  border-left-color: #06a049;
+  border-right-color: #27abfd;
+  border-bottom-color: #eb1c22;
 }
 
 .border_bottom_hidden {
@@ -645,6 +661,7 @@ img {
 
 .winner,
 .left_user {
+  z-index: 2;
   width: 107px;
   height: 107px;
   position: absolute;
@@ -664,6 +681,10 @@ img {
   }
   .multiple_tokens {
     margin-left: -5px;
+  }
+
+  .destination {
+    border-width: 37px;
   }
 
   .running_green_token_animation,
@@ -728,6 +749,15 @@ img {
   td {
     width: 22px;
     height: 22px;
+  }
+
+  .destination {
+    border-width: 32.5px;
+  }
+  @-moz-document url-prefix() {
+    .destination {
+      border-width: 33px;
+    }
   }
 
   .single_token {
@@ -853,6 +883,10 @@ img {
     line-height: 0px;
   }
 
+  .destination {
+    border-width: 28px;
+  }
+
   .single_token {
     width: 10px;
     height: 19px;
@@ -964,6 +998,10 @@ img {
     line-height: 0px;
   }
 
+  .destination {
+    border-width: 25px;
+  }
+  
   .single_token {
     height: 17px;
     margin-top: -6px;
