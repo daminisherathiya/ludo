@@ -298,7 +298,7 @@ input:checked + .slider:after {
 .manual_player {
   position: absolute;
   left: 120px;
-  color:rgb(218, 255, 7);
+  color: rgb(218, 255, 7);
   font-weight: bold;
 }
 .manual_player_arrow {
@@ -901,10 +901,10 @@ img {
     height: 19px;
   }
 
-  .manual_player{
-      top: 3px;
+  .manual_player {
+    top: 3px;
   }
-  .manual_player_text{
+  .manual_player_text {
     top: 6px;
     font-size: 11px;
   }
@@ -1001,7 +1001,7 @@ img {
   .destination {
     border-width: 25px;
   }
-  
+
   .single_token {
     height: 17px;
     margin-top: -6px;
@@ -1014,7 +1014,7 @@ img {
     height: 17px;
   }
 
-  .manual_player{
+  .manual_player {
     left: 104px;
     top: 0px;
   }
